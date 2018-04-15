@@ -18,10 +18,10 @@ public final class MysqlConnect {
     
     private MysqlConnect() {
         String url= "jdbc:mysql://localhost:3306/";
-        String dbName = "carInventory";
+        String dbName = "TutorTools";			//modify according to your DB
         String driver = "com.mysql.jdbc.Driver";
-        String userName = "root";
-        String password = "hello";
+        String userName = "root";				//modify according to your user
+        String password = "hello";				//modify according to your password
         try {
             Class.forName(driver).newInstance();
             this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
@@ -65,6 +65,12 @@ public final class MysqlConnect {
  
     }
     
+     /**
+     * @desc Method to insert data to a table with PreparedStatement
+     * @param insertQuery String The Insert query
+     * @return boolean
+     * @throws SQLException
+     */
      public PreparedStatement preparedStatement(String insertQuery) throws SQLException {
         
         PreparedStatement result = db.conn.prepareStatement(insertQuery);
