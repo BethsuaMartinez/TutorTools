@@ -5,11 +5,14 @@
  */
 package tutortools;
 
-import TutorSession.SessionView;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import login.loginGUI;
 
 /**
  *
@@ -19,9 +22,21 @@ public class TutorTools extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        SessionView sv = new SessionView();
+        loginGUI login = new loginGUI();
+       /* Button btn = new Button();
+        btn.setText("Say 'Hello World'");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+            }
+        });
         
-        Scene scene = new Scene(sv, 300, 250);
+        StackPane root = new StackPane();
+        root.getChildren().add(btn);*/
+        
+        Scene scene = new Scene(login, 1000, 500);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
