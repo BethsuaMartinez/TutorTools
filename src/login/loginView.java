@@ -9,11 +9,9 @@ package login;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,18 +24,15 @@ import javafx.scene.text.Font;
  *
  * @author beths
  */
-public class loginGUI extends BorderPane{ 
+public class loginView extends BorderPane{ 
     private ImageView logo;
     private Label loginLabel = new Label("Login to Your Account");
     private TextField username = new TextField();
     private TextField password = new TextField();
     private Button login = new Button("Login");
-
-
     
-    
-    public loginGUI(){
-        
+        public loginView(){
+
         this.setStyle("-fx-background-color: #FFFFFF;");
         HBox h1 = new HBox();
         HBox h2 = new HBox();
@@ -77,11 +72,61 @@ public class loginGUI extends BorderPane{
         this.setCenter(v1);
         this.setLeft(h5);
         this.setRight(h6);
-        
-        
-        
-    
-    }
-    
-    
+        }
+            
+        /**
+         * @return the loginLabel
+         */
+        public Label getLoginLabel() {
+            return loginLabel;
+        }
+
+        /**
+         * @param loginLabel the loginLabel to set
+         */
+        public void setLoginLabel(Label loginLabel) {
+            this.loginLabel = loginLabel;
+        }
+
+        /**
+         * @return the username
+         */
+        public TextField getUsername() {
+            return username;
+        }
+
+        /**
+         * @param username the username to set
+         */
+        public void setUsername(TextField username) {
+            this.username = username;
+        }
+
+        /**
+         * @return the password
+         */
+        public TextField getPassword() {
+            return password;
+        }
+
+        /**
+         * @param password the password to set
+         */
+        public void setPassword(TextField password) {
+            this.password = password;
+        }
+
+        /**
+         * @return the login
+         */
+        public Button getLogin() {
+            return login;
+        }
+
+        /**
+         * @param login the login to set
+         */
+        public void setLogin(Button login) {
+            this.login = login;
+        }
 }

@@ -5,14 +5,13 @@
  */
 package tutortools;
 
+import java.sql.SQLException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import login.loginGUI;
+import login.loginController;
+import login.loginModel;
+import login.loginView;
 
 /**
  *
@@ -21,20 +20,10 @@ import login.loginGUI;
 public class TutorTools extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
-        loginGUI login = new loginGUI();
-       /* Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);*/
+    public void start(Stage primaryStage) throws SQLException {
+        loginView login = new loginView();
+        loginModel logm = new loginModel();
+        loginController logc = new loginController(logm, login);
         
         Scene scene = new Scene(login, 1000, 500);
         
