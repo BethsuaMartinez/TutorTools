@@ -27,7 +27,7 @@ public class TutorTools extends Application {
         
         Scene scene = new Scene(login, 1000, 500);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Tutor Tools");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
