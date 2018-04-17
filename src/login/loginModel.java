@@ -18,23 +18,30 @@ public class loginModel {
     MysqlConnect conn = MysqlConnect.getDbCon();
     ResultSet myRs=null;
     
-    public void login(String un, String psswd) throws SQLException{
+    /**
+     *
+     * @param un
+     * @param psswd
+     * @return
+     * @throws SQLException
+     */
+    public Boolean login(String un, String psswd) throws SQLException{
         try {
-            int citationNo;
             PreparedStatement myStmt;
-            citationNo= Integer.parseInt(un);
-            
-            String sql = "SELECT * FROM TutorTools.Tutors where idTutors = ?;";
+            String sql = "SELECT * FROM TutorTools.Tutors where email = ?;";
             
             myStmt = conn.preparedStatement(sql);
-            myStmt.setInt(1, citationNo);
+            myStmt.setString(1, un);
+            
             myRs =myStmt.executeQuery();
             
             String chkpsswd = null;
             if (myRs.next()) {
                 chkpsswd = myRs.getString("password");
                     if(chkpsswd.equals(psswd))
-                        System.out.println("yes");
+                        return true;
+                    else
+                        return false;
             }
         }
         catch (SQLException exc) {
@@ -44,5 +51,8 @@ public class loginModel {
                         myRs.close();
                     }
             }
+    return false;
     }
 }
+    
+

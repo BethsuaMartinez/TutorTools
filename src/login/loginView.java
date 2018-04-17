@@ -30,6 +30,7 @@ public class loginView extends BorderPane{
     private TextField username = new TextField();
     private TextField password = new TextField();
     private Button login = new Button("Login");
+    private Label incorrect = new Label("Incorrect Password or User Name");
     
         public loginView(){
 
@@ -73,6 +74,11 @@ public class loginView extends BorderPane{
         this.setLeft(h5);
         this.setRight(h6);
         }
+        
+        public void wrongPass(){
+            this.setBottom(incorrect);
+        }
+        
             
         /**
          * @return the loginLabel
