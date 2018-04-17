@@ -4,18 +4,25 @@
  * and open the template in the editor.
  */
 package tutortools;
+<<<<<<< HEAD
  
+=======
+
+import java.sql.SQLException;
+>>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+<<<<<<< HEAD
 import mvc.controllers.loginController;
 import mvc.models.loginModel;
 import mvc.views.View;
 import mvc.views.panels.loginPanel;
+=======
+import login.loginController;
+import login.loginModel;
+import login.loginView;
+>>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
 
 /**
  *
@@ -24,6 +31,7 @@ import mvc.views.panels.loginPanel;
 public class TutorTools extends Application {
     
     @Override
+<<<<<<< HEAD
     public void start(Stage primaryStage) {
         loginPanel login = new loginPanel();
        /* Button btn = new Button();
@@ -38,14 +46,24 @@ public class TutorTools extends Application {
         
         StackPane root = new StackPane();
         root.getChildren().add(btn);*/
+=======
+    public void start(Stage primaryStage) throws SQLException {
+        loginView login = new loginView();
+        loginModel logm = new loginModel();
+        loginController logc = new loginController(logm, login);
+>>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
         
        
        loginController log = new loginController(new View(login), new loginModel());
        
         Scene scene = new Scene(login, 1000, 500);
+<<<<<<< HEAD
        // Scene scene2 = new Scene(new tutorview(), 1000, 500);
          
          
+=======
+        
+>>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
         primaryStage.setTitle("Tutor Tools");
         primaryStage.setScene(scene);
         primaryStage.show();
