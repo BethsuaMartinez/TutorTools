@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package tutortools;
-
+ 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import login.loginGUI;
+import mvc.controllers.loginController;
+import mvc.models.loginModel;
+import mvc.views.View;
+import mvc.views.panels.loginPanel;
 
 /**
  *
@@ -22,7 +25,7 @@ public class TutorTools extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        loginGUI login = new loginGUI();
+        loginPanel login = new loginPanel();
        /* Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -36,9 +39,14 @@ public class TutorTools extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(btn);*/
         
+       
+       loginController log = new loginController(new View(login), new loginModel());
+       
         Scene scene = new Scene(login, 1000, 500);
-        
-        primaryStage.setTitle("Hello World!");
+       // Scene scene2 = new Scene(new tutorview(), 1000, 500);
+         
+         
+        primaryStage.setTitle("Tutor Tools");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
