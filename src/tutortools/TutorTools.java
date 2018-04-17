@@ -3,26 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tutortools;
-<<<<<<< HEAD
- 
-=======
-
-import java.sql.SQLException;
->>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
+package tutortools; 
+   
+import java.sql.SQLException; 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-<<<<<<< HEAD
 import mvc.controllers.loginController;
 import mvc.models.loginModel;
 import mvc.views.View;
+import mvc.views.loginView;
 import mvc.views.panels.loginPanel;
-=======
-import login.loginController;
-import login.loginModel;
-import login.loginView;
->>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
 
 /**
  *
@@ -30,40 +22,16 @@ import login.loginView;
  */
 public class TutorTools extends Application {
     
-    @Override
-<<<<<<< HEAD
-    public void start(Stage primaryStage) {
-        loginPanel login = new loginPanel();
-       /* Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);*/
-=======
+    @Override 
     public void start(Stage primaryStage) throws SQLException {
-        loginView login = new loginView();
+        loginView login = new loginView(new loginPanel());
         loginModel logm = new loginModel();
-        loginController logc = new loginController(logm, login);
->>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
-        
+        loginController logc = new loginController( login, logm); 
        
-       loginController log = new loginController(new View(login), new loginModel());
+       loginController log = new loginController(login, new loginModel());
        
-        Scene scene = new Scene(login, 1000, 500);
-<<<<<<< HEAD
-       // Scene scene2 = new Scene(new tutorview(), 1000, 500);
-         
-         
-=======
-        
->>>>>>> 06aa349d07ca2bf15c9e4d742a24783b9975d3af
+        Scene scene = new Scene(login.getPanel(), 1000, 500);
+ 
         primaryStage.setTitle("Tutor Tools");
         primaryStage.setScene(scene);
         primaryStage.show();
