@@ -5,30 +5,22 @@
  */
 package Tutor;
 
-import Student.*;
 import com.sun.prism.impl.Disposer.Record;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 /**
@@ -37,24 +29,24 @@ import javafx.util.Callback;
  */
 public class tutorView extends BorderPane {
 
-     ObservableList<RowData> data
-                = FXCollections.observableArrayList(
-                        new RowData("Jacob", "Smith", "jacob.smith@example.com", "12:00", "2:20"),
-                        new RowData("Isabella", "Johnson", "isabella.johnson@example.com", "", ""),
-                        new RowData("Ethan", "Williams", "ethan.williams@example.com", "", ""),
-                        new RowData("Emma", "Jones", "emma.jones@example.com", "", ""),
-                        new RowData("Michael", "Brown", "michael.brown@example.com", "", ""));
-     
+    ObservableList<RowData> data
+            = FXCollections.observableArrayList(
+                    new RowData("Jacob", "Smith", "jacob.smith@example.com", "12:00", "2:20"),
+                    new RowData("Isabella", "Johnson", "isabella.johnson@example.com", "", ""),
+                    new RowData("Ethan", "Williams", "ethan.williams@example.com", "", ""),
+                    new RowData("Emma", "Jones", "emma.jones@example.com", "", ""),
+                    new RowData("Michael", "Brown", "michael.brown@example.com", "", ""));
+
     private final TableView table = new TableView();
 
     private Button signOut = new Button("Log Out");
     private Button searchBtn = new Button("Search");
     private Button calender = new Button("Calender");
     private TextField searchTf = new TextField();
-    
+
     public tutorView() {
- 
-         this.setStyle(" -fx-background-color: white;");
+
+        this.setStyle(" -fx-background-color: white;");
         table.setItems(data);
 
         TableColumn firstNameCol = new TableColumn("First Name");
@@ -74,8 +66,8 @@ public class tutorView extends BorderPane {
         timeOutCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOut"));
         TableColumn actionCol = new TableColumn("Action");
-        
-         //Adding the Button to the cell
+
+        //Adding the Button to the cell
         actionCol.setCellFactory(
                 new Callback<TableColumn<Record, Boolean>, TableCell<Record, Boolean>>() {
 
@@ -83,30 +75,27 @@ public class tutorView extends BorderPane {
             public TableCell<Record, Boolean> call(TableColumn<Record, Boolean> p) {
                 return new ButtonCell();
             }
-        
-        }); 
+
+        });
         table.getColumns().addAll(firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, actionCol);
         table.setPrefWidth(600);
-        
-        
-        BorderPane sidebar = new BorderPane(); 
-         HBox menu = new HBox();
-      //   menu.setStyle(" -fx-background-color: white;");
-         Label userName = new Label("User: Bethsua");
-         userName.setStyle("-fx-text-fill: black; -fx-font-size: 10pt; -fx-padding: 5");
-         menu.setAlignment(Pos.CENTER_RIGHT);
-         
-         
-         
-         menu.getChildren().addAll(userName, signOut);
-         sidebar.setTop(menu);
-         
-         HBox search = new HBox();
-         sidebar.setBottom(search);
-         search.getChildren().addAll(searchTf, searchBtn, calender);
+
+        BorderPane sidebar = new BorderPane();
+        HBox menu = new HBox();
+        //   menu.setStyle(" -fx-background-color: white;");
+        Label userName = new Label("User: Bethsua");
+        userName.setStyle("-fx-text-fill: black; -fx-font-size: 10pt; -fx-padding: 5");
+        menu.setAlignment(Pos.CENTER_RIGHT);
+
+        menu.getChildren().addAll(userName, signOut);
+        sidebar.setTop(menu);
+
+        HBox search = new HBox();
+        sidebar.setBottom(search);
+        search.getChildren().addAll(searchTf, searchBtn, calender);
         search.setStyle(" -fx-padding: 10");
-         
-         this.setRight(sidebar);
+
+        this.setRight(sidebar);
 
         this.setLeft(table);
     }
@@ -169,22 +158,24 @@ public class tutorView extends BorderPane {
 
     //Define the button cell
     private class ButtonCell extends TableCell<Record, Boolean> {
-         final Button modButton = new Button("Modify");
+
+        final Button modButton = new Button("Modify");
         final Button cellButton = new Button("Delete");
         HBox cellBox = new HBox();
-        ButtonCell(){
-            
+
+        ButtonCell() {
+
             cellBox.getChildren().addAll(modButton, cellButton);
-            
-        	//Action when the button is pressed
-            cellButton.setOnAction(new EventHandler<ActionEvent>(){
+
+            //Action when the button is pressed
+            cellButton.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent t) {
                     // get Selected Item
-                	 RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
-                	//remove selected item from the table list
-                	 data.remove(currentPerson);
+                    RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
+                    //remove selected item from the table list
+                    data.remove(currentPerson);
                 }
             });
         }
@@ -193,15 +184,15 @@ public class tutorView extends BorderPane {
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);
-            if(!empty){
+            if (!empty) {
                 setGraphic(cellBox);
-            }else
-            {
-                 setGraphic(null);
+            } else {
+                setGraphic(null);
             }
         }
- 
+
     }
+
     public static class RowData {
 
         private SimpleStringProperty firstName;
@@ -213,7 +204,7 @@ public class tutorView extends BorderPane {
         private RowData(String fName, String lName, String subject, String timeIn, String timeOut) {
             this.firstName = new SimpleStringProperty(fName);
             this.lastName = new SimpleStringProperty(lName);
-            this.subject =  new SimpleStringProperty(subject);
+            this.subject = new SimpleStringProperty(subject);
             this.timeIn = new SimpleStringProperty(timeIn);
             this.timeOut = new SimpleStringProperty(timeOut);
 
@@ -289,6 +280,5 @@ public class tutorView extends BorderPane {
             this.timeOut = timeOut;
         }
 
- 
     }
 }

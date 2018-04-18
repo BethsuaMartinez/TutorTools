@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  *
  * @author beths
  */
-public class TutorTools_2 extends Application {
+public class TutorTools extends Application {
     
     @Override 
     public void start(Stage primaryStage) throws SQLException {

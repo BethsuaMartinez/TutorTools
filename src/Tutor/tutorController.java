@@ -5,31 +5,46 @@
  */
 package Tutor;
 
+import Login.loginModel;
+import Login.loginView;
+import Login.loginController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  *
  * @author beths
  */
-public class tutorController{
-        /*loginModel logm= new loginModel();
-        login.loginView logv= new login.loginView();
+public class tutorController {
+
+    loginModel logm = new loginModel();
+    loginView logv = new loginView();
+    tutorView tv = new tutorView();
 
     public tutorController(loginView view, loginModel model) {
-        this.view= view;
-        this.model=model;
+        this.logv = logv;
+        this.logm = logm;
+        this.tv = tv;
         attachHandlers();
     }
 
     private void attachHandlers() {
-        Button signOut = ((tutorView) this.getViewPanel()).getSignOut();
 
-        signOut.setOnAction(new EventHandler<ActionEvent>() {
+        tv.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 loginView v = new loginView();
-                loginController c = loginController(v, model);
-                getStage().setScene(new Scene(v, 1000, 500));
+                loginModel m = new loginModel();
+                Scene scene2 = new Scene(v, 1000, 500);
+                loginController logc = new loginController(logm, logv);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene2);
+                window.show();
             }
         });
 
-    }*/
+    }
 }

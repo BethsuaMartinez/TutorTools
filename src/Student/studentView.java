@@ -22,17 +22,17 @@ import javafx.scene.layout.VBox;
  *
  * @author elyvic
  */
-public class GUI extends BorderPane{
+public class studentView extends BorderPane {
+
     private GridPane gridpane = new GridPane();
-    
+
     private Button fillerBtn = new Button("Filler Button");
     private Button addBtn = new Button("Add Session");
     private Button refreshBtn = new Button("Refresh Sessions");
     private Button submitBtn = new Button("Submit");
-    
+
     private TableView<Data> table = new TableView<>();
-    
-    
+
     //table columns
     TableColumn<Data, String> idNoColumn = new TableColumn<>("ID Number");
     TableColumn<Data, String> firstNameColumn = new TableColumn<>("First Name");
@@ -42,134 +42,108 @@ public class GUI extends BorderPane{
     TableColumn<Data, String> tutorColumn = new TableColumn<>("Tutor");
     TableColumn<Data, String> timeColumn = new TableColumn<>("Time");
     TableColumn<Data, String> dateColumn = new TableColumn<>("Date");
-    
+
     private Label idNoLabel = new Label("ID Number");
     private TextField idNoTF = new TextField();
-    
+
     private Label firstNameLabel = new Label("First Name");
     private TextField firstNameTF = new TextField();
-    
+
     private Label lastNameLabel = new Label("Last Name");
     private TextField lastNameTF = new TextField();
-    
+
     private Label emailLabel = new Label("E-Mail");
     private TextField emailTF = new TextField();
-    
+
     private Label phoneNoLabel = new Label("Phone Number");
     private TextField phoneNoTF = new TextField();
-    
+
     private Label subjectLabel = new Label("Subject");
     private TextField subjectTF = new TextField();
-    
+
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
-    
-    
-    
+
     private VBox idNoVbox = new VBox(idNoLabel, idNoTF);
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneNoVbox = new VBox(phoneNoLabel, phoneNoTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
-    private VBox tutorVbox = new VBox(tutorLabel, tutorTF);    
-    
-    
+    private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
+
     private HBox buttonHbox = new HBox(refreshBtn, addBtn);
     private VBox centerVbox = new VBox(table, buttonHbox);
 
-    public GUI(){
-        
+    public studentView() {
+
         //idNo column
         idNoColumn.setMinWidth(100);
         idNoColumn.setCellValueFactory(new PropertyValueFactory<>("IdNo"));
-        
+
         //first name column
         firstNameColumn.setMinWidth(100);
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        
+
         //last name column
         lastNameColumn.setMinWidth(100);
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        
+
         emailColumn.setMinWidth(100);
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        
+
         phoneNoColumn.setMinWidth(100);
         phoneNoColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNo"));
-        
+
         tutorColumn.setMinWidth(100);
         tutorColumn.setCellValueFactory(new PropertyValueFactory<>("tutor"));
-        
+
         timeColumn.setMinWidth(100);
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        
-        
-        
-        
-        
-        
+
         table.getColumns().addAll(idNoColumn, firstNameColumn, lastNameColumn, emailColumn, phoneNoColumn, tutorColumn, timeColumn);
-        
-         //Hbox
+
+        //Hbox
         buttonHbox.setSpacing(3);
-        
 
         //Vbox
-        centerVbox.setSpacing(3);        
+        centerVbox.setSpacing(3);
 
         idNoVbox.setSpacing(3);
         firstNameVbox.setSpacing(3);
         lastNameVbox.setSpacing(3);
         emailVbox.setSpacing(3);
         phoneNoVbox.setSpacing(3);
-        
-        
+
         //GridPane
         gridpane.setVgap(5);
         gridpane.setHgap(5);
         gridpane.setAlignment(Pos.CENTER);
-        
-        
-        
+
         gridpane.addRow(0, idNoVbox);
         gridpane.addRow(1, firstNameVbox, lastNameVbox);
         gridpane.addRow(2, emailVbox, phoneNoVbox);
         gridpane.addRow(3, subjectVbox);
         gridpane.addRow(4, tutorVbox);
         gridpane.addRow(5, submitBtn);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        BorderPane.setMargin(table, new Insets(10, 10, 10 ,10));
-        BorderPane.setMargin(fillerBtn, new Insets(10, 10, 10,10));
-        
+
+        BorderPane.setMargin(table, new Insets(10, 10, 10, 10));
+        BorderPane.setMargin(fillerBtn, new Insets(10, 10, 10, 10));
+
         this.setLeft(fillerBtn);
         this.setCenter(centerVbox);
-        
+
     }
-    
-    public void ClearFields(){
+
+    public void ClearFields() {
         getIdNoTF().clear();
         getFirstNameTF().clear();
         getLastNameTF().clear();
         getEmailTF().clear();
         getPhoneNoTF().clear();
         getTutorTF().clear();
-        
+
     }
-    
- 
-    
 
     /**
      * @return the addBtn
@@ -436,5 +410,5 @@ public class GUI extends BorderPane{
     public void setGridpane(GridPane gridpane) {
         this.gridpane = gridpane;
     }
-    
+
 }
