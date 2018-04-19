@@ -38,11 +38,12 @@ public class TutorInformationView extends BorderPane {
     private Button search = new Button("Search");
     private Button back = new Button("Back");
     TableView table = new TableView();
+    private Button activity= new Button("Activity Log");
     
     public  TutorInformationView() {
         
         search.setPrefSize(100, 10);
-        HBox hbox1= new HBox(lasName, lastNameTF, search, back);
+        HBox hbox1= new HBox(lasName, lastNameTF, search, getActivity(), back);
         
         
         hbox1.setPadding(new Insets(10));
@@ -92,6 +93,20 @@ public class TutorInformationView extends BorderPane {
      */
     public void setSearch(Button search) {
         this.search = search;
+    }
+
+    /**
+     * @return the activity
+     */
+    public Button getActivity() {
+        return activity;
+    }
+
+    /**
+     * @param activity the activity to set
+     */
+    public void setActivity(Button activity) {
+        this.activity = activity;
     }
 
 

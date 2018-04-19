@@ -10,9 +10,7 @@ import javafx.collections.ObservableList;
  *
  * @author elyvic
  */
-public class studentModel {
-
-    MysqlConnect myConn = MysqlConnect.getDbCon();
+public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
@@ -22,9 +20,7 @@ public class studentModel {
 
     public void setCurrentStudent(Data currentData) throws SQLException {
         data = currentData;
-
         Database();
-
     }
 
     public Data getCurrentStudent() {
@@ -50,22 +46,19 @@ public class studentModel {
                         myRs.getString("phone")
                 ));
             }
-                
-                WriteDatabase();
-                gui.getTable().setItems(students);
+
+            WriteDatabase();
+            gui.getTable().setItems(students);
+        } catch (SQLException exc) {
+        } finally {
+            if (myRs != null) {
+                myRs.close();
             }
-                catch (SQLException exc) {
         }
-        finally {
-                if (myRs != null) {
-                        myRs.close();
-                    }
-            }
     }
 
     public void WriteDatabase() {
         try {
-            System.out.println("in write");
             String idNo = data.getIdNo();
             String firstName = data.getFirstName();
             String lastName = data.getLastName();
@@ -77,7 +70,7 @@ public class studentModel {
             String sql = "INSERT INTO TutorTools.TutoringSessions " + "(studentid, fname, lname, tutorlname, time, email, phone)" + "VALUES ('" + idNo + "','" + firstName + "','" + lastName + "','" + tutor + "','" + time + "','" + email + "','" + phoneNo + "')";
 
             myStmt.executeUpdate(sql);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println(e);
         }
     }
@@ -96,3 +89,4 @@ public class studentModel {
         this.students = students;
     }
 }
+

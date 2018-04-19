@@ -26,6 +26,7 @@ public class ActivitylogView extends BorderPane {
     private Button tutor3 = new Button("Luis");
     private Button tutor4 = new Button("Osiel");
     private Button tutor5 = new Button("Elyvic");
+        private Button back = new Button("Back");
 
     public ActivitylogView() {
         VBox vbox1 = new VBox(name);
@@ -41,20 +42,39 @@ public class ActivitylogView extends BorderPane {
         tutor4.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         tutor5.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
+        back.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        
         tutor1.setPrefSize(100, 50);
         tutor2.setPrefSize(100, 50);
         tutor3.setPrefSize(100, 50);
         tutor4.setPrefSize(100, 50);
         tutor5.setPrefSize(100, 50);
+        back.setPrefSize(100, 50);
 
         hbox1.getChildren().add(tutor1);
         hbox1.getChildren().add(tutor2);
         hbox1.getChildren().add(tutor3);
         hbox1.getChildren().add(tutor4);
         hbox1.getChildren().add(tutor5);
+        hbox1.getChildren().add(back);
 
         this.setBottom(vbox1);
         this.setTop(hbox1);
+    }
+    
+    
+    /**
+     * @return the back
+     */
+    public Button getBack() {
+        return back;
+    }
+
+    /**
+     * @param back the back to set
+     */
+    public void setBack(Button back) {
+        this.back = back;
     }
 
 }

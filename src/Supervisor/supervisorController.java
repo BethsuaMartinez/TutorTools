@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 public class supervisorController {
     TutorInformationView tiv = new TutorInformationView();
     tutorView tv = new tutorView();
+    ActivitylogView alv = new ActivitylogView();
 
     public supervisorController(TutorInformationView tiv) {
         this.tiv = tiv;
@@ -44,7 +45,19 @@ public class supervisorController {
 
             }
         });
-        
+        tiv.getActivity().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                ActivitylogView alv = new ActivitylogView();
+                activityController ac = new activityController(alv);
+
+                Scene scene3 = new Scene(alv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene3);
+                window.show();
+
+            }
+        });
     }
 }
 
