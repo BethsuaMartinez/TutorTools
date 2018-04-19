@@ -29,6 +29,7 @@ public class loginController {
         this.logm = logm;
         this.logv = logv;
         attachHandlers();
+        
     }
 
     private void attachHandlers() {        
@@ -36,7 +37,7 @@ public class loginController {
             @Override
             public void handle(ActionEvent event) {
 
-                System.out.println("controller3");
+                System.out.println("contrller");
                 String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 

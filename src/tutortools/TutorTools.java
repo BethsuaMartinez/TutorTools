@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tutortools; 
-   
+package tutortools;
+
 import Login.loginController;
 import Login.loginModel;
 import Login.loginView;
-import SuperVisorGui.StudentInfo;
-import SuperVisorGui.TutorEditInfo;
-import SuperVisorGui.TutorEditInfoHbox;
-import SuperVisorGui.TutorInfo;
+import Supervisor.ActivitylogView;
+import Supervisor.TutorInformationView;
 import java.sql.SQLException; 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
@@ -28,30 +25,17 @@ public class TutorTools extends Application {
     
     @Override 
     public void start(Stage primaryStage) throws SQLException {
-        /*loginView login = new loginView();
-        loginModel logm = new loginModel();
         
-        loginController logc = new loginController(logm, login); 
+        loginView lv = new loginView();
+        loginModel lm = new loginModel();
+        loginController lc = new loginController(lm, lv);
        
-        Scene scene = new Scene(login, 1000, 500);
+        Scene scene = new Scene(lv, 1000, 500);
  
         primaryStage.setTitle("Tutor Tools");
         primaryStage.setScene(scene);
-        primaryStage.show();*/
-        BorderPane border = new BorderPane();
-		
-                TutorInfo tutorGui = new TutorInfo();
-                TutorEditInfoHbox tutorGui2 = new TutorEditInfoHbox();
-		TutorEditInfo tutorGui3 = new TutorEditInfo();
-                StudentInfo studentGui = new StudentInfo();
-		border.setTop(tutorGui2);
-                border.setCenter(tutorGui3);
-		
-		Scene scene = new Scene(border, 600, 500);
-		
-		primaryStage.setTitle("TutorTools");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+        primaryStage.show();
+        
     }
 
     /**

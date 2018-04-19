@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SuperVisorTutor;
+package Supervisor;
 
 import Database.MysqlConnect;
 import java.sql.*;
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author KennyBoiii
  */
-public class TutorDAO {
+public class TutorModel {
 
     MysqlConnect con = MysqlConnect.getDbCon();
 

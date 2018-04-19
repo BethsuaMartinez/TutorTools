@@ -64,7 +64,6 @@ public class studentModel {
 
     public void WriteDatabase() {
         try {
-            System.out.println("in write");
             String idNo = data.getIdNo();
             String firstName = data.getFirstName();
             String lastName = data.getLastName();
