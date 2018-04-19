@@ -12,12 +12,12 @@ import javafx.scene.layout.VBox;
  *
  * @author KennyBoiii
  */
-public class StudentInfo extends VBox{
-    
+public class StudentInfo extends VBox {
+
     private TextField name = new TextField();
-    
-    public StudentInfo(){
-        
+
+    public StudentInfo() {
+
         this.getChildren().add(name);
     }
 
@@ -34,6 +34,5 @@ public class StudentInfo extends VBox{
     public void setName(TextField name) {
         this.name = name;
     }
-    
-    
+
 }

@@ -22,7 +22,6 @@ import javafx.scene.text.Font;
  */
 public class loginView extends BorderPane {
 
-
     private ImageView logo;
     private Label loginLabel = new Label("Login to Your Account");
     private TextField username = new TextField();
@@ -60,7 +59,6 @@ public class loginView extends BorderPane {
         h2.getChildren().add(username);
         h3.getChildren().add(password);
         h4.getChildren().add(login);
-        System.out.println("this is the view");
 
         this.login.setStyle("-fx-background-color: #CCFFFF;");
         this.username.setPromptText("username");

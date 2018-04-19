@@ -16,7 +16,7 @@ public class Tutor {
     private String FirstName;
     private String email;
     private int phone;
-    
+
     public Tutor(int ID, String LastName, String email, int phone) {
         this.ID = ID;
         this.LastName = LastName;

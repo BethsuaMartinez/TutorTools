@@ -7,7 +7,6 @@ package SuperVisorGui;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -17,37 +16,37 @@ import javafx.scene.text.FontWeight;
  * @author KennyBoiii
  */
 public class TutorInfo extends HBox {
-    
+
     private Button tutor1 = new Button("Kenneth");
     private Button tutor2 = new Button("Bethsua");
     private Button tutor3 = new Button("Luis");
     private Button tutor4 = new Button("Osiel");
     private Button tutor5 = new Button("Elyvic");
-    
-    public TutorInfo(){
-       
+
+    public TutorInfo() {
+
         this.setPadding(new Insets(10));
         this.setSpacing(50);
         this.setStyle("-fx-background-color: #336699;");
-        
+
         tutor1.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         tutor2.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         tutor3.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         tutor4.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         tutor5.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        
+
         tutor1.setPrefSize(100, 50);
         tutor2.setPrefSize(100, 50);
         tutor3.setPrefSize(100, 50);
         tutor4.setPrefSize(100, 50);
         tutor5.setPrefSize(100, 50);
-        
+
         this.getChildren().add(tutor1);
         this.getChildren().add(tutor2);
         this.getChildren().add(tutor3);
         this.getChildren().add(tutor4);
         this.getChildren().add(tutor5);
-        
+
     }
 
     /**
@@ -119,8 +118,4 @@ public class TutorInfo extends HBox {
     public void setTutor5(Button tutor5) {
         this.tutor5 = tutor5;
     }
-    
-    
-    
-    
 }

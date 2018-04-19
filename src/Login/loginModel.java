@@ -26,7 +26,7 @@ public class loginModel {
      * @return
      * @throws SQLException
      */
-    public Boolean login(String un, String psswd) throws SQLException {
+    public Boolean loginDB(String un, String psswd) throws SQLException {
         try {
             PreparedStatement myStmt;
             String sql = "SELECT * FROM TutorTools.Tutors where email = ?;";
@@ -39,11 +39,7 @@ public class loginModel {
             String chkpsswd = null;
             if (myRs.next()) {
                 chkpsswd = myRs.getString("password");
-                if (chkpsswd.equals(psswd)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return chkpsswd.equals(psswd);
             }
         } catch (SQLException exc) {
         } finally {

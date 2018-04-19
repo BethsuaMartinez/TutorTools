@@ -6,7 +6,6 @@
 package Login;
 
 import Student.studentView;
-import Tutor.tutorView;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,9 +31,7 @@ public class loginController {
         attachHandlers();
     }
 
-    private void attachHandlers() {
-
-        
+    private void attachHandlers() {        
         logv.getLogin().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -50,7 +47,7 @@ public class loginController {
                 }
 
                 try {
-                    if (logm.login(un, psswd) == true) {
+                    if (logm.loginDB(un, psswd) == true) {
 
                         Scene scene2 = new Scene(studentv, 1000, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

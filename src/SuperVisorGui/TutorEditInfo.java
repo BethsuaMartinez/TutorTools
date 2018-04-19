@@ -12,6 +12,6 @@ import javafx.scene.control.TableView;
  * @author KennyBoiii
  */
 public class TutorEditInfo extends TableView{
-    private TableView table = new TableView();
+    private final TableView table = new TableView();
     
 }

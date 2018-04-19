@@ -8,10 +8,15 @@ package tutortools;
 import Login.loginController;
 import Login.loginModel;
 import Login.loginView;
+import SuperVisorGui.StudentInfo;
+import SuperVisorGui.TutorEditInfo;
+import SuperVisorGui.TutorEditInfoHbox;
+import SuperVisorGui.TutorInfo;
 import java.sql.SQLException; 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
@@ -23,7 +28,7 @@ public class TutorTools extends Application {
     
     @Override 
     public void start(Stage primaryStage) throws SQLException {
-        loginView login = new loginView();
+        /*loginView login = new loginView();
         loginModel logm = new loginModel();
         
         loginController logc = new loginController(logm, login); 
@@ -32,7 +37,21 @@ public class TutorTools extends Application {
  
         primaryStage.setTitle("Tutor Tools");
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show();*/
+        BorderPane border = new BorderPane();
+		
+                TutorInfo tutorGui = new TutorInfo();
+                TutorEditInfoHbox tutorGui2 = new TutorEditInfoHbox();
+		TutorEditInfo tutorGui3 = new TutorEditInfo();
+                StudentInfo studentGui = new StudentInfo();
+		border.setTop(tutorGui2);
+                border.setCenter(tutorGui3);
+		
+		Scene scene = new Scene(border, 600, 500);
+		
+		primaryStage.setTitle("TutorTools");
+		primaryStage.setScene(scene);
+		primaryStage.show();
     }
 
     /**
