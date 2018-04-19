@@ -30,7 +30,12 @@ public class studentView extends BorderPane {
     private Button addBtn = new Button("Add Session");
     private Button refreshBtn = new Button("Refresh Sessions");
     private Button submitBtn = new Button("Submit");
-
+    
+    
+    private Button supervisor = new Button("Supervisor");
+    private Button tutor = new Button("Tutor");
+    
+    
     private TableView<Data> table = new TableView<>();
 
     //table columns
@@ -72,7 +77,7 @@ public class studentView extends BorderPane {
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
 
-    private HBox buttonHbox = new HBox(refreshBtn, addBtn);
+    private HBox buttonHbox = new HBox(refreshBtn, addBtn,tutor, supervisor);
     private VBox centerVbox = new VBox(table, buttonHbox);
 
     public studentView() {
@@ -411,4 +416,33 @@ public class studentView extends BorderPane {
         this.gridpane = gridpane;
     }
 
+    /**
+     * @return the supervisor
+     */
+    public Button getSupervisor() {
+        return supervisor;
+    }
+
+    /**
+     * @param supervisor the supervisor to set
+     */
+    public void setSupervisor(Button supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    /**
+     * @return the tutor
+     */
+    public Button getTutor() {
+        return tutor;
+    }
+
+    /**
+     * @param tutor the tutor to set
+     */
+    public void setTutor(Button tutor) {
+        this.tutor = tutor;
+    }
+
+    
 }
