@@ -43,6 +43,7 @@ public class tutorView extends BorderPane {
     private Button searchBtn = new Button("Search");
     private Button calender = new Button("Calender");
     private TextField searchTf = new TextField();
+    private Button back = new Button("Back");
 
     public tutorView() {
 
@@ -92,7 +93,7 @@ public class tutorView extends BorderPane {
 
         HBox search = new HBox();
         sidebar.setBottom(search);
-        search.getChildren().addAll(searchTf, searchBtn, calender);
+        search.getChildren().addAll(searchTf, searchBtn, calender, back);
         search.setStyle(" -fx-padding: 10");
 
         this.setRight(sidebar);
@@ -154,6 +155,20 @@ public class tutorView extends BorderPane {
      */
     public void setSearchTf(TextField searchTf) {
         this.searchTf = searchTf;
+    }
+
+    /**
+     * @return the back
+     */
+    public Button getBack() {
+        return back;
+    }
+
+    /**
+     * @param back the back to set
+     */
+    public void setBack(Button back) {
+        this.back = back;
     }
 
     //Define the button cell

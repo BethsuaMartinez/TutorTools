@@ -18,17 +18,31 @@ import javafx.scene.layout.HBox;
  * @author selvera
  */
 public class TutorInformationView extends BorderPane {
+
+    /**
+     * @return the back
+     */
+    public Button getBack() {
+        return back;
+    }
+
+    /**
+     * @param back the back to set
+     */
+    public void setBack(Button back) {
+        this.back = back;
+    }
     
     private Label lasName = new Label("Enter Last Name of Tutor");
     private TextField lastNameTF = new TextField();
     private Button search = new Button("Search");
-    
+    private Button back = new Button("Back");
     TableView table = new TableView();
     
     public  TutorInformationView() {
         
         search.setPrefSize(100, 10);
-        HBox hbox1= new HBox(lasName, lastNameTF, search);
+        HBox hbox1= new HBox(lasName, lastNameTF, search, back);
         
         
         hbox1.setPadding(new Insets(10));

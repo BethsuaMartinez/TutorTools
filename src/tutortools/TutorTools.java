@@ -8,8 +8,9 @@ package tutortools;
 import Login.loginController;
 import Login.loginModel;
 import Login.loginView;
-import Supervisor.ActivitylogView;
-import Supervisor.TutorInformationView;
+import Student.studentController;
+import Student.studentModel;
+import Student.studentView;
 import java.sql.SQLException; 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -28,6 +29,7 @@ public class TutorTools extends Application {
         
         loginView lv = new loginView();
         loginModel lm = new loginModel();
+
         loginController lc = new loginController(lv, lm);
        
         Scene scene = new Scene(lv, 1000, 500);

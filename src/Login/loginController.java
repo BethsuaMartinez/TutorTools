@@ -5,6 +5,8 @@
  */
 package Login;
 
+import Student.studentController;
+import Student.studentModel;
 import Student.studentView;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,7 +45,10 @@ public class loginController {
                 }
                 try {
                     if (logm.loginDB(un, psswd) == true) {
-
+                            
+                                studentView sv = new studentView();
+        studentModel sm = new studentModel();
+        studentController sc = new studentController(sv, sm);
                         Scene scene2 = new Scene(sv, 1000, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         window.setScene(scene2);

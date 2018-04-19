@@ -5,6 +5,10 @@
  */
 package Student;
 
+import Supervisor.TutorInformationView;
+import Supervisor.supervisorController;
+import Tutor.tutorController;
+import Tutor.tutorView;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -82,6 +87,30 @@ public class studentController {
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        });
+
+        gui.getTutor().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                tutorView tv = new tutorView();
+                tutorController tc = new tutorController(tv);
+                Scene scene3 = new Scene(tv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene3);
+                window.show();
+
+            }
+        });
+
+        gui.getSupervisor().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                TutorInformationView tiv = new TutorInformationView();
+                supervisorController sc = new supervisorController(tiv);
+                Scene scene2 = new Scene(tiv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene2);
+                window.show();
+
             }
         });
 
