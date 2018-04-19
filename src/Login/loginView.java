@@ -26,7 +26,7 @@ public class loginView extends BorderPane {
     private Label loginLabel = new Label("Login to Your Account");
     private TextField username = new TextField();
     private TextField password = new TextField();
-    private Button login = new Button("Login");
+    private Button loginButton = new Button("Login");
 
     public loginView() {
 
@@ -58,9 +58,9 @@ public class loginView extends BorderPane {
         h1.getChildren().add(loginLabel);
         h2.getChildren().add(username);
         h3.getChildren().add(password);
-        h4.getChildren().add(login);
+        h4.getChildren().add(loginButton);
 
-        this.login.setStyle("-fx-background-color: #CCFFFF;");
+        this.loginButton.setStyle("-fx-background-color: #CCFFFF;");
         this.username.setPromptText("username");
         this.password.setPromptText("password");
         //    this.login.setS
@@ -69,6 +69,7 @@ public class loginView extends BorderPane {
         this.setCenter(v1);
         this.setLeft(h5);
         this.setRight(h6);
+        
 
     }
 
@@ -132,19 +133,21 @@ public class loginView extends BorderPane {
     public void setPassword(TextField password) {
         this.password = password;
     }
-    
+
     /**
-     * @return the login
+     * @return the loginButton
      */
-    public Button getLogin() {
-        return login;
+    public Button getLoginButton() {
+        return loginButton;
     }
 
     /**
-     * @param login the login to set
+     * @param loginButton the loginButton to set
      */
-    public void setLogin(Button login) {
-        this.login = login;
+    public void setLoginButton(Button loginButton) {
+        this.loginButton = loginButton;
     }
+
+    
 
 }

@@ -23,34 +23,28 @@ public class loginController {
 
     loginModel logm = new loginModel();
     loginView logv = new loginView();
-    studentView studentv = new studentView();
+    studentView sv = new studentView();
 
-    public loginController(loginModel model, loginView view) {
+    public loginController(loginView logv, loginModel logm) {
         this.logm = logm;
         this.logv = logv;
-        attachHandlers();
-        
+        AttachHandler();
     }
 
-    private void attachHandlers() {        
-        logv.getLogin().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                System.out.println("contrller");
+    public void AttachHandler() {
+        
+        logv.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
+             public void handle(ActionEvent event) {
                 String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 
-                System.out.println(un + psswd);
-
-                if ("".equals(un) || "".equals(psswd)) {
+                if ("".equals(un) || "".equals(psswd)){
                     logv.wrongPass();
                 }
-
                 try {
                     if (logm.loginDB(un, psswd) == true) {
 
-                        Scene scene2 = new Scene(studentv, 1000, 500);
+                        Scene scene2 = new Scene(sv, 1000, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         window.setScene(scene2);
                         window.show();
@@ -60,8 +54,9 @@ public class loginController {
                 } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+             }
         });
-
     }
 }
+
+

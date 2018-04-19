@@ -28,7 +28,7 @@ public class TutorTools extends Application {
         
         loginView lv = new loginView();
         loginModel lm = new loginModel();
-        loginController lc = new loginController(lm, lv);
+        loginController lc = new loginController(lv, lm);
        
         Scene scene = new Scene(lv, 1000, 500);
  

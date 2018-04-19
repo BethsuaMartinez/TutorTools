@@ -39,7 +39,10 @@ public class loginModel {
             String chkpsswd = null;
             if (myRs.next()) {
                 chkpsswd = myRs.getString("password");
-                return chkpsswd.equals(psswd);
+                if(chkpsswd.equals(psswd))
+                    return true;
+                else
+                    return false;
             }
         } catch (SQLException exc) {
         } finally {

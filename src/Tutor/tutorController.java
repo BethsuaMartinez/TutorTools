@@ -39,7 +39,7 @@ public class tutorController {
                 loginView v = new loginView();
                 loginModel m = new loginModel();
                 Scene scene2 = new Scene(v, 1000, 500);
-                loginController logc = new loginController(logm, logv);
+                loginController logc = new loginController(logv, logm);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene2);
                 window.show();
