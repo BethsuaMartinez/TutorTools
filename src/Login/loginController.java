@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author beths
  */
-public class loginController {
+public final class loginController {
 
     loginModel logm = new loginModel();
     loginView logv = new loginView();
@@ -36,16 +36,16 @@ public class loginController {
     public void AttachHandler() {
         
         logv.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
+             @Override
              public void handle(ActionEvent event) {
-                /*String un = logv.getUsername().getText();
+                String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 
                 if ("".equals(un) || "".equals(psswd)){
                     logv.wrongPass();
                 }
                 try {
-                    if (logm.loginDB(un, psswd) == true) {
-                  */          
+                    if (logm.loginDB(un, psswd) == true) {          
                                 studentView sv = new studentView();
         studentModel sm = new studentModel();
         studentController sc = new studentController(sv, sm);
@@ -53,12 +53,12 @@ public class loginController {
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         window.setScene(scene2);
                         window.show();
-                    /*} else {
+                    } else {
                         logv.wrongPass();
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                }
              }
         });
     }

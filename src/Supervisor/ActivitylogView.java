@@ -26,7 +26,8 @@ public class ActivitylogView extends BorderPane {
     private Button tutor3 = new Button("Luis");
     private Button tutor4 = new Button("Osiel");
     private Button tutor5 = new Button("Elyvic");
-        private Button back = new Button("Back");
+    private Button back = new Button("Back");
+    private Button signOut = new Button("Log Out");
 
     public ActivitylogView() {
         VBox vbox1 = new VBox(name);

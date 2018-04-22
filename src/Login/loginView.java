@@ -27,6 +27,7 @@ public class loginView extends BorderPane {
     private TextField username = new TextField();
     private TextField password = new TextField();
     private Button loginButton = new Button("Login");
+    private Button signOut = new Button("Log Out");
 
     public loginView() {
 

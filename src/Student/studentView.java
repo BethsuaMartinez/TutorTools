@@ -5,11 +5,15 @@
  */
 package Student;
 
+import Tutor.tutorView.RowData;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.collections.FXCollections;
 
 /**
  *
@@ -30,13 +35,12 @@ public class studentView extends BorderPane {
     private Button addBtn = new Button("Add Session");
     private Button refreshBtn = new Button("Refresh Sessions");
     private Button submitBtn = new Button("Submit");
-    
-    
+    private Button signOut = new Button("Log Out");
     private Button supervisor = new Button("Supervisor");
     private Button tutor = new Button("Tutor");
     
     
-    private TableView<Data> table = new TableView<>();
+    private TableView table = new TableView();
 
     //table columns
     TableColumn<Data, String> idNoColumn = new TableColumn<>("ID Number");
@@ -47,7 +51,12 @@ public class studentView extends BorderPane {
     TableColumn<Data, String> tutorColumn = new TableColumn<>("Tutor");
     TableColumn<Data, String> timeColumn = new TableColumn<>("Time");
     TableColumn<Data, String> dateColumn = new TableColumn<>("Date");
-
+    
+    ObservableList <RowData> data = FXCollections.observableArrayList(
+    new RowData("Jacob", "Smith", "@gmail", "23", "#223")
+    );
+    
+    
     private Label idNoLabel = new Label("ID Number");
     private TextField idNoTF = new TextField();
 
@@ -82,6 +91,7 @@ public class studentView extends BorderPane {
 
     public studentView() {
 
+        table.setItems(data);
         //idNo column
         idNoColumn.setMinWidth(100);
         idNoColumn.setCellValueFactory(new PropertyValueFactory<>("IdNo"));
@@ -140,6 +150,94 @@ public class studentView extends BorderPane {
 
     }
 
+     public static class RowData {
+
+        /**
+         * @return the firstName
+         */
+        public String getFirstName() {
+            return firstName.get();
+        }
+
+        /**
+         * @param firstName the firstName to set
+         */
+        public void setFirstName(SimpleStringProperty firstName) {
+            this.firstName = firstName;
+        }
+
+        /**
+         * @return the lastName
+         */
+        public String getLastName() {
+            return lastName.get();
+        }
+
+        /**
+         * @param lastName the lastName to set
+         */
+        public void setLastName(SimpleStringProperty lastName) {
+            this.lastName = lastName;
+        }
+
+        /**
+         * @return the subject
+         */
+        public String getSubject() {
+            return subject.get();
+        }
+
+        /**
+         * @param subject the subject to set
+         */
+        public void setSubject(SimpleStringProperty subject) {
+            this.subject = subject;
+        }
+
+        /**
+         * @return the timeIn
+         */
+        public String getTimeIn() {
+            return timeIn.get();
+        }
+
+        /**
+         * @param timeIn the timeIn to set
+         */
+        public void setTimeIn(SimpleStringProperty timeIn) {
+            this.timeIn = timeIn;
+        }
+
+        /**
+         * @return the timeOut
+         */
+        public String getTimeOut() {
+            return timeOut.get();
+        }
+
+        /**
+         * @param timeOut the timeOut to set
+         */
+        public void setTimeOut(SimpleStringProperty timeOut) {
+            this.timeOut = timeOut;
+        }
+
+        private SimpleStringProperty firstName;
+        private SimpleStringProperty lastName;
+        private SimpleStringProperty subject;
+        private SimpleStringProperty timeIn;
+        private SimpleStringProperty timeOut;
+
+        private RowData(String fName, String lName, String subject, String timeIn, String timeOut) {
+            this.firstName = new SimpleStringProperty(fName);
+            this.lastName = new SimpleStringProperty(lName);
+            this.subject = new SimpleStringProperty(subject);
+            this.timeIn = new SimpleStringProperty(timeIn);
+            this.timeOut = new SimpleStringProperty(timeOut);
+
+        }
+     }
+    
     public void ClearFields() {
         getIdNoTF().clear();
         getFirstNameTF().clear();

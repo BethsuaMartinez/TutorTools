@@ -83,7 +83,6 @@ public class tutorView extends BorderPane {
 
         BorderPane sidebar = new BorderPane();
         HBox menu = new HBox();
-        //   menu.setStyle(" -fx-background-color: white;");
         Label userName = new Label("User: Bethsua");
         userName.setStyle("-fx-text-fill: black; -fx-font-size: 10pt; -fx-padding: 5");
         menu.setAlignment(Pos.CENTER_RIGHT);

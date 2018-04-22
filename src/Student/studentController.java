@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -76,7 +77,7 @@ public class studentController {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                gui.ClearFields();
+                ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             }
         });
 
