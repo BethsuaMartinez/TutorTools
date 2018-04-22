@@ -172,8 +172,8 @@ public class tutorView extends BorderPane {
 
     //Define the button cell
     private class ButtonCell extends TableCell<Record, Boolean> {
-
-        final Button modButton = new Button("Modify");
+        
+        private Button modButton = new Button("Modify");
         final Button cellButton = new Button("Delete");
         HBox cellBox = new HBox();
 
@@ -190,6 +190,16 @@ public class tutorView extends BorderPane {
                     RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
                     //remove selected item from the table list
                     data.remove(currentPerson);
+                }
+            });
+            modButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent t) {
+                    // get Selected Item
+                    RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
+                    //remove selected item from the table list
+                    System.out.println(currentPerson.firstName.get());
                 }
             });
         }
