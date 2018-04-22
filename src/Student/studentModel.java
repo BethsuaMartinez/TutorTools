@@ -55,6 +55,24 @@ public class studentModel {
             }
         }
     }
+    
+    public int sizeDB() throws SQLException {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM TutoringSessions";
+            myRs = myConn.query(sql);
+            while (myRs.next()) {
+                count = myRs.getInt("COUNT(*)");
+            }
+            return count;
+        } catch (SQLException exc) {
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+        return count;
+    }
 
     public void WriteDatabase(Data currentData) throws SQLException {
         try {
@@ -67,20 +85,21 @@ public class studentModel {
             String idNo = currentData.getIdNo();
             String subject = currentData.getSubject();
 
-            int id = Integer.parseInt(idNo);
+            int studentid = Integer.parseInt(idNo);
 
             String sql = "INSERT INTO TutorTools.TutoringSessions "
-                    + "(studentid, fname, lname, tutorlname, subject, startTime, endTime)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                    + "(id, studentid, fname, lname, tutorlname, subject, endTime,startTime)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
 
-            myStmt.setInt(1, id);
-            myStmt.setString(2, firstName);
-            myStmt.setString(3, lastName);
-            myStmt.setString(4, tutor);
-            myStmt.setString(5, subject);
-            myStmt.setString(6, startTime);
-            myStmt.setString(7, endTime);
+            myStmt.setInt(1, (sizeDB() + 1));
+            myStmt.setInt(2, studentid);
+            myStmt.setString(3, firstName);
+            myStmt.setString(4, lastName);
+            myStmt.setString(5, tutor);
+            myStmt.setString(6, subject);
+            myStmt.setString(7, startTime);
+            myStmt.setString(8, endTime);
 
             myStmt.executeUpdate();
 

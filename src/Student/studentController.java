@@ -55,26 +55,16 @@ public class studentController {
                 String idNo = gui.getIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
-                String email = gui.getEmailTF().getText();
-                String phoneNo = gui.getPhoneNoTF().getText();
+                //String email = gui.getEmailTF().getText();
+                //String phoneNo = gui.getPhoneNoTF().getText();
                 String tutor = gui.getTutorTF().getText();
+                String subject = gui.getSubjectTF().getText();
                 String time = dateFormat.format(date);
                 
-                Data currentSession = new Data(idNo, firstName, lastName, email, phoneNo, tutor, time);
+                
+                Data currentSession = new Data(idNo, lastName, firstName, tutor, time, subject, "");
                 gui.updateTable(currentSession);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-            }
-        });
-        
-        gui.getRefreshBtn().setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                /*try {
-                    model.Database();
-                } catch (SQLException ex) {
-                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
             }
         });
         

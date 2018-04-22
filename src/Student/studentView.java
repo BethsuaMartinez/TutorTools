@@ -46,10 +46,9 @@ public class studentView extends BorderPane {
     private GridPane studentIdGridpane = new GridPane();
     private GridPane oldStudentGridpane = new GridPane();
     private Stage signInStage = new Stage();
-
-    private Button fillerBtn = new Button("Filler Button");
+    
     private Button addBtn = new Button("Add Session");
-    private Button refreshBtn = new Button("Refresh Sessions");
+   
     private Button submitBtn = new Button("Submit");
     private Button signOut = new Button("Log Out");
     private Button supervisor = new Button("Supervisor");
@@ -92,11 +91,15 @@ public class studentView extends BorderPane {
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
 
-    private HBox buttonHbox = new HBox(refreshBtn, addBtn,tutor, supervisor);
+    private HBox buttonHbox = new HBox( addBtn);
     private HBox idHbox = new HBox(idNoSubmitBtn, getNewStudentBtn());
     private VBox idVbox = new VBox (idNoLabel, idNoTF, idHbox);
+    private VBox vbox10 = new VBox (tutor, supervisor);
 
     public studentView() {
+        
+        vbox10.setSpacing(100);
+        
         table.setItems(tableData);
 
         TableColumn idCol = new TableColumn("ID");
@@ -130,7 +133,7 @@ public class studentView extends BorderPane {
 
         });
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
-        table.setPrefWidth(600);
+        table.setPrefWidth(1500);
         //Hbox
         buttonHbox.setSpacing(3);
 
@@ -141,10 +144,12 @@ public class studentView extends BorderPane {
         phoneNoVbox.setSpacing(3);
 
         BorderPane.setMargin(table, new Insets(10, 10, 10, 10));
-        BorderPane.setMargin(fillerBtn, new Insets(10, 10, 10, 10));
+        BorderPane.setMargin(vbox10, new Insets(10, 10, 10, 10));
 
+        buttonHbox.setAlignment(Pos.CENTER);
+        
         this.setCenter(table);
-        this.setLeft(fillerBtn);
+        this.setLeft(vbox10);
         this.setBottom(buttonHbox);
 
     }
@@ -201,7 +206,6 @@ public class studentView extends BorderPane {
         String timeIn = currentData.getStartTime();
         String id = currentData.getIdNo();
         String subject = currentData.getSubject();
-
         RowData rowData = new studentView.RowData(fName, lName, subject, timeIn, id, tutor);
         tableData.add(rowData);
         table.setItems(tableData);
@@ -384,23 +388,7 @@ public class studentView extends BorderPane {
         return table;
     }
 
-    /**
-     * @param table the table to set
-     */
-    /**
-     * @return the refreshBtn
-     */
-    public Button getRefreshBtn() {
-        return refreshBtn;
-    }
-
-    /**
-     * @param refreshBtn the refreshBtn to set
-     */
-    public void setRefreshBtn(Button refreshBtn) {
-        this.refreshBtn = refreshBtn;
-    }
-
+   
     /**
      * @return the idNoLabel
      */
