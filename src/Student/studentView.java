@@ -29,7 +29,9 @@ import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -40,6 +42,10 @@ public class studentView extends BorderPane {
 
     studentModel sm = new studentModel();
     private GridPane gridpane = new GridPane();
+    private GridPane newStudentGridpane = new GridPane();
+    private GridPane studentIdGridpane = new GridPane();
+    private GridPane oldStudentGridpane = new GridPane();
+    private Stage signInStage = new Stage();
 
     private Button fillerBtn = new Button("Filler Button");
     private Button addBtn = new Button("Add Session");
@@ -48,6 +54,8 @@ public class studentView extends BorderPane {
     private Button signOut = new Button("Log Out");
     private Button supervisor = new Button("Supervisor");
     private Button tutor = new Button("Tutor");
+    private Button idNoSubmitBtn = new Button("Enter"); //check to see if id number is in database
+    private Button newStudentBtn = new Button("new student");
 
     ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"));
 
@@ -55,6 +63,9 @@ public class studentView extends BorderPane {
 
     private Label idNoLabel = new Label("ID Number");
     private TextField idNoTF = new TextField();
+    
+    private Label newStudentIdNoLabel = new Label("ID Number");
+    private TextField newStudentIdNoTF = new TextField();
 
     private Label firstNameLabel = new Label("First Name");
     private TextField firstNameTF = new TextField();
@@ -73,8 +84,7 @@ public class studentView extends BorderPane {
 
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
-
-    private VBox idNoVbox = new VBox(idNoLabel, idNoTF);
+    private VBox idNoVbox = new VBox(newStudentIdNoLabel, newStudentIdNoTF);
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
@@ -82,7 +92,9 @@ public class studentView extends BorderPane {
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
 
-    private HBox buttonHbox = new HBox(refreshBtn, addBtn, tutor, supervisor);
+    private HBox buttonHbox = new HBox(refreshBtn, addBtn,tutor, supervisor);
+    private HBox idHbox = new HBox(idNoSubmitBtn, getNewStudentBtn());
+    private VBox idVbox = new VBox (idNoLabel, idNoTF, idHbox);
 
     public studentView() {
         table.setItems(tableData);
@@ -128,18 +140,6 @@ public class studentView extends BorderPane {
         emailVbox.setSpacing(3);
         phoneNoVbox.setSpacing(3);
 
-        //GridPane
-        gridpane.setVgap(5);
-        gridpane.setHgap(5);
-        gridpane.setAlignment(Pos.CENTER);
-
-        gridpane.addRow(0, idNoVbox);
-        gridpane.addRow(1, firstNameVbox, lastNameVbox);
-        gridpane.addRow(2, emailVbox, phoneNoVbox);
-        gridpane.addRow(3, subjectVbox);
-        gridpane.addRow(4, tutorVbox);
-        gridpane.addRow(5, submitBtn);
-
         BorderPane.setMargin(table, new Insets(10, 10, 10, 10));
         BorderPane.setMargin(fillerBtn, new Insets(10, 10, 10, 10));
 
@@ -147,6 +147,40 @@ public class studentView extends BorderPane {
         this.setLeft(fillerBtn);
         this.setBottom(buttonHbox);
 
+    }
+    
+    public void addSession() {
+        Scene signInscene = new Scene(getStudentIdGridpane(), 200, 100);
+        signInStage.setTitle("Sign-In");
+        signInStage.setScene(signInscene);
+        signInStage.show();
+        //studentIdGridPane
+        studentIdGridpane.setAlignment(Pos.CENTER);
+        studentIdGridpane.setVgap(5);
+        
+        idVbox.setSpacing(5);
+        studentIdGridpane.addRow(0, idVbox);
+
+    }
+    
+    public void newStudent(){
+        //newStudentGridPane
+        newStudentGridpane.setVgap(5);
+        newStudentGridpane.setHgap(5);
+        newStudentGridpane.setAlignment(Pos.CENTER);
+        
+        //new student scene gripdane
+        newStudentGridpane.addRow(0, idNoVbox);
+        newStudentGridpane.addRow(1, firstNameVbox, lastNameVbox);
+        newStudentGridpane.addRow(2, emailVbox, phoneNoVbox);
+        newStudentGridpane.addRow(3, subjectVbox);
+        newStudentGridpane.addRow(4, tutorVbox);
+        newStudentGridpane.addRow(5, submitBtn);
+        
+        Scene newStudentScene = new Scene(newStudentGridpane, 375, 350);
+        
+        signInStage.setScene(newStudentScene);
+        signInStage.show();
     }
 
     public void ClearFields() {
@@ -160,14 +194,14 @@ public class studentView extends BorderPane {
     }
 
     public void updateTable(Data currentData) {
-        
+
         String fName = currentData.getFirstName();
         String lName = currentData.getLastName();
         String tutor = currentData.getTutor();
         String timeIn = currentData.getStartTime();
         String id = currentData.getIdNo();
         String subject = currentData.getSubject();
-            
+
         RowData rowData = new studentView.RowData(fName, lName, subject, timeIn, id, tutor);
         tableData.add(rowData);
         table.setItems(tableData);
@@ -617,6 +651,62 @@ public class studentView extends BorderPane {
      */
     public void setTutor(Button tutor) {
         this.tutor = tutor;
+    }
+    
+        /**
+     * @return the newStudentGridpane
+     */
+    public GridPane getNewStudentGridpane() {
+        return newStudentGridpane;
+    }
+
+    /**
+     * @param newStudentGridpane the newStudentGridpane to set
+     */
+    public void setNewStudentGridpane(GridPane newStudentGridpane) {
+        this.newStudentGridpane = newStudentGridpane;
+    }
+
+    /**
+     * @return the studentIdGridpane
+     */
+    public GridPane getStudentIdGridpane() {
+        return studentIdGridpane;
+    }
+
+    /**
+     * @param studentIdGridpane the studentIdGridpane to set
+     */
+    public void setStudentIdGridpane(GridPane studentIdGridpane) {
+        this.studentIdGridpane = studentIdGridpane;
+    }
+
+    /**
+     * @return the oldStudentGridpane
+     */
+    public GridPane getOldStudentGridpane() {
+        return oldStudentGridpane;
+    }
+
+    /**
+     * @param oldStudentGridpane the oldStudentGridpane to set
+     */
+    public void setOldStudentGridpane(GridPane oldStudentGridpane) {
+        this.oldStudentGridpane = oldStudentGridpane;
+    }
+
+    /**
+     * @return the newStudentBtn
+     */
+    public Button getNewStudentBtn() {
+        return newStudentBtn;
+    }
+
+    /**
+     * @param newStudentBtn the newStudentBtn to set
+     */
+    public void setNewStudentBtn(Button newStudentBtn) {
+        this.newStudentBtn = newStudentBtn;
     }
 
 }

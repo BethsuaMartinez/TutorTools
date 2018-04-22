@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author elyvic
  */
 public class Data {
+
     private SimpleStringProperty idNo;
     private SimpleStringProperty lastName;
     private SimpleStringProperty firstName;
@@ -19,11 +20,10 @@ public class Data {
     private SimpleStringProperty time;
     private SimpleStringProperty subject;
     private SimpleStringProperty startTime;
-    
-    
-    public Data(){ 
+
+    public Data() {
     }
-    
+
     public Data(String idNo, String lastName, String firstName, String tutor, String startTime, String subject, String time) {
         this.idNo = new SimpleStringProperty(idNo);
         this.lastName = new SimpleStringProperty(lastName);
@@ -33,12 +33,12 @@ public class Data {
         this.subject = new SimpleStringProperty(subject);
         this.startTime = new SimpleStringProperty(startTime);
     }
-    
-    
-    /********************
-    *setters and getter *
-    ********************/
-    
+
+    /**
+     * ******************
+     * setters and getter *
+    *******************
+     */
     /**
      * @return the idNo
      */
@@ -81,7 +81,6 @@ public class Data {
         this.firstName.set(firstName);
     }
 
-    
     /**
      * @return the time
      */
@@ -95,7 +94,6 @@ public class Data {
     public void setTime(String time) {
         this.time.set(time);
     }
-
 
     /**
      * @return the tutor

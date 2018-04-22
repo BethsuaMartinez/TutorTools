@@ -1,4 +1,3 @@
-
 package Student;
 
 import Database.MysqlConnect;
@@ -10,7 +9,9 @@ import javafx.collections.ObservableList;
  *
  * @author elyvic
  */
-public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
+public class studentModel {
+
+    MysqlConnect myConn = MysqlConnect.getDbCon();
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
@@ -57,7 +58,7 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
 
     public void WriteDatabase(Data currentData) throws SQLException {
         try {
-            
+
             String firstName = currentData.getFirstName();
             String lastName = currentData.getLastName();
             String tutor = currentData.getTutor();
@@ -65,14 +66,14 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
             String startTime = currentData.getStartTime();
             String idNo = currentData.getIdNo();
             String subject = currentData.getSubject();
-            
+
             int id = Integer.parseInt(idNo);
-            
-            String sql = "INSERT INTO TutorTools.TutoringSessions " + 
-                    "(studentid, fname, lname, tutorlname, subject, startTime, endTime)" 
+
+            String sql = "INSERT INTO TutorTools.TutoringSessions "
+                    + "(studentid, fname, lname, tutorlname, subject, startTime, endTime)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
-            
+
             myStmt.setInt(1, id);
             myStmt.setString(2, firstName);
             myStmt.setString(3, lastName);
@@ -80,9 +81,9 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
             myStmt.setString(5, subject);
             myStmt.setString(6, startTime);
             myStmt.setString(7, endTime);
-            
+
             myStmt.executeUpdate();
-            
+
         } catch (SQLException e) {
             System.err.println(e);
         } finally {
@@ -106,4 +107,3 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
         this.students = students;
     }
 }
-

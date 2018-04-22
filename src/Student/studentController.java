@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,39 +24,34 @@ import javafx.stage.Stage;
  * @author elyvic
  */
 public class studentController {
-
+    
     studentModel model = new studentModel();
     studentView gui = new studentView();
-
+    
     public studentController(studentView gui, studentModel model) {
         this.model = model;
         this.gui = gui;
-
+        
         AttachHandler();
     }
-
+    
     public void AttachHandler() {
         gui.getAddBtn().setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(ActionEvent event) {
-                Scene signInscene = new Scene(gui.getGridpane(), 330, 285);
-                Stage signInStage = new Stage();
-
-                signInStage.setTitle("Sign-In");
-                signInStage.setScene(signInscene);
-                signInStage.show();
+              gui.addSession();
             }
         });
-
+        
         gui.getSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(ActionEvent event) {
-
+                
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                 Date date = new Date();
-
+                
                 String idNo = gui.getIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
@@ -66,15 +59,15 @@ public class studentController {
                 String phoneNo = gui.getPhoneNoTF().getText();
                 String tutor = gui.getTutorTF().getText();
                 String time = dateFormat.format(date);
-
+                
                 Data currentSession = new Data(idNo, firstName, lastName, email, phoneNo, tutor, time);
                 gui.updateTable(currentSession);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             }
         });
-
+        
         gui.getRefreshBtn().setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(ActionEvent event) {
                 /*try {
@@ -84,7 +77,7 @@ public class studentController {
                 }*/
             }
         });
-
+        
         gui.getTutor().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 tutorView tv = new tutorView();
@@ -93,10 +86,10 @@ public class studentController {
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene3);
                 window.show();
-
+                
             }
         });
-
+        
         gui.getSupervisor().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 TutorInformationView tiv = new TutorInformationView();
@@ -105,10 +98,15 @@ public class studentController {
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setScene(scene2);
                 window.show();
+                
+            }
+        });
+        gui.getNewStudentBtn().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+               gui.newStudent();
 
             }
         });
-
+        
     }
 }
-
