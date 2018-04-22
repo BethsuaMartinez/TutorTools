@@ -11,12 +11,9 @@ import Supervisor.TutorInformationView;
 import Supervisor.supervisorController;
 import Tutor.tutorController;
 import Tutor.tutorView;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -71,12 +68,7 @@ public class studentController {
                 String time = dateFormat.format(date);
 
                 Data currentSession = new Data(idNo, firstName, lastName, email, phoneNo, tutor, time);
-                try {
-                    model.setCurrentStudent(currentSession);
-                } catch (SQLException ex) {
-                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+                gui.updateTable(currentSession);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             }
         });

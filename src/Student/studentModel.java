@@ -15,7 +15,6 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
     ResultSet myRs = null;
 
     private ObservableList<Data> students = FXCollections.observableArrayList();
-    studentView gui = new studentView();
     Data data = new Data();
 
     public void setCurrentStudent(Data currentData) throws SQLException {
@@ -47,8 +46,7 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
                 ));
             }
 
-            WriteDatabase();
-            gui.getTable().setItems(students);
+            //WriteDatabase();
         } catch (SQLException exc) {
         } finally {
             if (myRs != null) {
@@ -57,21 +55,40 @@ public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
         }
     }
 
-    public void WriteDatabase() {
+    public void WriteDatabase(Data currentData) throws SQLException {
         try {
-            String idNo = data.getIdNo();
-            String firstName = data.getFirstName();
-            String lastName = data.getLastName();
-            String email = data.getEmail();
-            String phoneNo = data.getPhoneNo();
-            String tutor = data.getTutor();
-            String time = data.getTime();
-
-            String sql = "INSERT INTO TutorTools.TutoringSessions " + "(studentid, fname, lname, tutorlname, time, email, phone)" + "VALUES ('" + idNo + "','" + firstName + "','" + lastName + "','" + tutor + "','" + time + "','" + email + "','" + phoneNo + "')";
-
-            myStmt.executeUpdate(sql);
+            
+            String firstName = currentData.getFirstName();
+            String lastName = currentData.getLastName();
+            String tutor = currentData.getTutor();
+            String endTime = currentData.getTime();
+            String startTime = currentData.getStartTime();
+            String idNo = currentData.getIdNo();
+            String subject = currentData.getSubject();
+            
+            int id = Integer.parseInt(idNo);
+            
+            String sql = "INSERT INTO TutorTools.TutoringSessions " + 
+                    "(studentid, fname, lname, tutorlname, subject, startTime, endTime)" 
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+            
+            myStmt.setInt(1, id);
+            myStmt.setString(2, firstName);
+            myStmt.setString(3, lastName);
+            myStmt.setString(4, tutor);
+            myStmt.setString(5, subject);
+            myStmt.setString(6, startTime);
+            myStmt.setString(7, endTime);
+            
+            myStmt.executeUpdate();
+            
         } catch (SQLException e) {
             System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
         }
     }
 
