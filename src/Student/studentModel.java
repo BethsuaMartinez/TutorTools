@@ -1,4 +1,3 @@
-
 package Student;
 
 import Database.SQLConnector;
@@ -10,12 +9,13 @@ import javafx.collections.ObservableList;
  *
  * @author elyvic
  */
-public class studentModel {    SQLConnector myConn = SQLConnector.getDbCon();
+public class studentModel {   
+    
+    SQLConnector myConn = SQLConnector.getDbCon();
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
     private ObservableList<Data> students = FXCollections.observableArrayList();
-    studentView gui = new studentView();
     Data data = new Data();
 
     public void setCurrentStudent(Data currentData) throws SQLException {
@@ -47,8 +47,7 @@ public class studentModel {    SQLConnector myConn = SQLConnector.getDbCon();
                 ));
             }
 
-            WriteDatabase();
-            gui.getTable().setItems(students);
+            //WriteDatabase();
         } catch (SQLException exc) {
         } finally {
             if (myRs != null) {
@@ -56,22 +55,60 @@ public class studentModel {    SQLConnector myConn = SQLConnector.getDbCon();
             }
         }
     }
-
-    public void WriteDatabase() {
+    
+    public int sizeDB() throws SQLException {
+        int count = 0;
         try {
-            String idNo = data.getIdNo();
-            String firstName = data.getFirstName();
-            String lastName = data.getLastName();
-            String email = data.getEmail();
-            String phoneNo = data.getPhoneNo();
-            String tutor = data.getTutor();
-            String time = data.getTime();
+            String sql = "SELECT COUNT(*) FROM TutoringSessions";
+            myRs = myConn.query(sql);
+            while (myRs.next()) {
+                count = myRs.getInt("COUNT(*)");
+            }
+            return count;
+        } catch (SQLException exc) {
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+        return count;
+    }
 
-            String sql = "INSERT INTO TutorTools.TutoringSessions " + "(studentid, fname, lname, tutorlname, time, email, phone)" + "VALUES ('" + idNo + "','" + firstName + "','" + lastName + "','" + tutor + "','" + time + "','" + email + "','" + phoneNo + "')";
+    public void WriteDatabase(Data currentData) throws SQLException {
+        try {
 
-            myStmt.executeUpdate(sql);
+            String firstName = currentData.getFirstName();
+            String lastName = currentData.getLastName();
+            String tutor = currentData.getTutor();
+            String endTime = currentData.getTime();
+            String startTime = currentData.getStartTime();
+            String idNo = currentData.getIdNo();
+            String subject = currentData.getSubject();
+
+            int studentid = Integer.parseInt(idNo);
+
+            String sql = "INSERT INTO TutorTools.TutoringSessions "
+                    + "(id, studentid, fname, lname, tutorlname, subject, endTime,startTime)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            myStmt.setInt(1, (sizeDB() + 1));
+            myStmt.setInt(2, studentid);
+            myStmt.setString(3, firstName);
+            myStmt.setString(4, lastName);
+            myStmt.setString(5, tutor);
+            myStmt.setString(6, subject);
+            myStmt.setString(7, startTime);
+            myStmt.setString(8, endTime);
+
+            myStmt.executeUpdate();
+
         } catch (SQLException e) {
             System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
         }
     }
 
@@ -89,4 +126,3 @@ public class studentModel {    SQLConnector myConn = SQLConnector.getDbCon();
         this.students = students;
     }
 }
-

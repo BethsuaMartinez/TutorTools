@@ -34,10 +34,12 @@ public class loginView extends BorderPane {
 
     private ImageView logo;
     private Label loginLabel = new Label("Login to Your Account");
+
     private CustomTextField username = new CustomTextField();
     private CustomPasswordField password = new CustomPasswordField();
     private Button loginButton = new Button("LOGIN");
     private AnchorPane back = new AnchorPane();
+    private Button signOut = new Button("Log Out");
 
     public loginView() {
 
@@ -70,7 +72,7 @@ public class loginView extends BorderPane {
         
        this.setBackground(new Background(background));
         
-        this.logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
+        this.logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
         this.logo.setFitWidth(700);
         this.logo.setFitHeight(200);
         this.logo.setPreserveRatio(true);

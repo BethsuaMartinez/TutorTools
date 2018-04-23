@@ -83,7 +83,6 @@ public class tutorView extends BorderPane {
 
         BorderPane sidebar = new BorderPane();
         HBox menu = new HBox();
-        //   menu.setStyle(" -fx-background-color: white;");
         Label userName = new Label("User: Bethsua");
         userName.setStyle("-fx-text-fill: black; -fx-font-size: 10pt; -fx-padding: 5");
         menu.setAlignment(Pos.CENTER_RIGHT);
@@ -173,8 +172,8 @@ public class tutorView extends BorderPane {
 
     //Define the button cell
     private class ButtonCell extends TableCell<Record, Boolean> {
-
-        final Button modButton = new Button("Modify");
+        
+        private Button modButton = new Button("Modify");
         final Button cellButton = new Button("Delete");
         HBox cellBox = new HBox();
 
@@ -191,6 +190,16 @@ public class tutorView extends BorderPane {
                     RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
                     //remove selected item from the table list
                     data.remove(currentPerson);
+                }
+            });
+            modButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent t) {
+                    // get Selected Item
+                    RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
+                    //remove selected item from the table list
+                    System.out.println(currentPerson.firstName.get());
                 }
             });
         }

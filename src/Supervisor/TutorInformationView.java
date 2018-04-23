@@ -19,19 +19,7 @@ import javafx.scene.layout.HBox;
  */
 public class TutorInformationView extends BorderPane {
 
-    /**
-     * @return the back
-     */
-    public Button getBack() {
-        return back;
-    }
-
-    /**
-     * @param back the back to set
-     */
-    public void setBack(Button back) {
-        this.back = back;
-    }
+    
     
     private Label lasName = new Label("Enter Last Name of Tutor");
     private TextField lastNameTF = new TextField();
@@ -39,6 +27,7 @@ public class TutorInformationView extends BorderPane {
     private Button back = new Button("Back");
     TableView table = new TableView();
     private Button activity= new Button("Activity Log");
+    private Button signOut = new Button("Log Out");
     
     public  TutorInformationView() {
         
@@ -109,5 +98,19 @@ public class TutorInformationView extends BorderPane {
         this.activity = activity;
     }
 
+    /**
+     * @return the back
+     */
+    public Button getBack() {
+        return back;
+    }
 
+    /**
+     * @param back the back to set
+     */
+    public void setBack(Button back) {
+        this.back = back;
+    }
+
+    
 }

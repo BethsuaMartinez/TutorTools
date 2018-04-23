@@ -30,19 +30,23 @@ public class loginModel {
         try {
             PreparedStatement myStmt;
             String sql = "SELECT * FROM TutorTools.Tutors where email = ?;";
+            String sql1 = "SELECT * FROM TutorTools.Supervisor where email = ?;";
 
             myStmt = conn.preparedStatement(sql);
             myStmt.setString(1, un);
-
+            
             myRs = myStmt.executeQuery();
+            
+            myStmt = conn.preparedStatement(sql1);
+            myStmt.setString(1, un);
+            
+            ResultSet myRs2 =null;
+            myRs2 = myStmt.executeQuery();
 
             String chkpsswd = null;
-            if (myRs.next()) {
+            if (myRs.next()||myRs2.next()) {
                 chkpsswd = myRs.getString("password");
-                if(chkpsswd.equals(psswd))
-                    return true;
-                else
-                    return false;
+                return chkpsswd.equals(psswd);
             }
         } catch (SQLException exc) {
         } finally {
