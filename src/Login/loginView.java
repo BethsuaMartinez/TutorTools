@@ -90,7 +90,7 @@ public class loginView extends BorderPane {
         h3.getChildren().add(password);
         h4.getChildren().add(loginButton);
 
-        this.loginButton.setStyle("-fx-background-color: #b3b3b5;");
+        this.loginButton.setStyle("-fx-background-color: #d9d9d9;");
         this.loginButton.setPrefSize(250, 30);
         this.username.setLeft(user);
         this.username.setPrefSize(250, 30);
