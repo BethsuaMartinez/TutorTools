@@ -18,6 +18,7 @@ public class loginModel {
 
     SQLConnector conn = SQLConnector.getDbCon();
     ResultSet myRs = null;
+    ResultSet myRs2 =null;
 
     /**
      *
@@ -29,6 +30,7 @@ public class loginModel {
     public Boolean loginDB(String un, String psswd) throws SQLException {
         try {
             PreparedStatement myStmt;
+            PreparedStatement myStmt2;
             String sql = "SELECT * FROM TutorTools.Tutors where email = ?;";
             String sql1 = "SELECT * FROM TutorTools.Supervisor where email = ?;";
 
@@ -37,11 +39,11 @@ public class loginModel {
             
             myRs = myStmt.executeQuery();
             
-            myStmt = conn.preparedStatement(sql1);
-            myStmt.setString(1, un);
+            myStmt2 = conn.preparedStatement(sql1);
+            myStmt2.setString(1, un);
             
-            ResultSet myRs2 =null;
-            myRs2 = myStmt.executeQuery();
+            
+            myRs2 = myStmt2.executeQuery();
 
             String chkpsswd = null;
             if (myRs.next()||myRs2.next()) {

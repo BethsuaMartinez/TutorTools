@@ -9,6 +9,8 @@ import com.sun.prism.paint.Color;
 import javafx.geometry.Insets;
 import org.controlsfx.control.textfield.CustomPasswordField;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
 
 /**
@@ -108,8 +111,13 @@ public class loginView extends BorderPane {
     }
 
     public void wrongPass() {
-        Label wrong = new Label("Incorrect Password or Username");
-        this.setBottom(wrong);
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Incorrect Password or Username");
+        alert.setContentText("Try a valid username and password!");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
+        alert.showAndWait();
     }
 
     /**
