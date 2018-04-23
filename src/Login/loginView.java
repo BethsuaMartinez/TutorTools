@@ -75,7 +75,7 @@ public class loginView extends BorderPane {
         
        this.setBackground(new Background(background));
         
-        this.logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
+        this.logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
         this.logo.setFitWidth(700);
         this.logo.setFitHeight(200);
         this.logo.setPreserveRatio(true);
