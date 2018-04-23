@@ -5,16 +5,26 @@
  */
 package Login;
 
+import com.sun.prism.paint.Color;
+import javafx.geometry.Insets;
+import org.controlsfx.control.textfield.CustomPasswordField;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import org.controlsfx.control.textfield.CustomTextField;
 
 /**
  *
@@ -24,13 +34,14 @@ public class loginView extends BorderPane {
 
     private ImageView logo;
     private Label loginLabel = new Label("Login to Your Account");
-    private TextField username = new TextField();
-    private TextField password = new TextField();
-    private Button loginButton = new Button("Login");
+    private CustomTextField username = new CustomTextField();
+    private CustomPasswordField password = new CustomPasswordField();
+    private Button loginButton = new Button("LOGIN");
+    private AnchorPane back = new AnchorPane();
 
     public loginView() {
 
-        this.setStyle("-fx-background-color: #FFFFFF;");
+      //  this.setStyle("-fx-background-color: #FFFFFF;");
         HBox h1 = new HBox();
         HBox h2 = new HBox();
         HBox h3 = new HBox();
@@ -38,14 +49,31 @@ public class loginView extends BorderPane {
         HBox h5 = new HBox();
         HBox h6 = new HBox();
         VBox v1 = new VBox();
-
+       
+        h1.setPadding(new Insets(5,5,5,5));
+        h2.setPadding(new Insets(5,5,5,5));
+        h3.setPadding(new Insets(5,5,5,5));
+        h4.setPadding(new Insets(5,5,5,5));
+        
+        ImageView user = new ImageView(new Image(getClass().getResourceAsStream("/resources/user.png")));
+        user.setFitHeight(15);
+        user.setFitWidth(15);
+        
+        ImageView lock = new ImageView(new Image(getClass().getResourceAsStream("/resources/lock.png")));
+        lock.setFitHeight(14);
+        lock.setFitWidth(13);
+        
+       // ImageView background = new ImageView(new Image(getClass().getResourceAsStream("/resources/background.jpg")));
+        BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        
+       this.setBackground(new Background(background));
+        
         this.logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
-        this.logo.setFitWidth(590);
-        this.logo.setFitHeight(160);
+        this.logo.setFitWidth(700);
+        this.logo.setFitHeight(200);
         this.logo.setPreserveRatio(true);
-        this.logo.setSmooth(true);
-        this.logo.setCache(true);
-        this.centerProperty();
         this.loginLabel.setFont(Font.font("Lucida Bright 50px", 40));
         this.setTop(logo);
         BorderPane.setAlignment(this.logo, Pos.CENTER);
@@ -60,12 +88,16 @@ public class loginView extends BorderPane {
         h3.getChildren().add(password);
         h4.getChildren().add(loginButton);
 
-        this.loginButton.setStyle("-fx-background-color: #CCFFFF;");
-        this.username.setPromptText("username");
-        this.password.setPromptText("password");
-        //    this.login.setS
-
-        v1.getChildren().addAll(h1, h2, h3, h4);
+        this.loginButton.setStyle("-fx-background-color: #b3b3b5;");
+        this.loginButton.setPrefSize(250, 30);
+        this.username.setLeft(user);
+        this.username.setPrefSize(250, 30);
+        this.username.setPromptText("Username");
+        this.password.setLeft(lock);
+        this.password.setPrefSize(250, 30);
+        this.password.setPromptText("Password");
+                
+        v1.getChildren().addAll(h1, h2, h3, h4);    
         this.setCenter(v1);
         this.setLeft(h5);
         this.setRight(h6);
@@ -116,7 +148,7 @@ public class loginView extends BorderPane {
     /**
      * @param username the username to set
      */
-    public void setUsername(TextField username) {
+    public void setUsername(CustomTextField username) {
         this.username = username;
     }
 
@@ -130,7 +162,7 @@ public class loginView extends BorderPane {
     /**
      * @param password the password to set
      */
-    public void setPassword(TextField password) {
+    public void setPassword(CustomPasswordField password) {
         this.password = password;
     }
 

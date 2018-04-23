@@ -11,12 +11,12 @@ import java.sql.DriverManager;
  *
  * @author selvera
  */
-public final class MysqlConnect {
+public final class SQLConnector {
     public Connection conn;
     private Statement statement;
-    public static MysqlConnect db;
+    public static SQLConnector db;
     
-    private MysqlConnect() {
+    private SQLConnector() {
         String url= "jdbc:mysql://localhost:3306/";
         String dbName = "TutorTools";			//modify according to your DB
         String driver = "com.mysql.jdbc.Driver";
@@ -32,11 +32,11 @@ public final class MysqlConnect {
     }
     /**
      *
-     * @return MysqlConnect Database connection object
+     * @return SQLConnector Database connection object
      */
-    public static synchronized MysqlConnect getDbCon() {
+    public static synchronized SQLConnector getDbCon() {
         if ( db == null ) {
-            db = new MysqlConnect();
+            db = new SQLConnector();
         }
         return db;
  

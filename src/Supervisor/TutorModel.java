@@ -5,7 +5,7 @@
  */
 package Supervisor;
 
-import Database.MysqlConnect;
+import Database.SQLConnector;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class TutorModel {
 
-    MysqlConnect con = MysqlConnect.getDbCon();
+    SQLConnector con = SQLConnector.getDbCon();
 
     public List<Tutor> getAllTutor() throws Exception {
         List<Tutor> list = new ArrayList<>();

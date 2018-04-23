@@ -1,7 +1,7 @@
 
 package Student;
 
-import Database.MysqlConnect;
+import Database.SQLConnector;
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
  *
  * @author elyvic
  */
-public class studentModel {    MysqlConnect myConn = MysqlConnect.getDbCon();
+public class studentModel {    SQLConnector myConn = SQLConnector.getDbCon();
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 

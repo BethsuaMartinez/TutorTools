@@ -5,7 +5,7 @@
  */
 package Login;
 
-import Database.MysqlConnect;
+import Database.SQLConnector;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class loginModel {
 
-    MysqlConnect conn = MysqlConnect.getDbCon();
+    SQLConnector conn = SQLConnector.getDbCon();
     ResultSet myRs = null;
 
     /**

@@ -37,7 +37,7 @@ public class loginController {
         
         logv.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
              public void handle(ActionEvent event) {
-                /*String un = logv.getUsername().getText();
+                String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 
                 if ("".equals(un) || "".equals(psswd)){
@@ -45,7 +45,7 @@ public class loginController {
                 }
                 try {
                     if (logm.loginDB(un, psswd) == true) {
-                  */          
+                            
                                 studentView sv = new studentView();
         studentModel sm = new studentModel();
         studentController sc = new studentController(sv, sm);
@@ -53,12 +53,12 @@ public class loginController {
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         window.setScene(scene2);
                         window.show();
-                    /*} else {
+                    } else {
                         logv.wrongPass();
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                }
              }
         });
     }

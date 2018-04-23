@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -34,7 +35,8 @@ public class TutorTools extends Application {
        
         Scene scene = new Scene(lv, 1000, 500);
  
-        primaryStage.setTitle("Tutor Tools");
+        primaryStage.getIcons().add(new Image("/resources/Logo.png"));
+        primaryStage.setTitle("TutorTools");
         primaryStage.setScene(scene);
         primaryStage.show();
         
