@@ -40,11 +40,26 @@ import javafx.util.Callback;
  */
 public class studentView extends BorderPane {
 
+    /**
+     * @return the idNoSubmitBtn
+     */
+    public Button getIdNoSubmitBtn() {
+        return idNoSubmitBtn;
+    }
+
+    /**
+     * @param idNoSubmitBtn the idNoSubmitBtn to set
+     */
+    public void setIdNoSubmitBtn(Button idNoSubmitBtn) {
+        this.idNoSubmitBtn = idNoSubmitBtn;
+    }
+
     studentModel sm = new studentModel();
     private GridPane gridpane = new GridPane();
     private GridPane newStudentGridpane = new GridPane();
     private GridPane studentIdGridpane = new GridPane();
-    private GridPane oldStudentGridpane = new GridPane();
+    private GridPane newSessionGridpane = new GridPane();
+    
     
     private Stage signInStage = new Stage();
     
@@ -93,7 +108,7 @@ public class studentView extends BorderPane {
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
 
     private HBox buttonHbox = new HBox( addBtn);
-    private HBox idHbox = new HBox(idNoSubmitBtn, getNewStudentBtn());
+    private HBox idHbox = new HBox(getIdNoSubmitBtn());
     private VBox idVbox = new VBox (idNoLabel, idNoTF, idHbox);
     private VBox vbox10 = new VBox (tutor, supervisor);
 
@@ -189,6 +204,22 @@ public class studentView extends BorderPane {
         signInStage.setScene(newStudentScene);
         signInStage.show();
     }
+    
+    public void newSession(){
+        //newStudentGridPane
+        newSessionGridpane.setVgap(5);
+        newSessionGridpane.setHgap(5);
+        newSessionGridpane.setAlignment(Pos.CENTER);
+        newSessionGridpane.addRow(3, subjectVbox);
+        newSessionGridpane.addRow(4, tutorVbox);
+        newSessionGridpane.addRow(5, submitBtn);
+        
+        Scene newStudentScene = new Scene(newSessionGridpane, 375, 350);
+        
+        signInStage.setScene(newStudentScene);
+        signInStage.show();
+    }
+
 
     public void ClearFields() {
         getIdNoTF().clear();
@@ -675,14 +706,14 @@ public class studentView extends BorderPane {
      * @return the oldStudentGridpane
      */
     public GridPane getOldStudentGridpane() {
-        return oldStudentGridpane;
+        return newSessionGridpane;
     }
 
     /**
      * @param oldStudentGridpane the oldStudentGridpane to set
      */
     public void setOldStudentGridpane(GridPane oldStudentGridpane) {
-        this.oldStudentGridpane = oldStudentGridpane;
+        this.newSessionGridpane = oldStudentGridpane;
     }
 
     /**

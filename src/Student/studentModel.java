@@ -56,6 +56,31 @@ public class studentModel {
         }
     }
     
+    public Boolean verifyUser(int id) throws SQLException{
+         try {
+            PreparedStatement myStmt;
+            String sql = "SELECT * FROM TutorTools.Students where idStudents = ?;";
+
+            myStmt = myConn.preparedStatement(sql);
+            myStmt.setInt(1, id);
+            
+            myRs = myStmt.executeQuery();
+            int chkid = 0;
+            if (myRs.next()) {
+                chkid = myRs.getInt("idStudents");
+                return chkid==(id);
+              
+            }
+
+        } catch (SQLException exc) {
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+        return false;
+    }
+    
     public int sizeDB() throws SQLException {
         int count = 0;
         try {

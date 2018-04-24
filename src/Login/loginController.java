@@ -47,11 +47,7 @@ public final class loginController {
                 }
                 try {
 
-                    if (logm.loginDB(un, psswd) == true) {
-<<<<<<< HEAD
-                            
-
-                    if (logm.loginDB(un, psswd) == true) {          
+                    if (logm.loginDB(un, psswd) == true) {    
 
                        studentView sv = new studentView();
                         studentModel sm = new studentModel();
@@ -62,21 +58,6 @@ public final class loginController {
                         window.show();
                     } else {
                         logv.wrongPass();
-=======
-
-                        if (logm.loginDB(un, psswd) == true) {
-
-                            studentView sv = new studentView();
-                            studentModel sm = new studentModel();
-                            studentController sc = new studentController(sv, sm);
-                            Scene scene2 = new Scene(sv, 1000, 500);
-                            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            window.setScene(scene2);
-                            window.show();
-                        } else {
-                            logv.wrongPass();
-                        }
->>>>>>> a8bbd94f1c833500c4d51ff9a80628a310e496b2
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);

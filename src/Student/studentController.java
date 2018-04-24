@@ -9,9 +9,12 @@ import Supervisor.TutorInformationView;
 import Supervisor.supervisorController;
 import Tutor.tutorController;
 import Tutor.tutorView;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -55,8 +58,6 @@ public class studentController {
                 String idNo = gui.getIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
-                //String email = gui.getEmailTF().getText();
-                //String phoneNo = gui.getPhoneNoTF().getText();
                 String tutor = gui.getTutorTF().getText();
                 String subject = gui.getSubjectTF().getText();
                 String time = dateFormat.format(date);
@@ -91,9 +92,20 @@ public class studentController {
                 
             }
         });
-        gui.getNewStudentBtn().setOnAction(new EventHandler<ActionEvent>() {
+        
+        gui.getIdNoSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-               gui.newStudent();
+               String id = gui.getIdNoTF().getText();
+               int x = Integer.parseInt(id);
+                try {
+                if(true==model.verifyUser(x))
+                    gui.newSession();
+                else
+                    gui.newStudent();
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         });
