@@ -21,8 +21,13 @@ public final class SQLConnector {
         String dbName = "TutorTools";			//modify according to your DB
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";				//modify according to your user
+<<<<<<< HEAD
         String password = "root";				//modify according to your password
 
+=======
+        //String password = "Bjms83936878.,";				//modify according to your password
+        String password = "hello";				//modify according to your password
+>>>>>>> a0b96a9b673fb40a83dc05332fd8e11e338ac2ec
         try {
             Class.forName(driver).newInstance();
             this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
