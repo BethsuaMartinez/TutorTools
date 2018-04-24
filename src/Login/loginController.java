@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 /**
@@ -34,19 +35,20 @@ public final class loginController {
     }
 
     public void AttachHandler() {
-        
+
         logv.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
-             @Override
-             public void handle(ActionEvent event) {
+            @Override
+            public void handle(ActionEvent event) {
                 String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 
-                if ("".equals(un) || "".equals(psswd)){
+                if ("".equals(un) || "".equals(psswd)) {
                     logv.wrongPass();
                 }
                 try {
 
                     if (logm.loginDB(un, psswd) == true) {
+<<<<<<< HEAD
                             
 
                     if (logm.loginDB(un, psswd) == true) {          
@@ -60,15 +62,58 @@ public final class loginController {
                         window.show();
                     } else {
                         logv.wrongPass();
+=======
+
+                        if (logm.loginDB(un, psswd) == true) {
+
+                            studentView sv = new studentView();
+                            studentModel sm = new studentModel();
+                            studentController sc = new studentController(sv, sm);
+                            Scene scene2 = new Scene(sv, 1000, 500);
+                            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            window.setScene(scene2);
+                            window.show();
+                        } else {
+                            logv.wrongPass();
+                        }
+>>>>>>> a8bbd94f1c833500c4d51ff9a80628a310e496b2
                     }
-                } 
-             }
-                catch (SQLException ex) {
+                } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-        }
-    });
-  }
+            }
+        });
+
+        logv.getPassword().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                String un = logv.getUsername().getText();
+                String psswd = logv.getPassword().getText();
+
+                if ("".equals(un) || "".equals(psswd)) {
+                    logv.wrongPass();
+                }
+                try {
+
+                    if (logm.loginDB(un, psswd) == true) {
+
+                        if (logm.loginDB(un, psswd) == true) {
+
+                            studentView sv = new studentView();
+                            studentModel sm = new studentModel();
+                            studentController sc = new studentController(sv, sm);
+                            Scene scene2 = new Scene(sv, 1000, 500);
+                            Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                            window.setScene(scene2);
+                            window.show();
+                        } else {
+                            logv.wrongPass();
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+    }
 }
-
-

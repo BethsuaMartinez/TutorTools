@@ -22,7 +22,7 @@ public final class SQLConnector {
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";				//modify according to your user
         String password = "root";				//modify according to your password
-
+        
         try {
             Class.forName(driver).newInstance();
             this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
