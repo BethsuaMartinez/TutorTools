@@ -39,6 +39,7 @@ public class activityController {
 
                 Scene scene3 = new Scene(tiv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Supervisor");
                 window.setScene(scene3);
                 window.show();
 

@@ -56,6 +56,7 @@ public final class loginController {
                         studentController sc = new studentController(sv, sm);
                         Scene scene2 = new Scene(sv, 1000, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        window.setTitle("Student List");
                         window.setScene(scene2);
                         window.show();
                     } else {
