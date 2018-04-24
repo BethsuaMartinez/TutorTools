@@ -15,15 +15,15 @@ public class studentModel {
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
-    private ObservableList<Data> students = FXCollections.observableArrayList();
-    Data data = new Data();
+    private ObservableList<Session> students = FXCollections.observableArrayList();
+    Session data = new Session();
 
-    public void setCurrentStudent(Data currentData) throws SQLException {
+    public void setCurrentStudent(Session currentData) throws SQLException {
         data = currentData;
         Database();
     }
 
-    public Data getCurrentStudent() {
+    public Session getCurrentStudent() {
         return data;
     }
 
@@ -36,7 +36,7 @@ public class studentModel {
             myRs = myStmt.executeQuery();
 
             while (myRs.next()) {
-                students.add(new Data(
+                students.add(new Session(
                         myRs.getString("studentid"),
                         myRs.getString("fname"),
                         myRs.getString("lname"),
@@ -99,7 +99,7 @@ public class studentModel {
         return count;
     }
 
-    public void WriteDatabase(Data currentData) throws SQLException {
+    public void WriteDatabase(Session currentData) throws SQLException {
         try {
 
             String firstName = currentData.getFirstName();
@@ -136,18 +136,45 @@ public class studentModel {
             }
         }
     }
+    
+    public void insertStudent(String idNo, String fname, String lname, String email, String phone) throws SQLException {
+        try {
+            
+            int studentid = Integer.parseInt(idNo);
+
+            String sql = "INSERT INTO TutorTools.Students "
+                    + "(idStudents, fname, lname, email, phone)"
+                    + "VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+            
+            myStmt.setInt(1, studentid);
+            myStmt.setString(2, fname);
+            myStmt.setString(3, lname);
+            myStmt.setString(4, email);
+            myStmt.setString(5, phone);
+            
+            myStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
 
     /**
      * @return the students
      */
-    public ObservableList<Data> getStudents() {
+    public ObservableList<Session> getStudents() {
         return students;
     }
 
     /**
      * @param students the students to set
      */
-    public void setStudents(ObservableList<Data> students) {
+    public void setStudents(ObservableList<Session> students) {
         this.students = students;
     }
 }

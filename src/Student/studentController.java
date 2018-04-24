@@ -47,7 +47,7 @@ public class studentController {
             }
         });
         
-        gui.getSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
+        gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
@@ -63,7 +63,7 @@ public class studentController {
                 String time = dateFormat.format(date);
                 
                 
-                Data currentSession = new Data(idNo, lastName, firstName, tutor, time, subject, "");
+                Session currentSession = new Session(idNo, lastName, firstName, tutor, time, subject, "");
                 gui.updateTable(currentSession);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             }
@@ -93,7 +93,7 @@ public class studentController {
             }
         });
         
-        gui.getIdNoSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
+        gui.getSubmitId().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                String id = gui.getIdNoTF().getText();
                int x = Integer.parseInt(id);
@@ -109,6 +109,30 @@ public class studentController {
 
             }
         });
+         gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+            }
+        });
+          gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+               
+                String idNo = gui.getNewStudentIdNoTF().getText();
+                String firstName = gui.getFirstNameTF().getText();
+                String lastName = gui.getLastNameTF().getText();
+                String email = gui.getEmailTF().getText();
+                String phone = gui.getPhoneNoTF().getText();
+                
+                try {
+                    model.insertStudent(idNo, firstName, lastName, email, phone);
+                    gui.newSession();
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            }
+        });
+        
         
     }
 }
