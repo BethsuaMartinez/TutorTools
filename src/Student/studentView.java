@@ -45,6 +45,7 @@ public class studentView extends BorderPane {
     private GridPane newStudentGridpane = new GridPane();
     private GridPane studentIdGridpane = new GridPane();
     private GridPane oldStudentGridpane = new GridPane();
+    
     private Stage signInStage = new Stage();
     
     private Button addBtn = new Button("Add Session");
