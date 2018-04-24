@@ -5,7 +5,7 @@
  */
 package Supervisor;
 
-import Student.Data;
+import Student.Session;
 import Student.studentController;
 import Student.studentView;
 import com.sun.prism.impl.Disposer;

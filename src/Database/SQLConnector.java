@@ -24,6 +24,7 @@ public final class SQLConnector {
         //String password = "Bjms83936878.,";				//modify according to your password
         //String password = "hello";				//modify according to your password
         String password = "root";				//modify according to your password
+
         try {
             Class.forName(driver).newInstance();
             this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
