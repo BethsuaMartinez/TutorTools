@@ -46,18 +46,16 @@ public final class loginController {
                     logv.wrongPass();
                 }
                 try {
-<<<<<<< HEAD
                     if (logm.loginDB(un, psswd) == true) {          
-=======
 
-                    if (logm.loginDB(un, psswd) == true) {    
->>>>>>> d238be2f22338988009e785ef75e613503549c9a
 
                        studentView sv = new studentView();
                         studentModel sm = new studentModel();
                         studentController sc = new studentController(sv, sm);
                         Scene scene2 = new Scene(sv, 1000, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        window.setTitle("Student List");
+                        window.setScene(scene2);
                         window.setScene(scene2);         
                         window.show();
                     } else {

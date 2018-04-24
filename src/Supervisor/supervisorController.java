@@ -40,6 +40,7 @@ public class supervisorController {
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Student List");
                 window.setScene(scene3);
                 window.show();
 
@@ -53,6 +54,7 @@ public class supervisorController {
 
                 Scene scene3 = new Scene(alv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Activity Log");
                 window.setScene(scene3);
                 window.show();
 

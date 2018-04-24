@@ -93,7 +93,7 @@ public class studentView extends BorderPane {
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
     
-    private VBox idNoVbox = new VBox(newStudentIdNoLabel, getNewStudentIdNoTF());
+    private VBox idNoVbox = new VBox(newStudentIdNoLabel, newStudentIdNoTF);
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
@@ -102,9 +102,9 @@ public class studentView extends BorderPane {
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
 
 
-//    private HBox buttonHbox = new HBox( addBtn);
-    //private HBox idHbox = new HBox(idNoSubmitBtn, getNewStudentBtn());
-    private VBox idVbox = new VBox (idNoLabel, idNoTF, idHbox);
+    
+    
+    private VBox idVbox = new VBox (idNoLabel, idNoTF);
     private VBox vbox10 = new VBox (tutor, supervisor, addBtn);
 
     public studentView() {
@@ -320,12 +320,12 @@ public class studentView extends BorderPane {
 
                     Session currentSession = new Session(idNo, lastName, firstName, tutor, time, subject, startTime);
 
-                    try {
-                        sm.WriteDatabase(currentSession);//remove selected item from the table list
-                        tableData.remove(currentPerson);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //try {
+                        //sm.WriteDatabase(currentSession);//remove selected item from the table list
+                      //  tableData.remove(currentPerson);
+                    //} catch (SQLException ex) {
+                      //  Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                 }
             });
         }
@@ -444,6 +444,8 @@ public class studentView extends BorderPane {
         public void setTutor(SimpleStringProperty tutor) {
             this.tutor = tutor;
         }
+
+
 
     }
 

@@ -22,7 +22,6 @@ import javafx.stage.Stage;
  */
 public class TutorTools extends Application {
     
-    @Override 
     public void start(Stage primaryStage) throws SQLException {
         
         loginView lv = new loginView();
