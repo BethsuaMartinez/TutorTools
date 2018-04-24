@@ -56,7 +56,7 @@ public final class loginController {
                         studentController sc = new studentController(sv, sm);
                         Scene scene2 = new Scene(sv, 1000, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        window.setScene(scene2);
+                        window.setScene(scene2);         
                         window.show();
                     } else {
                         logv.wrongPass();

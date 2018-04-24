@@ -98,6 +98,7 @@ public class studentView extends BorderPane {
 
     public studentView() {
         
+        
         vbox10.setSpacing(100);
         
         table.setItems(tableData);
