@@ -35,7 +35,6 @@ public class TutorTools extends Application {
         primaryStage.getIcons().add(new Image("/resources/Logo.png"));
         primaryStage.setTitle("TutorTools");
         primaryStage.setScene(scene);
- //       primaryStage.setMaximized(true);
         primaryStage.show();
         
     }
