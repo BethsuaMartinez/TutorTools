@@ -31,6 +31,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -86,7 +93,7 @@ public class studentView extends BorderPane {
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
     
-    private VBox idNoVbox = new VBox(newStudentIdNoLabel, getNewStudentIdNoTF());
+    private VBox idNoVbox = new VBox(newStudentIdNoLabel, newStudentIdNoTF);
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
@@ -94,14 +101,52 @@ public class studentView extends BorderPane {
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
 
-    private HBox buttonHbox = new HBox(addBtn);
-    private VBox idVbox = new VBox(idNoLabel, idNoTF);
-    private VBox vbox10 = new VBox(tutor, supervisor);
+
+    
+    
+    private VBox idVbox = new VBox (idNoLabel, idNoTF);
+    private VBox vbox10 = new VBox (tutor, supervisor, addBtn);
 
     public studentView() {
-
-        vbox10.setSpacing(100);
-
+        
+        HBox hb = new HBox();
+         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        hb.setBackground(new Background(background));
+        hb.setPrefSize(300, 40);
+        hb.setPadding(new Insets(0,20,20,20));
+        
+        this.tutor.setMaxSize(200, 30);       
+        this.supervisor.setMaxSize(200, 30);
+        this.addBtn.setMaxSize(200, 40);
+        this.tutor.setPadding(new Insets(10,50,10,50));
+        this.supervisor.setPadding(new Insets(10,50,10,50));
+        this.addBtn.setPadding(new Insets(10,50,10,50));
+        this.tutor.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        this.supervisor.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
+        this.addBtn.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
+        
+        ImageView user = new ImageView(new Image(getClass().getResourceAsStream("/resources/user.png")));
+        user.setFitHeight(15);
+        user.setFitWidth(16);
+        this.tutor.setGraphic(user);
+      
+        ImageView supervisor = new ImageView(new Image(getClass().getResourceAsStream("/resources/supervisor.png")));
+        supervisor.setFitHeight(20);
+        supervisor.setFitWidth(20);
+        this.supervisor.setGraphic(supervisor);
+        
+        ImageView userPlus = new ImageView(new Image(getClass().getResourceAsStream("/resources/userPlus.png")));
+        userPlus.setFitHeight(18);
+        userPlus.setFitWidth(16);
+        this.addBtn.setGraphic(userPlus);
+      
+      
+        vbox10.setSpacing(10);
+        vbox10.setPadding(new Insets(5,0,0,20));
+        
+        table.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        
         table.setItems(tableData);
 
         TableColumn idCol = new TableColumn("ID");
@@ -135,9 +180,10 @@ public class studentView extends BorderPane {
 
         });
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
-        table.setPrefWidth(1500);
+        this.table.setPrefWidth(700);
+
         //Hbox
-        buttonHbox.setSpacing(3);
+     //   buttonHbox.setSpacing(3);
 
         idNoVbox.setSpacing(3);
         firstNameVbox.setSpacing(3);
@@ -146,13 +192,14 @@ public class studentView extends BorderPane {
         phoneNoVbox.setSpacing(3);
 
         BorderPane.setMargin(table, new Insets(10, 10, 10, 10));
-        BorderPane.setMargin(vbox10, new Insets(10, 10, 10, 10));
+    //    BorderPane.setMargin(vbox10, new Insets(10, 10, 10, 10));
 
-        buttonHbox.setAlignment(Pos.CENTER);
-
-        this.setCenter(table);
+     //   buttonHbox.setAlignment(Pos.CENTER);
+        
+        this.setRight(table);
         this.setLeft(vbox10);
-        this.setBottom(buttonHbox);
+        this.setTop(hb);
+      //  this.setBottom(buttonHbox);
 
     }
 
@@ -273,12 +320,12 @@ public class studentView extends BorderPane {
 
                     Session currentSession = new Session(idNo, lastName, firstName, tutor, time, subject, startTime);
 
-                    try {
-                        sm.WriteDatabase(currentSession);//remove selected item from the table list
-                        tableData.remove(currentPerson);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    //try {
+                        //sm.WriteDatabase(currentSession);//remove selected item from the table list
+                      //  tableData.remove(currentPerson);
+                    //} catch (SQLException ex) {
+                      //  Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                    //}
                 }
             });
         }
@@ -397,6 +444,8 @@ public class studentView extends BorderPane {
         public void setTutor(SimpleStringProperty tutor) {
             this.tutor = tutor;
         }
+
+
 
     }
 

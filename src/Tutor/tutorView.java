@@ -57,7 +57,7 @@ public class tutorView extends BorderPane {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         
-       this.setBackground(new Background(background));
+      // this.setBackground(new Background(background));
         table.setItems(data);
 
         TableColumn firstNameCol = new TableColumn("First Name");
