@@ -11,7 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author elyvic
  */
-public class Data {
+public class Session {
 
     private SimpleStringProperty idNo;
     private SimpleStringProperty lastName;
@@ -21,10 +21,10 @@ public class Data {
     private SimpleStringProperty subject;
     private SimpleStringProperty startTime;
 
-    public Data() {
+    public Session() {
     }
 
-    public Data(String idNo, String lastName, String firstName, String tutor, String startTime, String subject, String time) {
+    public Session(String idNo, String lastName, String firstName, String tutor, String startTime, String subject, String time) {
         this.idNo = new SimpleStringProperty(idNo);
         this.lastName = new SimpleStringProperty(lastName);
         this.firstName = new SimpleStringProperty(firstName);

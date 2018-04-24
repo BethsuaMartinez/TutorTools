@@ -9,9 +9,12 @@ import Supervisor.TutorInformationView;
 import Supervisor.supervisorController;
 import Tutor.tutorController;
 import Tutor.tutorView;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -44,7 +47,7 @@ public class studentController {
             }
         });
         
-        gui.getSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
+        gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
@@ -55,14 +58,12 @@ public class studentController {
                 String idNo = gui.getIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
-                //String email = gui.getEmailTF().getText();
-                //String phoneNo = gui.getPhoneNoTF().getText();
                 String tutor = gui.getTutorTF().getText();
                 String subject = gui.getSubjectTF().getText();
                 String time = dateFormat.format(date);
                 
                 
-                Data currentSession = new Data(idNo, lastName, firstName, tutor, time, subject, "");
+                Session currentSession = new Session(idNo, lastName, firstName, tutor, time, subject, "");
                 gui.updateTable(currentSession);
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             }
@@ -91,12 +92,47 @@ public class studentController {
                 
             }
         });
-        gui.getNewStudentBtn().setOnAction(new EventHandler<ActionEvent>() {
+        
+        gui.getSubmitId().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-               gui.newStudent();
+               String id = gui.getIdNoTF().getText();
+               int x = Integer.parseInt(id);
+                try {
+                if(true==model.verifyUser(x))
+                    gui.newSession();
+                else
+                    gui.newStudent();
+                
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         });
+         gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+            }
+        });
+          gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+               
+                String idNo = gui.getNewStudentIdNoTF().getText();
+                String firstName = gui.getFirstNameTF().getText();
+                String lastName = gui.getLastNameTF().getText();
+                String email = gui.getEmailTF().getText();
+                String phone = gui.getPhoneNoTF().getText();
+                
+                try {
+                    model.insertStudent(idNo, firstName, lastName, email, phone);
+                    gui.newSession();
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            }
+        });
+        
         
     }
 }

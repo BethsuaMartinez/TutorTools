@@ -46,7 +46,12 @@ public final class loginController {
                     logv.wrongPass();
                 }
                 try {
+<<<<<<< HEAD
                     if (logm.loginDB(un, psswd) == true) {          
+=======
+
+                    if (logm.loginDB(un, psswd) == true) {    
+>>>>>>> d238be2f22338988009e785ef75e613503549c9a
 
                        studentView sv = new studentView();
                         studentModel sm = new studentModel();
