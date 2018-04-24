@@ -46,9 +46,14 @@ public class loginModel {
             myRs2 = myStmt2.executeQuery();
 
             String chkpsswd = null;
-            if (myRs.next()||myRs2.next()) {
+            if (myRs.next()) {
                 chkpsswd = myRs.getString("password");
                 return chkpsswd.equals(psswd);
+              
+            }
+            else if(myRs2.next()){
+               chkpsswd = myRs2.getString("password");
+               return chkpsswd.equals(psswd);
             }
         } catch (SQLException exc) {
         } finally {
