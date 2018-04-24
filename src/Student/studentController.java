@@ -111,6 +111,9 @@ public class studentController {
         });
          gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+            
+                
+                
             }
         });
           gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
