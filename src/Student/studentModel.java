@@ -113,18 +113,17 @@ public class studentModel {
             int studentid = Integer.parseInt(idNo);
 
             String sql = "INSERT INTO TutorTools.TutoringSessions "
-                    + "(id, studentid, fname, lname, tutorlname, subject, endTime,startTime)"
+                    + "(studentid, fname, lname, tutorlname, subject, endTime,startTime)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
-
-            myStmt.setInt(1, (sizeDB() + 1));
-            myStmt.setInt(2, studentid);
-            myStmt.setString(3, firstName);
-            myStmt.setString(4, lastName);
-            myStmt.setString(5, tutor);
-            myStmt.setString(6, subject);
-            myStmt.setString(7, startTime);
-            myStmt.setString(8, endTime);
+            
+            myStmt.setInt(1, studentid);
+            myStmt.setString(2, firstName);
+            myStmt.setString(3, lastName);
+            myStmt.setString(4, tutor);
+            myStmt.setString(5, subject);
+            myStmt.setString(6, startTime);
+            myStmt.setString(7, endTime);
 
             myStmt.executeUpdate();
 
