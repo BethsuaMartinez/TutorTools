@@ -261,7 +261,7 @@ public class studentView extends BorderPane {
         newStudentGridpane.addRow(0, idNoVbox);
         newStudentGridpane.addRow(1, firstNameVbox, lastNameVbox);
         newStudentGridpane.addRow(2, emailVbox, phoneNoVbox);
-        newStudentGridpane.addRow(5, submitSt, getBackNew());
+        newStudentGridpane.addRow(5, submitSt);
         
         return newStudentGridpane;
     }
