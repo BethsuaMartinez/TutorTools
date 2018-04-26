@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -47,8 +48,12 @@ public class studentController {
 
             @Override
             public void handle(ActionEvent event) {
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Stage signInStage = new Stage();
-                GridPane studentIdGridpane = gui.addSession();
+                signInStage.initModality(Modality.APPLICATION_MODAL);
+                signInStage.initOwner(window);
+                GridPane studentIdGridpane = new GridPane();
+                studentIdGridpane=gui.addSession();
                 Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
                 signInStage.setTitle("Sign-In");
                 signInStage.setScene(newIdScene);
@@ -60,7 +65,7 @@ public class studentController {
 
             @Override
             public void handle(ActionEvent event) {
-
+                Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 DateFormat dateFormat = new SimpleDateFormat("HH:mm");
                 Date date = new Date();
 
@@ -84,7 +89,9 @@ public class studentController {
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+                signInStage.close();
+                //((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
+                
             }
         });
 

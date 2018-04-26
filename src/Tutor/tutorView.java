@@ -53,11 +53,11 @@ public class tutorView extends BorderPane {
 
     public tutorView() {
 
-               BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
+        BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
-        
-      // this.setBackground(new Background(background));
+
+        // this.setBackground(new Background(background));
         table.setItems(data);
 
         TableColumn firstNameCol = new TableColumn("First Name");
@@ -182,7 +182,7 @@ public class tutorView extends BorderPane {
 
     //Define the button cell
     private class ButtonCell extends TableCell<Record, Boolean> {
-        
+
         private Button modButton = new Button("Modify");
         final Button cellButton = new Button("Delete");
         HBox cellBox = new HBox();
