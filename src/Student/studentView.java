@@ -38,6 +38,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -110,21 +111,39 @@ public class studentView extends BorderPane {
     public studentView() {
         
         HBox hb = new HBox();
-         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
+        HBox hb2 = new HBox();
+        HBox hb3 = new HBox();
+        BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
-        hb.setPrefSize(300, 40);
-        hb.setPadding(new Insets(0,20,20,20));
-        
+        hb.setPadding(new Insets(10,10,10,10));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
+        logo.setPreserveRatio(true);
+        logo.setFitWidth(120);
+        logo.setFitHeight(30);
+        hb2.getChildren().add(logo);
+        hb2.setPadding(new Insets(0,0,0,30));
+        hb3.getChildren().add(signOut);
+        hb3.setAlignment(Pos.CENTER_RIGHT);
+        hb3.setPadding(new Insets(0, 20, 0, 0));
+        HBox.setHgrow(hb3, Priority.ALWAYS);
+        hb.getChildren().addAll(logo, hb3);
+        hb.setPadding(new Insets(5,0,5,20));
+
         this.tutor.setMaxSize(200, 30);       
         this.supervisor.setMaxSize(200, 30);
         this.addBtn.setMaxSize(200, 40);
+        this.signOut.setMaxSize(100, 20);  
+        
         this.tutor.setPadding(new Insets(10,50,10,50));
         this.supervisor.setPadding(new Insets(10,50,10,50));
         this.addBtn.setPadding(new Insets(10,50,10,50));
+        this.signOut.setPadding(new Insets(5,5,5,5));
+        
         this.tutor.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         this.supervisor.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
         this.addBtn.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
+        this.signOut.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
         
         ImageView user = new ImageView(new Image(getClass().getResourceAsStream("/resources/user.png")));
         user.setFitHeight(15);
@@ -151,23 +170,30 @@ public class studentView extends BorderPane {
 
         TableColumn idCol = new TableColumn("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idCol.setPrefWidth(110);
 
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        firstNameCol.setPrefWidth(110);
 
         TableColumn lastNameCol = new TableColumn("Last Name");
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        lastNameCol.setPrefWidth(110);
 
         TableColumn subjectcol = new TableColumn("Subject");
         subjectcol.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        subjectcol.setPrefWidth(110);
 
         TableColumn tutorcol = new TableColumn("Tutor");
         tutorcol.setCellValueFactory(new PropertyValueFactory<>("tutor"));
+        tutorcol.setPrefWidth(110);
 
         TableColumn timeInCol = new TableColumn("TimeIn");
         timeInCol.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
+        timeInCol.setPrefWidth(110);
 
         TableColumn actionCol = new TableColumn("Action");
+        actionCol.setPrefWidth(110);
 
         //Adding the Button to the cell
         actionCol.setCellFactory(
@@ -180,7 +206,7 @@ public class studentView extends BorderPane {
 
         });
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
-        this.table.setPrefWidth(700);
+        this.table.setPrefWidth(770);
 
         //Hbox
      //   buttonHbox.setSpacing(3);
@@ -289,6 +315,20 @@ public class studentView extends BorderPane {
 
     public void setSubmitSs(Button submitSs) {
         this.submitSs = submitSs;
+    }
+
+    /**
+     * @return the signOut
+     */
+    public Button getSignOut() {
+        return signOut;
+    }
+
+    /**
+     * @param signOut the signOut to set
+     */
+    public void setSignOut(Button signOut) {
+        this.signOut = signOut;
     }
 
     //Define the button cell
