@@ -30,48 +30,58 @@ import javafx.stage.Stage;
  * @author elyvic
  */
 public class studentController {
-    
+
     studentModel model = new studentModel();
     studentView gui = new studentView();
-    
+
     public studentController(studentView gui, studentModel model) {
         this.model = model;
         this.gui = gui;
-        
+
         AttachHandler();
     }
-    
+
     public void AttachHandler() {
         gui.getAddBtn().setOnAction(new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
-              gui.addSession();
+                gui.addSession();
             }
         });
-        
+        //Submit to table
         gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
-                
-                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
                 Date date = new Date();
-                
+
                 String idNo = gui.getIdNoTF().getText();
-                String firstName = gui.getFirstNameTF().getText();
-                String lastName = gui.getLastNameTF().getText();
                 String tutor = gui.getTutorTF().getText();
                 String subject = gui.getSubjectTF().getText();
-                String time = dateFormat.format(date);
-                
-                
-                Session currentSession = new Session(idNo, lastName, firstName, tutor, time, subject, "");
-                gui.updateTable(currentSession);
+                String startTime = dateFormat.format(date);
+
+                int id = Integer.parseInt(idNo);
+
+                Student student;
+                try {
+                    student = model.getStudent(id);
+                    String fname = student.getFname();
+                    String lname = student.getLname();
+                    String email = student.getEmail();
+                    String phone = student.getPhone();
+
+                    Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
+                    gui.updateTable(currentSession);
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
             }
         });
-        
+
         gui.getTutor().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 tutorView tv = new tutorView();
@@ -81,10 +91,10 @@ public class studentController {
                 window.setTitle("Tutor Information");
                 window.setScene(scene3);
                 window.show();
-                
+
             }
         });
-        
+
         gui.getSupervisor().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 TutorInformationView tiv = new TutorInformationView();
@@ -94,47 +104,58 @@ public class studentController {
                 window.setTitle("Supervisor");
                 window.setScene(scene2);
                 window.show();
-                
+
             }
         });
-        
+
         gui.getSubmitId().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-               String id = gui.getIdNoTF().getText();
-               int x = Integer.parseInt(id);
-                try {
-                if(true==model.verifyUser(x))
-                    gui.newSession();
-                else
-                    gui.newStudent();
                 
+                if ("".equals(gui.getIdNoTF().getText())) {
+                    gui.wrongPass();
+                }
+                String id = gui.getIdNoTF().getText();
+                int x = Integer.parseInt(id);
+                try {
+                    if (true == model.verifyUser(x)) {
+                        gui.newSession();
+                    } else {
+                        gui.newStudent();
+                    }
+
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
         });
-         gui.getSubmitSs().setOnAction(new EventHandler<ActionEvent>() {
+        
+        gui.getBackNew().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                gui.addSession();
             }
         });
-          gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
+        
+        gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-               
+
+                if ("".equals(gui.getNewStudentIdNoTF().getText())) {
+                    gui.wrongPass();
+                }
+                
                 String idNo = gui.getNewStudentIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
                 String email = gui.getEmailTF().getText();
                 String phone = gui.getPhoneNoTF().getText();
-                
+
                 try {
                     model.insertStudent(idNo, firstName, lastName, email, phone);
                     gui.newSession();
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                
+
             }
         });
         
@@ -151,6 +172,5 @@ public class studentController {
                 window.show();
             }
         });
-        
     }
 }

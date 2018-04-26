@@ -43,11 +43,10 @@ public final class loginController {
                 String psswd = logv.getPassword().getText();
 
                 if ("".equals(un) || "".equals(psswd)) {
-                    logv.wrongPass();
+                    logv.wrongId();
                 }
                 try {
                     if (logm.loginDB(un, psswd) == true) {          
-
 
                        studentView sv = new studentView();
                         studentModel sm = new studentModel();
@@ -59,7 +58,7 @@ public final class loginController {
                         window.setScene(scene2);         
                         window.show();
                     } else {
-                        logv.wrongPass();
+                        logv.wrongId();
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,7 +72,7 @@ public final class loginController {
                 String psswd = logv.getPassword().getText();
 
                 if ("".equals(un) || "".equals(psswd)) {
-                    logv.wrongPass();
+                    logv.wrongId();
                 }
                 try {
 
@@ -89,7 +88,7 @@ public final class loginController {
                             window.setScene(scene2);
                             window.show();
                         } else {
-                            logv.wrongPass();
+                            logv.wrongId();
                         }
                     }
                 } catch (SQLException ex) {
