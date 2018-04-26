@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -43,7 +44,12 @@ public class studentController {
 
             @Override
             public void handle(ActionEvent event) {
-                gui.addSession();
+                Stage signInStage = new Stage();
+                GridPane studentIdGridpane = gui.addSession();
+                Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
+                signInStage.setTitle("Sign-In");
+                signInStage.setScene(newIdScene);
+                signInStage.show();
             }
         });
         //Submit to table
@@ -107,7 +113,7 @@ public class studentController {
 
         gui.getSubmitId().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                
+                Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 if ("".equals(gui.getIdNoTF().getText())) {
                     gui.wrongPass();
                 }
@@ -115,9 +121,15 @@ public class studentController {
                 int x = Integer.parseInt(id);
                 try {
                     if (true == model.verifyUser(x)) {
-                        gui.newSession();
+                        GridPane newSessionGridpane = gui.newSession();
+                        Scene newSessionScene = new Scene(newSessionGridpane, 375, 350);
+                        signInStage.setScene(newSessionScene);
+                        signInStage.show();
                     } else {
-                        gui.newStudent();
+                        GridPane newStudentGridpane= gui.newStudent();
+                        Scene newStudentScene = new Scene(newStudentGridpane, 375, 350);
+                        signInStage.setScene(newStudentScene);
+                        signInStage.show();
                     }
 
                 } catch (SQLException ex) {
@@ -126,20 +138,25 @@ public class studentController {
 
             }
         });
-        
+
         gui.getBackNew().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                gui.addSession();
+                Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                GridPane studentIdGridpane = gui.addSession();
+                Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
+                signInStage.setTitle("Sign-In");
+                signInStage.setScene(newIdScene);
+                signInStage.show();
             }
         });
-        
+
         gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
                 if ("".equals(gui.getNewStudentIdNoTF().getText())) {
                     gui.wrongPass();
                 }
-                
+
                 String idNo = gui.getNewStudentIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();

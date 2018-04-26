@@ -54,8 +54,6 @@ public class studentView extends BorderPane {
     private GridPane studentIdGridpane = new GridPane();
     private GridPane newSessionGridpane = new GridPane();
 
-    private Stage signInStage = new Stage();
-
     private Button addBtn = new Button("Add Session");
 
     private Button signOut = new Button("Log Out");
@@ -198,11 +196,7 @@ public class studentView extends BorderPane {
 
     }
 
-    public void addSession() {
-        Scene signInscene = new Scene(getStudentIdGridpane(), 200, 100);
-        signInStage.setTitle("Sign-In");
-        signInStage.setScene(signInscene);
-        signInStage.show();
+    public GridPane addSession(){
         //studentIdGridPane
         studentIdGridpane.setAlignment(Pos.CENTER);
         studentIdGridpane.setVgap(5);
@@ -211,10 +205,11 @@ public class studentView extends BorderPane {
 
         studentIdGridpane.addRow(1, submitId);
         studentIdGridpane.addRow(0, idVbox);
-
+        
+        return studentIdGridpane;
     }
 
-    public void newStudent() {
+    public GridPane newStudent() {
         //newStudentGridPane
         newStudentGridpane.setVgap(5);
         newStudentGridpane.setHgap(5);
@@ -225,14 +220,11 @@ public class studentView extends BorderPane {
         newStudentGridpane.addRow(1, firstNameVbox, lastNameVbox);
         newStudentGridpane.addRow(2, emailVbox, phoneNoVbox);
         newStudentGridpane.addRow(5, submitSt, getBackNew());
-
-        Scene newStudentScene = new Scene(newStudentGridpane, 375, 350);
-
-        signInStage.setScene(newStudentScene);
-        signInStage.show();
+        
+        return newStudentGridpane;
     }
 
-    public void newSession() {
+    public GridPane newSession() {
         //newStudentGridPane
         newSessionGridpane.setVgap(5);
         newSessionGridpane.setHgap(5);
@@ -240,11 +232,7 @@ public class studentView extends BorderPane {
         newSessionGridpane.addRow(3, subjectVbox);
         newSessionGridpane.addRow(4, tutorVbox);
         newSessionGridpane.addRow(5, submitSs);
-
-        Scene newSessionScene = new Scene(newSessionGridpane, 375, 350);
-
-        signInStage.setScene(newSessionScene);
-        signInStage.show();
+        return newSessionGridpane;
     }
 
     public void ClearFields() {
