@@ -110,7 +110,7 @@ public class loginView extends BorderPane {
 
     }
 
-    public void wrongPass() {
+    public void wrongId() {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Incorrect Password or Username");

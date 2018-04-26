@@ -17,21 +17,23 @@ public class Session {
     private SimpleStringProperty lastName;
     private SimpleStringProperty firstName;
     private SimpleStringProperty tutor;
-    private SimpleStringProperty time;
+    private SimpleStringProperty endTime;
     private SimpleStringProperty subject;
     private SimpleStringProperty startTime;
+    private SimpleStringProperty date;
 
     public Session() {
     }
 
-    public Session(String idNo, String lastName, String firstName, String tutor, String startTime, String subject, String time) {
+    public Session(String idNo, String lastName, String firstName, String tutor, String startTime, String subject, String endTime, String date) {
         this.idNo = new SimpleStringProperty(idNo);
         this.lastName = new SimpleStringProperty(lastName);
         this.firstName = new SimpleStringProperty(firstName);
         this.tutor = new SimpleStringProperty(tutor);
-        this.time = new SimpleStringProperty(time);
+        this.endTime = new SimpleStringProperty(endTime);
         this.subject = new SimpleStringProperty(subject);
         this.startTime = new SimpleStringProperty(startTime);
+        this.date = new SimpleStringProperty(date);
     }
 
     /**
@@ -82,17 +84,17 @@ public class Session {
     }
 
     /**
-     * @return the time
+     * @return the endTime
      */
-    public String getTime() {
-        return time.get();
+    public String getEndTime() {
+        return endTime.get();
     }
 
     /**
-     * @param time the time to set
+     * @param time the endTime to set
      */
-    public void setTime(String time) {
-        this.time.set(time);
+    public void setEndTime(String time) {
+        this.endTime.set(time);
     }
 
     /**
@@ -135,5 +137,13 @@ public class Session {
      */
     public void setStartTime(String startTime) {
         this.startTime.set(startTime);
+    }
+
+    public String getDate() {
+        return date.get();
+    }
+
+    public void setDate(String date) {
+        this.date.set(date);
     }
 }
