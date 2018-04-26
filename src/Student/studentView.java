@@ -113,7 +113,7 @@ public class studentView extends BorderPane {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
         hb.setPadding(new Insets(10,10,10,10));
-        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
         logo.setFitHeight(30);
