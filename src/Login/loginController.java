@@ -74,9 +74,6 @@ public final class loginController {
                     logv.wrongId();
                 }
                 try {
-
-                    if (logm.loginDB(un, psswd) == true) {
-
                         if (logm.loginDB(un, psswd) == true) {
 
                             studentView sv = new studentView();
@@ -90,7 +87,7 @@ public final class loginController {
                             logv.wrongId();
                         }
                     }
-                } catch (SQLException ex) {
+                 catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

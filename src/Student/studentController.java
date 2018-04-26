@@ -129,7 +129,7 @@ public class studentController {
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
                     } else {
-                        GridPane newStudentGridpane= gui.newStudent();
+                        GridPane newStudentGridpane = gui.newStudent();
                         Scene newStudentScene = new Scene(newStudentGridpane, 375, 350);
                         signInStage.setScene(newStudentScene);
                         signInStage.show();
@@ -159,24 +159,26 @@ public class studentController {
                 if ("".equals(gui.getNewStudentIdNoTF().getText())) {
                     gui.wrongPass();
                 }
-
                 String idNo = gui.getNewStudentIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
                 String email = gui.getEmailTF().getText();
                 String phone = gui.getPhoneNoTF().getText();
-
                 try {
+                    Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     model.insertStudent(idNo, firstName, lastName, email, phone);
-                    gui.newSession();
+                    GridPane newSessionGridpane = gui.newSession();
+                    Scene newSessionScene = new Scene(newSessionGridpane, 375, 350);
+                    signInStage.setScene(newSessionScene);
+                    signInStage.show();
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
         });
-        
-            gui.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
+
+        gui.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 loginView v = new loginView();
