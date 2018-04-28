@@ -113,27 +113,27 @@ public class TutorInformationView extends BorderPane {
         hb4.setAlignment(Pos.BOTTOM_CENTER);
         vb.getChildren().addAll(tutor,table,hb4);
         
-        TableColumn idCol = new TableColumn("ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn tutoridCol = new TableColumn("ID");
+        tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         
-        TableColumn fNameCol = new TableColumn("First Name");
-        fNameCol.setCellValueFactory(new PropertyValueFactory<>("fName"));
+        TableColumn tutorfNameCol = new TableColumn("First Name");
+        tutorfNameCol.setCellValueFactory(new PropertyValueFactory<>("fName"));
         
-        TableColumn lNameCol = new TableColumn("Last Name");
-        lNameCol.setCellValueFactory(new PropertyValueFactory<>("lName"));
+        TableColumn tutorlNameCol = new TableColumn("Last Name");
+        tutorlNameCol.setCellValueFactory(new PropertyValueFactory<>("lName"));
         
-        TableColumn emailCol = new TableColumn("Email");
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        TableColumn tutoremailCol = new TableColumn("Email");
+        tutoremailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         
-        TableColumn phoneCol = new TableColumn("Phone");
-        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        TableColumn tutorphoneCol = new TableColumn("Phone");
+        tutorphoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         
-        TableColumn subjectCol = new TableColumn("Subject");
-        subjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        TableColumn tutorsubjectCol = new TableColumn("Subject");
+        tutorsubjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
         
-        TableColumn actionCol = new TableColumn("Action");
+        TableColumn tutoractionCol = new TableColumn("Action");
         
-        actionCol.setCellFactory(
+        tutoractionCol.setCellFactory(
                 new Callback<TableColumn<Disposer.Record, Boolean>, TableCell<Disposer.Record, Boolean>>() {
 
             @Override
@@ -143,15 +143,15 @@ public class TutorInformationView extends BorderPane {
 
         });
         
-        table.getColumns().addAll(idCol, fNameCol, lNameCol, emailCol, subjectCol, phoneCol);
+        table.getColumns().addAll(tutoridCol, tutorfNameCol, tutorlNameCol, tutoremailCol, tutorsubjectCol, tutorphoneCol);
         table.setPrefWidth(1500);
         table2.setMaxSize(650, 350);
         table2.setTranslateX(5);
-        
         search.setPrefSize(100, 10);
         student.setTranslateX(10);
         student.setAlignment(Pos.BASELINE_CENTER);
         student.setPadding(new Insets(5,0,5,0));
+        
         HBox hbox1= new HBox(lasName, lastNameTF, search, getActivity(), back);
         hbox1.setPadding(new Insets(5));
         hbox1.setSpacing(20);
@@ -159,179 +159,43 @@ public class TutorInformationView extends BorderPane {
         VBox vb2 =new VBox();
         vb2.getChildren().addAll(student,hbox1, table2);
         
+                TableColumn studentidCol = new TableColumn("ID");
+        studentidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        
+        TableColumn studentfNameCol = new TableColumn("First Name");
+        studentfNameCol.setCellValueFactory(new PropertyValueFactory<>("fName"));
+        
+        TableColumn studentlNameCol = new TableColumn("Last Name");
+        studentlNameCol.setCellValueFactory(new PropertyValueFactory<>("lName"));
+        
+        TableColumn studentemailCol = new TableColumn("Email");
+        studentemailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        
+        TableColumn studentphoneCol = new TableColumn("Phone");
+        studentphoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        
+        TableColumn studentsubjectCol = new TableColumn("Subject");
+        studentsubjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        
+        TableColumn studentactionCol = new TableColumn("Action");
+        
+        studentactionCol.setCellFactory(
+                new Callback<TableColumn<Disposer.Record, Boolean>, TableCell<Disposer.Record, Boolean>>() {
+
+            @Override
+            public TableCell<Disposer.Record, Boolean> call(TableColumn<Disposer.Record, Boolean> p) {
+                return new TutorInformationView.ButtonCell();
+            }
+
+        });
+        
+        table2.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentsubjectCol, studentphoneCol);
+        
         this.setTop(hb);
         this.setLeft(vb2);
         this.setRight(vb);
     }
 
-    /**
-     * @return the idLabel
-     */
-    public Label getIdLabel() {
-        return idLabel;
-    }
-
-    /**
-     * @param idLabel the idLabel to set
-     */
-    public void setIdLabel(Label idLabel) {
-        this.idLabel = idLabel;
-    }
-
-    /**
-     * @return the idTF
-     */
-    public TextField getIdTF() {
-        return idTF;
-    }
-
-    /**
-     * @param idTF the idTF to set
-     */
-    public void setIdTF(TextField idTF) {
-        this.idTF = idTF;
-    }
-
-    /**
-     * @return the fNameLabel
-     */
-    public Label getfNameLabel() {
-        return fNameLabel;
-    }
-
-    /**
-     * @param fNameLabel the fNameLabel to set
-     */
-    public void setfNameLabel(Label fNameLabel) {
-        this.fNameLabel = fNameLabel;
-    }
-
-    /**
-     * @return the fNameTF
-     */
-    public TextField getfNameTF() {
-        return fNameTF;
-    }
-
-    /**
-     * @param fNameTF the fNameTF to set
-     */
-    public void setfNameTF(TextField fNameTF) {
-        this.fNameTF = fNameTF;
-    }
-
-    /**
-     * @return the lNameLabel
-     */
-    public Label getlNameLabel() {
-        return lNameLabel;
-    }
-
-    /**
-     * @param lNameLabel the lNameLabel to set
-     */
-    public void setlNameLabel(Label lNameLabel) {
-        this.lNameLabel = lNameLabel;
-    }
-
-    /**
-     * @return the lNameTF
-     */
-    public TextField getlNameTF() {
-        return lNameTF;
-    }
-
-    /**
-     * @param lNameTF the lNameTF to set
-     */
-    public void setlNameTF(TextField lNameTF) {
-        this.lNameTF = lNameTF;
-    }
-
-    /**
-     * @return the emailLabel
-     */
-    public Label getEmailLabel() {
-        return emailLabel;
-    }
-
-    /**
-     * @param emailLabel the emailLabel to set
-     */
-    public void setEmailLabel(Label emailLabel) {
-        this.emailLabel = emailLabel;
-    }
-
-    /**
-     * @return the emailLF
-     */
-    public TextField getEmailTF() {
-        return emailTF;
-    }
-
-    /**
-     * @param emailLF the emailLF to set
-     */
-    public void setEmailTF(TextField emailTF) {
-        this.emailTF = emailTF;
-    }
-
-    /**
-     * @return the phoneLabel
-     */
-    public Label getPhoneLabel() {
-        return phoneLabel;
-    }
-
-    /**
-     * @param phoneLabel the phoneLabel to set
-     */
-    public void setPhoneLabel(Label phoneLabel) {
-        this.phoneLabel = phoneLabel;
-    }
-
-    /**
-     * @return the phoneTF
-     */
-    public TextField getPhoneTF() {
-        return phoneTF;
-    }
-
-    /**
-     * @param phoneTF the phoneTF to set
-     */
-    public void setPhoneTF(TextField phoneTF) {
-        this.phoneTF = phoneTF;
-    }
-
-    /**
-     * @return the subjectLabel
-     */
-    public Label getSubjectLabel() {
-        return subjectLabel;
-    }
-
-    /**
-     * @param subjectLabel the subjectLabel to set
-     */
-    public void setSubjectLabel(Label subjectLabel) {
-        this.subjectLabel = subjectLabel;
-    }
-
-    /**
-     * @return the subjectTF
-     */
-    public TextField getSubjectTF() {
-        return subjectTF;
-    }
-
-    /**
-     * @param subjectTF the subjectTF to set
-     */
-    public void setSubjectTF(TextField subjectTF) {
-        this.subjectTF = subjectTF;
-    }
-    
      public static class RowData {
          
      
@@ -578,6 +442,172 @@ public class TutorInformationView extends BorderPane {
     public void setBack(Button back) {
         this.back = back;
     }
+ /**
+     * @return the idLabel
+     */
+    public Label getIdLabel() {
+        return idLabel;
+    }
 
+    /**
+     * @param idLabel the idLabel to set
+     */
+    public void setIdLabel(Label idLabel) {
+        this.idLabel = idLabel;
+    }
+
+    /**
+     * @return the idTF
+     */
+    public TextField getIdTF() {
+        return idTF;
+    }
+
+    /**
+     * @param idTF the idTF to set
+     */
+    public void setIdTF(TextField idTF) {
+        this.idTF = idTF;
+    }
+
+    /**
+     * @return the fNameLabel
+     */
+    public Label getfNameLabel() {
+        return fNameLabel;
+    }
+
+    /**
+     * @param fNameLabel the fNameLabel to set
+     */
+    public void setfNameLabel(Label fNameLabel) {
+        this.fNameLabel = fNameLabel;
+    }
+
+    /**
+     * @return the fNameTF
+     */
+    public TextField getfNameTF() {
+        return fNameTF;
+    }
+
+    /**
+     * @param fNameTF the fNameTF to set
+     */
+    public void setfNameTF(TextField fNameTF) {
+        this.fNameTF = fNameTF;
+    }
+
+    /**
+     * @return the lNameLabel
+     */
+    public Label getlNameLabel() {
+        return lNameLabel;
+    }
+
+    /**
+     * @param lNameLabel the lNameLabel to set
+     */
+    public void setlNameLabel(Label lNameLabel) {
+        this.lNameLabel = lNameLabel;
+    }
+
+    /**
+     * @return the lNameTF
+     */
+    public TextField getlNameTF() {
+        return lNameTF;
+    }
+
+    /**
+     * @param lNameTF the lNameTF to set
+     */
+    public void setlNameTF(TextField lNameTF) {
+        this.lNameTF = lNameTF;
+    }
+
+    /**
+     * @return the emailLabel
+     */
+    public Label getEmailLabel() {
+        return emailLabel;
+    }
+
+    /**
+     * @param emailLabel the emailLabel to set
+     */
+    public void setEmailLabel(Label emailLabel) {
+        this.emailLabel = emailLabel;
+    }
+
+    /**
+     * @return the emailLF
+     */
+    public TextField getEmailTF() {
+        return emailTF;
+    }
+
+    /**
+     * @param emailLF the emailLF to set
+     */
+    public void setEmailTF(TextField emailTF) {
+        this.emailTF = emailTF;
+    }
+
+    /**
+     * @return the phoneLabel
+     */
+    public Label getPhoneLabel() {
+        return phoneLabel;
+    }
+
+    /**
+     * @param phoneLabel the phoneLabel to set
+     */
+    public void setPhoneLabel(Label phoneLabel) {
+        this.phoneLabel = phoneLabel;
+    }
+
+    /**
+     * @return the phoneTF
+     */
+    public TextField getPhoneTF() {
+        return phoneTF;
+    }
+
+    /**
+     * @param phoneTF the phoneTF to set
+     */
+    public void setPhoneTF(TextField phoneTF) {
+        this.phoneTF = phoneTF;
+    }
+
+    /**
+     * @return the subjectLabel
+     */
+    public Label getSubjectLabel() {
+        return subjectLabel;
+    }
+
+    /**
+     * @param subjectLabel the subjectLabel to set
+     */
+    public void setSubjectLabel(Label subjectLabel) {
+        this.subjectLabel = subjectLabel;
+    }
+
+    /**
+     * @return the subjectTF
+     */
+    public TextField getSubjectTF() {
+        return subjectTF;
+    }
+
+    /**
+     * @param subjectTF the subjectTF to set
+     */
+    public void setSubjectTF(TextField subjectTF) {
+        this.subjectTF = subjectTF;
+    }
     
 }
