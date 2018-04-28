@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.22, for Linux (x86_64)
 --
 -- Host: localhost    Database: TutorTools
 -- ------------------------------------------------------
--- Server version	5.7.21-0ubuntu0.16.04.1
+-- Server version	5.7.22-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `Students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Students` (
-  `idStudents` int(11) NOT NULL,
+  `idStudent` int(11) NOT NULL,
   `fname` varchar(45) DEFAULT NULL,
   `lname` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idStudents`)
+  PRIMARY KEY (`idStudent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,7 +38,7 @@ CREATE TABLE `Students` (
 
 LOCK TABLES `Students` WRITE;
 /*!40000 ALTER TABLE `Students` DISABLE KEYS */;
-INSERT INTO `Students` VALUES (3571113,'Elyvic','Cabais','elyvic.cabais@aol.com','956-889-988'),(9756997,'Osiel','Juarez','osiel.juarez@aol.com','956-453-354');
+INSERT INTO `Students` VALUES (2345,'luis','selvera','',''),(4546,'Elyvic','Cabais','elyvic.cabais@aol.com','956-889-988'),(12345,'luis','selvera','luis.selvera@aol.com','512-345-6789'),(9756997,'Osiel','Juarez','osiel.juarez@aol.com','956-453-354'),(20327396,'Carlos','Quinto','quinto@gmail.com','');
 /*!40000 ALTER TABLE `Students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `Supervisor` (
 
 LOCK TABLES `Supervisor` WRITE;
 /*!40000 ALTER TABLE `Supervisor` DISABLE KEYS */;
-INSERT INTO `Supervisor` VALUES (2342,NULL,NULL,'456','def',NULL),(107115,'Kenneth','Segarra','kenny','kenneth.segarra@aol.com','956-845-548');
+INSERT INTO `Supervisor` VALUES (107115,'Kenneth','Segarra','kenny','kenneth.segarra@aol.com','956-845-548');
 /*!40000 ALTER TABLE `Supervisor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,16 +78,17 @@ DROP TABLE IF EXISTS `TutoringSessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `TutoringSessions` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `studentid` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idStudent` int(11) DEFAULT NULL,
   `fname` varchar(45) DEFAULT NULL,
   `lname` varchar(45) DEFAULT NULL,
-  `tutorlname` varchar(45) DEFAULT NULL,
+  `tutor` varchar(45) DEFAULT NULL,
+  `subject` varchar(45) DEFAULT NULL,
   `startTime` varchar(45) DEFAULT NULL,
   `endTime` varchar(45) DEFAULT NULL,
-  `subject` varchar(45) DEFAULT NULL,
+  `date` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +97,7 @@ CREATE TABLE `TutoringSessions` (
 
 LOCK TABLES `TutoringSessions` WRITE;
 /*!40000 ALTER TABLE `TutoringSessions` DISABLE KEYS */;
-INSERT INTO `TutoringSessions` VALUES (1,9809,'selvera','luis','elyvic','04/22/2018 13:11:30','','english'),(2,23432,'Jacob','Smith','Luis','04/22/2018 17:12:50','12:00','english'),(3,9756997,'Osiel','Juarez','Bethsua','2:00 PM',NULL,'math'),(4,23432,'Jacob','Smith','Luis','04/22/2018 18:37:27','12:00','english'),(5,23432,'Jacob','Smith','Luis','12:00','04/22/2018 18:38:35','english'),(6,23432,'Jacob','Smith','Luis','12:00','04/23/2018 14:13:14','english');
+INSERT INTO `TutoringSessions` VALUES (1,9809,'selvera','luis','elyvic','english','13:11','14:15','04/25/2018'),(2,23432,'Jacob','Smith','Luis','english','17:12','12:00','04/25/2018'),(3,9756997,'Osiel','Juarez','Bethsua','math','14:00','16:00','04/25/2018'),(8,4546,'Elyvic','Cabais','carla','english','19:12','19:13','04/25/2018');
 /*!40000 ALTER TABLE `TutoringSessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,14 +109,14 @@ DROP TABLE IF EXISTS `Tutors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tutors` (
-  `idTutors` int(11) NOT NULL,
+  `idTutor` int(11) NOT NULL,
   `fname` varchar(45) DEFAULT NULL,
   `lname` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
   `subject` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idTutors`)
+  PRIMARY KEY (`idTutor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,7 +126,7 @@ CREATE TABLE `Tutors` (
 
 LOCK TABLES `Tutors` WRITE;
 /*!40000 ALTER TABLE `Tutors` DISABLE KEYS */;
-INSERT INTO `Tutors` VALUES (23,'',NULL,'abc',NULL,'123',NULL),(98120,'Bethsua','Martinez','bethsua.martinez@aol.com','956-659-956','tutor2','Math'),(108115,'Luis','Selvera','luis.selvera@aol.com','512-215-512','tutor1','Computer Science');
+INSERT INTO `Tutors` VALUES (0,NULL,NULL,'abc',NULL,'123',NULL),(98120,'Bethsua','Martinez','bethsua.martinez@aol.com','956-659-956','tutor2','Math'),(108115,'Luis','Selvera','luis.selvera@aol.com','512-215-512','tutor1','Computer Science');
 /*!40000 ALTER TABLE `Tutors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -138,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-23 15:21:53
+-- Dump completed on 2018-04-26  3:19:26
