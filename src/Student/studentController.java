@@ -52,8 +52,7 @@ public class studentController {
                 Stage signInStage = new Stage();
                 signInStage.initModality(Modality.APPLICATION_MODAL);
                 signInStage.initOwner(window);
-                GridPane studentIdGridpane = new GridPane();
-                studentIdGridpane=gui.addSession();
+                GridPane studentIdGridpane = gui.addSession();
                 Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
                 signInStage.setTitle("Sign-In");
                 signInStage.setScene(newIdScene);
