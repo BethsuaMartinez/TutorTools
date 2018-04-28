@@ -5,6 +5,9 @@
  */
 package Supervisor;
 
+import Login.loginController;
+import Login.loginModel;
+import Login.loginView;
 import Student.studentController;
 import Student.studentModel;
 import Student.studentView;
@@ -29,7 +32,23 @@ public class supervisorController {
         attachHandlers();
     }
 
-    private void attachHandlers() {
+            private void attachHandlers() {
+
+    
+
+        tiv.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                loginView v = new loginView();
+                loginModel m = new loginModel();
+                loginController logc = new loginController(v, m);
+                Scene scene2 = new Scene(v, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Sign In");
+                window.setScene(scene2);
+                window.show();
+            }
+        });
         
         tiv.getBack().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
