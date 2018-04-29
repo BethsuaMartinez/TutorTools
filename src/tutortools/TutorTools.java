@@ -29,7 +29,7 @@ public class TutorTools extends Application {
 
         loginController lc = new loginController(lv, lm);
        
-        Scene scene = new Scene(lv, 1000, 500);
+        Scene scene = new Scene(lv, 1000, 550);
  
         primaryStage.getIcons().add(new Image("/resources/Logo.png"));
         primaryStage.setTitle("TutorTools");
