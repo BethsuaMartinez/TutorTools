@@ -54,7 +54,9 @@ public class tutorView extends BorderPane {
     private Button calender = new Button("Calender");
     private TextField searchTf = new TextField();
     private Button back = new Button("Back");
-
+    private Button modify = new Button("Modify");
+    private Button delete = new Button("Delete");
+    
     public tutorView() {
 
         HBox top = new HBox();
@@ -88,19 +90,29 @@ public class tutorView extends BorderPane {
         this.calender.setMaxSize(100, 20);
         this.back.setMaxSize(200, 20);
         this.signOut.setMaxSize(100, 20);  
+        this.modify.setMaxSize(100, 20); 
+        this.delete.setMaxSize(100, 20); 
         
         this.searchBtn.setPadding(new Insets(3,3,3,3));
         this.calender.setPadding(new Insets(3,3,3,3));
         this.back.setPadding(new Insets(5,10,5,10));
         this.signOut.setPadding(new Insets(5,10,5,10));
+        this.modify.setPadding(new Insets(3,15,3,15));
+        this.delete.setPadding(new Insets(3,15,3,15));
         
         this.searchBtn.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         this.calender.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
         this.back.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
         this.signOut.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
+        this.modify.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
+        this.delete.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
 
         table.setItems(data);
-       
+        
+        TableColumn studentIDcol = new TableColumn("Student ID");
+        studentIDcol.setCellValueFactory(
+                new PropertyValueFactory<>("studentID"));
+        studentIDcol.setPrefWidth(110);
 
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setCellValueFactory(
@@ -126,39 +138,44 @@ public class tutorView extends BorderPane {
         timeOutCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOut"));
         timeOutCol.setPrefWidth(90);
-        
-        TableColumn actionCol = new TableColumn("Action");
 
-        //Adding the Button to the cell
-        actionCol.setCellFactory(
-                new Callback<TableColumn<Record, Boolean>, TableCell<Record, Boolean>>() {
-
-            @Override
-            public TableCell<Record, Boolean> call(TableColumn<Record, Boolean> p) {
-                return new ButtonCell();
-            }
-
-        });
+        TableColumn dateCol = new TableColumn("Date");
+        dateCol.setCellValueFactory(
+                new PropertyValueFactory<>("date"));
+        dateCol.setPrefWidth(90);
         
         table.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
-        table.getColumns().addAll(firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, actionCol);
-        table.setPrefWidth(640);
-       
-        
+        table.getColumns().addAll(studentIDcol, firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, dateCol);
+        table.setMaxWidth(800);
+      
+        BorderPane.setAlignment(table, Pos.CENTER);
         this.searchTf.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
+        this.searchTf.setPromptText("Ex. Name, ID, Last Name");
+        this.searchTf.setPrefSize(300, 20);
 
         HBox search = new HBox();
+        search.setAlignment(Pos.CENTER);
         search.getChildren().addAll(searchTf, searchBtn, calender);
         search.setSpacing(10);
         search.setStyle(" -fx-padding: 10");
+        
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(table);
+        
+        HBox bottom = new HBox();
+        bottom.getChildren().addAll(modify,delete);
+        bottom.setAlignment(Pos.CENTER);
+        bottom.setSpacing(10);
        
-        VBox left = new VBox();
-        left.getChildren().addAll(search,table);
+        VBox center = new VBox();
+        center.getChildren().addAll(search,tableBox,bottom);
+        center.setSpacing(10);
        
-        BorderPane.setMargin(left, new Insets(0,10,0,10));
+        BorderPane.setMargin(center, new Insets(0,50,10,50));
 
-        this.setLeft(left);
+        this.setCenter(center);
         this.setTop(top);
     }
 
@@ -232,60 +249,43 @@ public class tutorView extends BorderPane {
         this.back = back;
     }
 
-    //Define the button cell
-    private class ButtonCell extends TableCell<Record, Boolean> {
+    /**
+     * @return the modify
+     */
+    public Button getModify() {
+        return modify;
+    }
 
-        private Button modButton = new Button("Modify");
-        final Button cellButton = new Button("Delete");
-        HBox cellBox = new HBox();
+    /**
+     * @param modify the modify to set
+     */
+    public void setModify(Button modify) {
+        this.modify = modify;
+    }
 
-        ButtonCell() {
+    /**
+     * @return the delete
+     */
+    public Button getDelete() {
+        return delete;
+    }
 
-            cellBox.getChildren().addAll(modButton, cellButton);
-
-            //Action when the button is pressed
-            cellButton.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent t) {
-                    // get Selected Item
-                    RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
-                    //remove selected item from the table list
-                    data.remove(currentPerson);
-                }
-            });
-            modButton.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent t) {
-                    // get Selected Item
-                    RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
-                    //remove selected item from the table list
-                    System.out.println(currentPerson.firstName.get());
-                }
-            });
-        }
-
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if (!empty) {
-                setGraphic(cellBox);
-            } else {
-                setGraphic(null);
-            }
-        }
-
+    /**
+     * @param delete the delete to set
+     */
+    public void setDelete(Button delete) {
+        this.delete = delete;
     }
 
     public static class RowData {
-
+        
+        private SimpleStringProperty studentID;
         private SimpleStringProperty firstName;
         private SimpleStringProperty lastName;
         private SimpleStringProperty subject;
         private SimpleStringProperty timeIn;
         private SimpleStringProperty timeOut;
+        private SimpleStringProperty date;
 
         private RowData(String fName, String lName, String subject, String timeIn, String timeOut) {
             this.firstName = new SimpleStringProperty(fName);
