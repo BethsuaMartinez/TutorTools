@@ -57,11 +57,18 @@ public class studentController {
                 Stage signInStage = new Stage();
                 signInStage.initModality(Modality.APPLICATION_MODAL);
                 signInStage.initOwner(window);
+
                 
                 VBox layout = new VBox();
                 layout = gui.addSession();     
                 
                 Scene newIdScene = new Scene(layout, 210, 110);
+
+
+
+                
+ 
+
                 signInStage.setTitle("Sign-In");
                 
                 signInStage.setScene(newIdScene);
@@ -127,6 +134,7 @@ public class studentController {
             public void handle(ActionEvent event) {
                 TutorInformationView tiv = new TutorInformationView();
                 supervisorController sc = new supervisorController(tiv);
+
                 Scene scene2 = new Scene(tiv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Supervisor");

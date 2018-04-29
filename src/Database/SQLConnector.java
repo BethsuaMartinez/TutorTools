@@ -21,8 +21,7 @@ public final class SQLConnector {
         String dbName = "TutorTools";			//modify according to your DB
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";				//modify according to your user
-        //String password = "Bjms83936878.,";				//modify according to your password
-        //String password = "hello";				//modify according to your password
+
         String password = "root";				//modify according to your password
 
         try {
