@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -40,7 +42,9 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -50,10 +54,12 @@ import javafx.util.Callback;
  */
 public class studentView extends BorderPane {
 
+    StudentModel sm = new StudentModel();
     SessionModel ssm = new SessionModel();
     private GridPane gridpane = new GridPane();
     private GridPane newStudentGridpane = new GridPane();
     private GridPane studentIdGridpane = new GridPane();
+    private GridPane studentIdGridpane2 = new GridPane();
     private GridPane newSessionGridpane = new GridPane();
 
     private Button addBtn = new Button("Add Session");
@@ -74,7 +80,7 @@ public class studentView extends BorderPane {
     private TextField idNoTF = new TextField();
 
     private Label newStudentIdNoLabel = new Label("ID Number");
-    private TextField newStudentIdNoTF = new TextField();
+    
 
     private Label firstNameLabel = new Label("First Name");
     private TextField firstNameTF = new TextField();
@@ -94,13 +100,15 @@ public class studentView extends BorderPane {
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
 
-    private VBox idNoVbox = new VBox(newStudentIdNoLabel, newStudentIdNoTF);
+  
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneNoVbox = new VBox(phoneNoLabel, phoneNoTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
+    
+    private HBox nameHBox = new HBox(firstNameVbox, lastNameVbox);
 
     private VBox idVbox = new VBox(idNoLabel, idNoTF);
     private VBox vbox10 = new VBox(tutor, supervisor, addBtn);
@@ -222,7 +230,7 @@ public class studentView extends BorderPane {
 
         //Hbox
         //   buttonHbox.setSpacing(3);
-        idNoVbox.setSpacing(3);
+        idVbox.setSpacing(3);
         firstNameVbox.setSpacing(3);
         lastNameVbox.setSpacing(3);
         emailVbox.setSpacing(3);
@@ -238,45 +246,50 @@ public class studentView extends BorderPane {
         //  this.setBottom(buttonHbox);
 
     }
-
-    public GridPane addSession(){
-        //studentIdGridPane
-        studentIdGridpane.setAlignment(Pos.CENTER);
-        studentIdGridpane.setVgap(5);
-
+    
+    public VBox addSession(){
+        VBox layout = new VBox();
+        layout.setPadding(new Insets(5,5,5,5));
+        layout.setAlignment(Pos.CENTER);
+        layout.setSpacing(5);
+        
+        
         idVbox.setSpacing(5);
-
-        studentIdGridpane.addRow(1, submitId);
-        studentIdGridpane.addRow(0, idVbox);
         
-        return studentIdGridpane;
-    }
-
-    public GridPane newStudent() {
-        //newStudentGridPane
-        newStudentGridpane.setVgap(5);
-        newStudentGridpane.setHgap(5);
-        newStudentGridpane.setAlignment(Pos.CENTER);
-
-        //new student scene gripdane
-        newStudentGridpane.addRow(0, idNoVbox);
-        newStudentGridpane.addRow(1, firstNameVbox, lastNameVbox);
-        newStudentGridpane.addRow(2, emailVbox, phoneNoVbox);
-        newStudentGridpane.addRow(5, submitSt);
+        layout.getChildren().addAll(idVbox, submitId);
         
-        return newStudentGridpane;
+        return layout;
     }
 
-    public GridPane newSession() {
-        //newStudentGridPane
-        newSessionGridpane.setVgap(5);
-        newSessionGridpane.setHgap(5);
-        newSessionGridpane.setAlignment(Pos.CENTER);
-        newSessionGridpane.addRow(3, subjectVbox);
-        newSessionGridpane.addRow(4, tutorVbox);
-        newSessionGridpane.addRow(5, submitSs);
-        return newSessionGridpane;
+    public VBox newSessionVBox(){
+        VBox layout = new VBox();
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5,5,5,5));
+        layout.setSpacing(5);
+        
+        layout.getChildren().addAll(subjectVbox, tutorVbox, submitSs);
+        
+        return layout;
     }
+
+    
+    
+    public VBox newStudentVBox(){
+        
+        VBox layout = new VBox();
+        
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5,5,5,5));
+        layout.setSpacing(5);
+        
+        nameHBox.setSpacing(5);
+        
+        layout.getChildren().addAll(idVbox, nameHBox, emailVbox, phoneNoVbox, submitSt);
+
+        return layout;
+    
+    }
+    
 
     public void ClearFields() {
         getIdNoTF().clear();
@@ -285,6 +298,7 @@ public class studentView extends BorderPane {
         getEmailTF().clear();
         getPhoneNoTF().clear();
         getTutorTF().clear();
+        getSubjectTF().clear();
 
     }
 
@@ -819,16 +833,7 @@ public class studentView extends BorderPane {
     /**
      * @return the newStudentIdNoTF
      */
-    public TextField getNewStudentIdNoTF() {
-        return newStudentIdNoTF;
-    }
-
-    /**
-     * @param newStudentIdNoTF the newStudentIdNoTF to set
-     */
-    public void setNewStudentIdNoTF(TextField newStudentIdNoTF) {
-        this.newStudentIdNoTF = newStudentIdNoTF;
-    }
+    
 
     /**
      * @return the backNew
@@ -844,4 +849,20 @@ public class studentView extends BorderPane {
         this.backNew = backNew;
     }
 
+    /**
+     * @return the studentIdGridpane2
+     */
+    public GridPane getStudentIdGridpane2() {
+        return studentIdGridpane2;
+    }
+
+    /**
+     * @param studentIdGridpane2 the studentIdGridpane2 to set
+     */
+    public void setStudentIdGridpane2(GridPane studentIdGridpane2) {
+        this.studentIdGridpane2 = studentIdGridpane2;
+    }
+
 }
+
+
