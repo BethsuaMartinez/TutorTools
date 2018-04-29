@@ -7,6 +7,8 @@ package Supervisor;
 
 import Login.loginController;
 import Login.loginView;
+import Mail.MailView;
+import Mail.mailController;
 import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
@@ -17,6 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -78,6 +82,32 @@ public class supervisorController {
                 window.setTitle("Activity Log");
                 window.setScene(scene3);
                 window.show();
+
+            }
+        });
+        
+        tiv.getEmail().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                MailView mv = new MailView();
+                mailController mc = new mailController(mv);
+
+                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage signInStage = new Stage();
+                signInStage.initModality(Modality.APPLICATION_MODAL);
+                signInStage.initOwner(window);
+
+                VBox layout = new VBox();
+                layout = mv;
+
+                Scene newIdScene = new Scene(layout, 500, 300);
+
+                signInStage.setTitle("E-Mail");
+
+                signInStage.setScene(newIdScene);
+
+                signInStage.show();
+
 
             }
         });

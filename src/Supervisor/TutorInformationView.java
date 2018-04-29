@@ -38,7 +38,7 @@ public class TutorInformationView extends BorderPane {
     TutorModel tm = new TutorModel();
     private Label lasName = new Label("Enter Last Name of Student");
     private TextField lastNameTF = new TextField();
-    private Button email = new Button("email");
+    private Button email = new Button("E-Mail");
     private Button add = new Button("Add");
     private Button delete = new Button("Delete");
     private Button modify = new Button("Modify");
@@ -778,6 +778,20 @@ public class TutorInformationView extends BorderPane {
      */
     public void setSignOut(Button signOut) {
         this.signOut = signOut;
+    }
+
+    /**
+     * @return the email
+     */
+    public Button getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(Button email) {
+        this.email = email;
     }
     
 }
