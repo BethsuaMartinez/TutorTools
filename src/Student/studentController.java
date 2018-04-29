@@ -6,8 +6,10 @@
 package Student;
 
 import Login.loginController;
-import Login.loginModel;
 import Login.loginView;
+import Models.LoginModel;
+import Models.SessionModel;
+import Models.StudentModel;
 import Supervisor.TutorInformationView;
 import Supervisor.supervisorController;
 import Tutor.tutorController;
@@ -33,12 +35,14 @@ import javafx.stage.Stage;
  */
 public class studentController {
 
-    studentModel model = new studentModel();
+    StudentModel model = new StudentModel();
     studentView gui = new studentView();
+    SessionModel ssm = new SessionModel();
 
-    public studentController(studentView gui, studentModel model) {
+    public studentController(studentView gui, StudentModel model, SessionModel ssm) {
         this.model = model;
         this.gui = gui;
+        this.ssm = ssm;
 
         AttachHandler();
     }
@@ -53,9 +57,8 @@ public class studentController {
                 signInStage.initModality(Modality.APPLICATION_MODAL);
                 signInStage.initOwner(window);
 
-
                 GridPane studentIdGridpane = gui.addSession();
- 
+
                 Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
                 signInStage.setTitle("Sign-In");
                 signInStage.setScene(newIdScene);
@@ -93,7 +96,7 @@ public class studentController {
                 }
                 signInStage.close();
                 //((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-                
+
             }
         });
 
@@ -101,7 +104,7 @@ public class studentController {
             public void handle(ActionEvent event) {
                 tutorView tv = new tutorView();
                 tutorController tc = new tutorController(tv);
-                Scene scene3 = new Scene(tv, 1000, 500);
+                Scene scene3 = new Scene(tv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Tutor Information");
                 window.setScene(scene3);
@@ -115,7 +118,7 @@ public class studentController {
                 TutorInformationView tiv = new TutorInformationView();
                 supervisorController sc = new supervisorController(tiv);
 
-                Scene scene2 = new Scene(tiv, 1000, 500);
+                Scene scene2 = new Scene(tiv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Supervisor");
                 window.setScene(scene2);
@@ -192,9 +195,9 @@ public class studentController {
             @Override
             public void handle(ActionEvent event) {
                 loginView v = new loginView();
-                loginModel m = new loginModel();
+                LoginModel m = new LoginModel();
                 loginController logc = new loginController(v, m);
-                Scene scene2 = new Scene(v, 1000, 500);
+                Scene scene2 = new Scene(v, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Sign In");
                 window.setScene(scene2);

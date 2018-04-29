@@ -5,6 +5,8 @@
  */
 package Student;
 
+import Models.SessionModel;
+import Models.StudentModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -29,7 +31,6 @@ import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
@@ -49,7 +50,7 @@ import javafx.util.Callback;
  */
 public class studentView extends BorderPane {
 
-    studentModel sm = new studentModel();
+    SessionModel ssm = new SessionModel();
     private GridPane gridpane = new GridPane();
     private GridPane newStudentGridpane = new GridPane();
     private GridPane studentIdGridpane = new GridPane();
@@ -374,7 +375,7 @@ public class studentView extends BorderPane {
                     Session currentSession = new Session(idNo, lastName, firstName, tutor, endTime, subject, startTime, date);
 
                     try {
-                        sm.insertSession(currentSession);//remove selected item from the table list
+                        ssm.insertSession(currentSession);//remove selected item from the table list
                         tableData.remove(currentPerson);
                     } catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);

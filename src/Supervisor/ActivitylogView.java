@@ -6,21 +6,23 @@
 package Supervisor;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.layout.Priority;
 
 /**
  *
@@ -28,89 +30,95 @@ import javafx.scene.text.FontWeight;
  */
 public class ActivitylogView extends BorderPane {
 
-    TableView name = new TableView();
-    TableView name2 = new TableView();
-    TableView name3 = new TableView();
-    TableView name4 = new TableView();
-    TableView name5 = new TableView();
-    
-    private Button tutor1 = new Button("Kenneth");
-    private Button tutor2 = new Button("Bethsua");
-    private Button tutor3 = new Button("Luis");
-    private Button tutor4 = new Button("Osiel");
-    private Button tutor5 = new Button("Elyvic");
     private Button back = new Button("Back");
-    private Button signOut = new Button("Log Out");
-    
+    private Button signOut = new Button("Sign Out");
+
+    final static String math = "";
+    final static String science = "";
+    final static String english = "";
+    final static String computerScience = "";
 
     public ActivitylogView() {
-         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT);
-        
-       this.setBackground(new Background(background));
-        
-        name.setPrefSize(100, 300);
-        name2.setPrefSize(100, 300);
-        name3.setPrefSize(100, 300);
-        name4.setPrefSize(100, 300);
-        name5.setPrefSize(100, 300);
- 
-        VBox vbox1 = new VBox();
-        GridPane gp = new GridPane();
-        HBox hbox1 = new HBox();
-        
-        gp.add(name,1,1);
-        gp.add(name2,2,1);
-        gp.add(name3,3,1);
-        gp.add(name4,4,1);
-        gp.add(name5,5,1);
-        
-        gp.setHgap(60);
-        gp.setVgap(20);
-        gp.setPadding(new Insets(0,50, 0, 50));
-        
-        hbox1.setPadding(new Insets(50));
-        hbox1.setSpacing(45);
-       
 
-        tutor1.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        tutor2.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        tutor3.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        tutor4.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        tutor5.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        HBox hb = new HBox();
+        HBox hb2 = new HBox();
+        HBox hb3 = new HBox();
+        BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        hb.setBackground(new Background(background));
+        hb.setPadding(new Insets(10, 10, 10, 10));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
+        logo.setPreserveRatio(true);
+        logo.setFitWidth(120);
+        logo.setFitHeight(30);
+        hb2.getChildren().add(logo);
+        hb2.setPadding(new Insets(0, 0, 0, 30));
+        hb3.getChildren().addAll(signOut, back);
+        hb3.setAlignment(Pos.CENTER_RIGHT);
+        hb3.setPadding(new Insets(0, 20, 0, 0));
+        hb3.setSpacing(10);
+        HBox.setHgrow(hb3, Priority.ALWAYS);
+        hb.getChildren().addAll(logo, hb3);
+        hb.setPadding(new Insets(5, 0, 5, 20));
 
-        back.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        
-        tutor1.setPrefSize(100, 50);
-        tutor2.setPrefSize(100, 50);
-        tutor3.setPrefSize(100, 50);
-        tutor4.setPrefSize(100, 50);
-        tutor5.setPrefSize(100, 50);
-        back.setPrefSize(100, 50);
-       
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String, Number> bc
+                = new BarChart<String, Number>(xAxis, yAxis);
+        bc.setTitle("Students Per Subject");
+        xAxis.setLabel("Subject");
+        yAxis.setLabel("Student");
 
-        hbox1.getChildren().add(tutor1);
-        hbox1.getChildren().add(tutor2);
-        hbox1.getChildren().add(tutor3);
-        hbox1.getChildren().add(tutor4);
-        hbox1.getChildren().add(tutor5);
-        hbox1.getChildren().add(back);
-        
-        
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Math");
+        series1.getData().add(new XYChart.Data(math, 10));
 
-        this.setCenter(gp);
-        
-        this.setTop(hbox1);
-        
-        
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("Science");
+        series2.getData().add(new XYChart.Data(science, 30));
+
+        XYChart.Series series3 = new XYChart.Series();
+        series3.setName("English");
+        series3.getData().add(new XYChart.Data(english, 25));
+
+        XYChart.Series series4 = new XYChart.Series();
+        series4.setName("Computer Science");
+        series4.getData().add(new XYChart.Data(computerScience, 5));
+
+        bc.getData().addAll(series1, series2, series3, series4);
+
+        final CategoryAxis xAxis2 = new CategoryAxis();
+        final NumberAxis yAxis2 = new NumberAxis();
+        final BarChart<String, Number> bc2
+                = new BarChart<String, Number>(xAxis2, yAxis2);
+        bc2.setTitle("Hours Per Tutors");
+        xAxis2.setLabel("Subject");
+        yAxis2.setLabel("Hours");
+
+        XYChart.Series series5 = new XYChart.Series();
+        series5.setName("Luis");
+        series5.getData().add(new XYChart.Data(math, 100));
+
+        XYChart.Series series6 = new XYChart.Series();
+        series6.setName("Kenneth");
+        series6.getData().add(new XYChart.Data(science, 300));
+
+        XYChart.Series series7 = new XYChart.Series();
+        series7.setName("Elyvic");
+        series7.getData().add(new XYChart.Data(english, 250));
+
+        XYChart.Series series8 = new XYChart.Series();
+        series8.setName("Bethsua");
+        series8.getData().add(new XYChart.Data(computerScience, 50));
+
+        bc2.getData().addAll(series5, series6, series7, series8);
+
+        this.setLeft(bc);
+        this.setRight(bc2);
+        this.setTop(hb);
+
     }
-    
-    
-    
 
-    
-    
     /**
      * @return the back
      */
@@ -123,6 +131,20 @@ public class ActivitylogView extends BorderPane {
      */
     public void setBack(Button back) {
         this.back = back;
+    }
+
+    /**
+     * @return the signOut
+     */
+    public Button getSignOut() {
+        return signOut;
+    }
+
+    /**
+     * @param signOut the signOut to set
+     */
+    public void setSignOut(Button signOut) {
+        this.signOut = signOut;
     }
 
 }
