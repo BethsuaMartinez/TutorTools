@@ -17,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -79,6 +81,35 @@ public class supervisorController {
                 window.setScene(scene3);
                 window.show();
 
+            }
+        });
+        
+        tiv.getAdd().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage newTutorStage = new Stage();
+                newTutorStage.initModality(Modality.APPLICATION_MODAL);
+                newTutorStage.initOwner(window);
+
+                                
+                VBox newTutorVbox = new VBox();
+                newTutorVbox = tiv.addTutor();
+                
+                Scene newTutorScene = new Scene(newTutorVbox, 300, 270);
+                
+                newTutorStage.setTitle("New Tutor");
+                newTutorStage.setScene(newTutorScene);
+                newTutorStage.show();
+
+            }
+        });
+        
+        tiv.getNewTutorSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.close();
+                tiv.ClearFields();
             }
         });
     }
