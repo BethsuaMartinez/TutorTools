@@ -5,8 +5,10 @@
  */
 package Login;
 
+import Models.LoginModel;
+import Models.SessionModel;
+import Models.StudentModel;
 import Student.studentController;
-import Student.studentModel;
 import Student.studentView;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -24,11 +26,11 @@ import javafx.stage.Stage;
  */
 public final class loginController {
 
-    loginModel logm = new loginModel();
+    LoginModel logm = new LoginModel();
     loginView logv = new loginView();
     studentView sv = new studentView();
 
-    public loginController(loginView logv, loginModel logm) {
+    public loginController(loginView logv, LoginModel logm) {
         this.logm = logm;
         this.logv = logv;
         AttachHandler();
@@ -46,15 +48,17 @@ public final class loginController {
                     logv.wrongId();
                 }
                 try {
-                    if (logm.loginDB(un, psswd) == true) {          
+                    if (logm.loginDB(un, psswd) == true) {
 
                         studentView sv = new studentView();
-                        studentModel sm = new studentModel();
-                        studentController sc = new studentController(sv, sm);
-                        Scene scene2 = new Scene(sv, 1000, 500);
+
+                        StudentModel sm = new StudentModel();
+                        SessionModel ssm = new SessionModel();
+                        studentController sc = new studentController(sv, sm, ssm);
+                        Scene scene2 = new Scene(sv, 1300, 500);
                         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         window.setTitle("Student List");
-                        window.setScene(scene2);       
+                        window.setScene(scene2);
                         window.show();
                     } else {
                         logv.wrongId();
@@ -74,20 +78,20 @@ public final class loginController {
                     logv.wrongId();
                 }
                 try {
-                        if (logm.loginDB(un, psswd) == true) {
+                    if (logm.loginDB(un, psswd) == true) {
 
-                            studentView sv = new studentView();
-                            studentModel sm = new studentModel();
-                            studentController sc = new studentController(sv, sm);
-                            Scene scene2 = new Scene(sv, 1000, 500);
-                            Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                            window.setScene(scene2);
-                            window.show();
-                        } else {
-                            logv.wrongId();
-                        }
+                        studentView sv = new studentView();
+                        StudentModel sm = new StudentModel();
+                        SessionModel ssm = new SessionModel();
+                        studentController sc = new studentController(sv, sm, ssm);
+                        Scene scene2 = new Scene(sv, 1300, 500);
+                        Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                        window.setScene(scene2);
+                        window.show();
+                    } else {
+                        logv.wrongId();
                     }
-                 catch (SQLException ex) {
+                } catch (SQLException ex) {
                     Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

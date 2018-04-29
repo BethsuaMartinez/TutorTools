@@ -6,6 +6,8 @@
  */
 package Student;
 
+import Models.SessionModel;
+import Models.StudentModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -50,8 +52,9 @@ import javafx.util.Callback;
  * @author elyvic
  */
 public class studentView extends BorderPane {
-    public static studentView sv;
-    studentModel sm = new studentModel();
+
+    StudentModel sm = new StudentModel();
+    SessionModel ssm = new SessionModel();
     private GridPane gridpane = new GridPane();
     private GridPane newStudentGridpane = new GridPane();
     private GridPane studentIdGridpane = new GridPane();
@@ -147,6 +150,10 @@ public class studentView extends BorderPane {
         this.signOut.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
         
 
+
+       // hb.setPrefSize(300, 40);
+       // hb.setPadding(new Insets(0, 20, 20, 20));
+
         this.tutor.setMaxSize(200, 30);
         this.supervisor.setMaxSize(200, 30);
         this.addBtn.setMaxSize(200, 40);
@@ -167,7 +174,8 @@ public class studentView extends BorderPane {
         supervisor.setFitWidth(20);
         this.supervisor.setGraphic(supervisor);
 
-        ImageView userPlus = new ImageView(new Image(getClass().getResourceAsStream("/resources/userPlus.png")));        userPlus.setFitHeight(18);
+        ImageView userPlus = new ImageView(new Image(getClass().getResourceAsStream("/resources/userPlus.png")));
+        userPlus.setFitHeight(18);
         userPlus.setFitWidth(16);
         this.addBtn.setGraphic(userPlus);
 
@@ -206,6 +214,7 @@ public class studentView extends BorderPane {
         TableColumn actionCol = new TableColumn("Action");
         actionCol.setPrefWidth(110);
 
+        //Adding the Button to the cell
         actionCol.setCellFactory(
                 new Callback<TableColumn<Disposer.Record, Boolean>, TableCell<Disposer.Record, Boolean>>() {
 
@@ -218,7 +227,6 @@ public class studentView extends BorderPane {
         table.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
         this.table.setPrefWidth(770);
 
-
         //Hbox
         //   buttonHbox.setSpacing(3);
         idVbox.setSpacing(3);
@@ -228,11 +236,13 @@ public class studentView extends BorderPane {
         phoneNoVbox.setSpacing(3);
 
         BorderPane.setMargin(table, new Insets(10, 10, 10, 10));
-        
+        //    BorderPane.setMargin(vbox10, new Insets(10, 10, 10, 10));
+
+        //   buttonHbox.setAlignment(Pos.CENTER);
         this.setRight(table);
         this.setLeft(vbox10);
         this.setTop(hb);
-        
+        //  this.setBottom(buttonHbox);
 
     }
     
@@ -378,7 +388,7 @@ public class studentView extends BorderPane {
                     Session currentSession = new Session(idNo, lastName, firstName, tutor, endTime, subject, startTime, date);
 
                     try {
-                        sm.insertSession(currentSession);//remove selected item from the table list
+                        ssm.insertSession(currentSession);//remove selected item from the table list
                         tableData.remove(currentPerson);
                     } catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -837,7 +847,6 @@ public class studentView extends BorderPane {
     public void setBackNew(Button backNew) {
         this.backNew = backNew;
     }
-    
 
     /**
      * @return the studentIdGridpane2

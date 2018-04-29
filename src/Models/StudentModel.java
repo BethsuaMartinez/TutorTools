@@ -1,13 +1,14 @@
-package Student;
+package Models;
 
 import Database.SQLConnector;
+import Student.Student;
 import java.sql.*;
 
 /**
  *
  * @author elyvic
  */
-public class studentModel {
+public class StudentModel {
 
     SQLConnector myConn = SQLConnector.getDbCon();
     PreparedStatement myStmt = null;
@@ -38,37 +39,37 @@ public class studentModel {
         return false;
     }
 
-    Student getStudent(int id) throws SQLException {
+    public Student getStudent(int id) throws SQLException {
         Student student = new Student();
         try {
             PreparedStatement myStmt;
             String sql = "SELECT * FROM TutorTools.Students where idStudent = ?;";
 
-            String fname=null;
-            String lname=null;
-            String email=null;
-            String phone=null;
-            
+            String fname = null;
+            String lname = null;
+            String email = null;
+            String phone = null;
+
             myStmt = myConn.preparedStatement(sql);
             myStmt.setInt(1, id);
 
             myRs = myStmt.executeQuery();
-            
-            while (myRs.next()){
+
+            while (myRs.next()) {
                 fname = myRs.getString("fname");
                 lname = myRs.getString("lname");
                 email = myRs.getString("email");
                 phone = myRs.getString("phone");
             }
-            
+
             student.setIdStudent(id);
             student.setFname(fname);
             student.setLname(lname);
             student.setEmail(email);
             student.setPhone(phone);
-            
+
             return student;
-            
+
         } catch (SQLException e) {
             System.err.println(e);
         } finally {
@@ -77,45 +78,6 @@ public class studentModel {
             }
         }
         return student;
-}
-
-    public void insertSession(Session currentData) throws SQLException {
-        try {
-
-            String firstName = currentData.getFirstName();
-            String lastName = currentData.getLastName();
-            String tutor = currentData.getTutor();
-            String endTime = currentData.getEndTime();
-            String startTime = currentData.getStartTime();
-            String idNo = currentData.getIdNo();
-            String subject = currentData.getSubject();
-            String date = currentData.getDate();
-
-            int studentid = Integer.parseInt(idNo);
-
-            String sql = "INSERT INTO TutorTools.TutoringSessions "
-                    + "(idStudent, fname, lname, tutor, subject, endTime,startTime, date)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement myStmt = myConn.preparedStatement(sql);
-
-            myStmt.setInt(1, studentid);
-            myStmt.setString(2, firstName);
-            myStmt.setString(3, lastName);
-            myStmt.setString(4, tutor);
-            myStmt.setString(5, subject);
-            myStmt.setString(6, startTime);
-            myStmt.setString(7, endTime);
-            myStmt.setString(8, date);
-
-            myStmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.err.println(e);
-        } finally {
-            if (myRs != null) {
-                myRs.close();
-            }
-        }
     }
 
     public void insertStudent(String idNo, String fname, String lname, String email, String phone) throws SQLException {
@@ -133,6 +95,52 @@ public class studentModel {
             myStmt.setString(3, lname);
             myStmt.setString(4, email);
             myStmt.setString(5, phone);
+
+            myStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+
+    public void updateStudent(String idNo, String fname, String lname, String email, String phone) throws SQLException {
+        try {
+
+            int tutorid = Integer.parseInt(idNo);
+
+            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=? where id =? ";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            myStmt.setInt(1, tutorid);
+            myStmt.setString(2, fname);
+            myStmt.setString(3, lname);
+            myStmt.setString(4, email);
+            myStmt.setString(5, phone);
+
+            myStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+
+    public void deleteStudent(String idNo) throws SQLException {
+        try {
+
+            int tutorid = Integer.parseInt(idNo);
+
+            String sql = "DELETE FROM TutorTools.Students where idStudent =?";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            myStmt.setInt(1, tutorid);
 
             myStmt.executeUpdate();
 

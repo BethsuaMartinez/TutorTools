@@ -6,8 +6,10 @@
 package Student;
 
 import Login.loginController;
-import Login.loginModel;
 import Login.loginView;
+import Models.LoginModel;
+import Models.SessionModel;
+import Models.StudentModel;
 import Supervisor.TutorInformationView;
 import Supervisor.supervisorController;
 import Tutor.tutorController;
@@ -36,13 +38,14 @@ import javafx.stage.Stage;
  */
 public class studentController {
 
-    studentModel model = new studentModel();
+    StudentModel model = new StudentModel();
     studentView gui = new studentView();
+    SessionModel ssm = new SessionModel();
 
-
-    public studentController(studentView gui, studentModel model) {
+    public studentController(studentView gui, StudentModel model, SessionModel ssm) {
         this.model = model;
         this.gui = gui;
+        this.ssm = ssm;
 
         AttachHandler();
     }
@@ -52,32 +55,23 @@ public class studentController {
 
             @Override
             public void handle(ActionEvent event) {
-                
-                
+
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Stage signInStage = new Stage();
                 signInStage.initModality(Modality.APPLICATION_MODAL);
                 signInStage.initOwner(window);
 
-                
                 VBox layout = new VBox();
-                layout = gui.addSession();     
-                
+                layout = gui.addSession();
+
                 Scene newIdScene = new Scene(layout, 210, 110);
 
-
-
-                
- 
-
                 signInStage.setTitle("Sign-In");
-                
+
                 signInStage.setScene(newIdScene);
-                        
-                
+
                 signInStage.show();
-                
-               
+
             }
         });
         //Submit to table
@@ -94,7 +88,7 @@ public class studentController {
                 String subject = gui.getSubjectTF().getText();
                 String startTime = dateFormat.format(date);
                 System.out.println(idNo + tutor + subject + startTime);
-                
+
                 int id = Integer.parseInt(idNo);
 
                 Student student;
@@ -102,17 +96,18 @@ public class studentController {
                     student = model.getStudent(id);
                     String fname = student.getFname();
                     String lname = student.getLname();
+
                     Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
                     gui.updateTable(currentSession);
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 signInStage.close();
                 gui.ClearFields();
                 //((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
-                
+
             }
         });
 
@@ -120,7 +115,7 @@ public class studentController {
             public void handle(ActionEvent event) {
                 tutorView tv = new tutorView();
                 tutorController tc = new tutorController(tv);
-                Scene scene3 = new Scene(tv, 1000, 500);
+                Scene scene3 = new Scene(tv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Tutor Information");
                 window.setScene(scene3);
@@ -134,7 +129,7 @@ public class studentController {
                 TutorInformationView tiv = new TutorInformationView();
                 supervisorController sc = new supervisorController(tiv);
 
-                Scene scene2 = new Scene(tiv, 1000, 500);
+                Scene scene2 = new Scene(tiv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Supervisor");
                 window.setScene(scene2);
@@ -151,7 +146,7 @@ public class studentController {
                 }
                 String id = gui.getIdNoTF().getText();
                 int x = Integer.parseInt(id);
-                
+
                 try {
                     if (true == model.verifyUser(x)) {
                         //GridPane newSessionGridpane = gui.newSession();
@@ -159,21 +154,19 @@ public class studentController {
                         Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
-                        
-                        
+
                     } else {
-                        VBox newStudentVbox =  gui.newStudentVBox();
+                        VBox newStudentVbox = gui.newStudentVBox();
                         Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
                         signInStage.setScene(newStudentScene);
                         signInStage.show();
-                        
+
                     }
 
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                
+
             }
         });
 
@@ -192,14 +185,14 @@ public class studentController {
             public void handle(ActionEvent event) {
 
                 //if ("".equals(gui.getIdNoTF().getText())) {
-                 //   gui.wrongPass();
+                //   gui.wrongPass();
                 //}
                 String idNo = gui.getIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
                 String email = gui.getEmailTF().getText();
                 String phone = gui.getPhoneNoTF().getText();
-                
+
                 try {
                     Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     model.insertStudent(idNo, firstName, lastName, email, phone);
@@ -217,9 +210,9 @@ public class studentController {
             @Override
             public void handle(ActionEvent event) {
                 loginView v = new loginView();
-                loginModel m = new loginModel();
+                LoginModel m = new LoginModel();
                 loginController logc = new loginController(v, m);
-                Scene scene2 = new Scene(v, 1000, 500);
+                Scene scene2 = new Scene(v, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Sign In");
                 window.setScene(scene2);
