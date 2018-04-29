@@ -52,7 +52,6 @@ public class StudentModel {
 
             myStmt = myConn.preparedStatement(sql);
             myStmt.setInt(1, id);
-
             myRs = myStmt.executeQuery();
 
             while (myRs.next()) {
@@ -115,11 +114,11 @@ public class StudentModel {
             String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=? where id =? ";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
 
-            myStmt.setInt(1, tutorid);
-            myStmt.setString(2, fname);
-            myStmt.setString(3, lname);
-            myStmt.setString(4, email);
-            myStmt.setString(5, phone);
+            myStmt.setString(1, fname);
+            myStmt.setString(2, lname);
+            myStmt.setString(3, email);
+            myStmt.setString(4, phone);
+            myStmt.setInt(5, tutorid);
 
             myStmt.executeUpdate();
 

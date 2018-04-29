@@ -33,21 +33,21 @@ public class SessionModel {
             String subject = currentData.getSubject();
             String date = currentData.getDate();
 
-            int studentid = Integer.parseInt(idNo);
+            int id = Integer.parseInt(idNo);
 
             String sql = "INSERT INTO TutorTools.TutoringSessions "
-                    + "(idStudent, fname, lname, tutor, subject, endTime,startTime, date)"
+                    + "(id, fname, lname, tutor, subject, endTime,startTime, date)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
 
-            myStmt.setInt(1, studentid);
-            myStmt.setString(2, firstName);
-            myStmt.setString(3, lastName);
-            myStmt.setString(4, tutor);
-            myStmt.setString(5, subject);
-            myStmt.setString(6, startTime);
-            myStmt.setString(7, endTime);
-            myStmt.setString(8, date);
+            myStmt.setString(1, firstName);
+            myStmt.setString(2, lastName);
+            myStmt.setString(3, tutor);
+            myStmt.setString(4, subject);
+            myStmt.setString(5, startTime);
+            myStmt.setString(6, endTime);
+            myStmt.setString(7, date);
+            myStmt.setInt(18, id);
 
             myStmt.executeUpdate();
 
@@ -59,6 +59,44 @@ public class SessionModel {
             }
         }
     }
+    
+    public void updateSession(Session currentData) throws SQLException {
+        try {
+
+            String fname = currentData.getFirstName();
+            String lname = currentData.getLastName();
+            String tutor = currentData.getTutor();
+            String endTime = currentData.getEndTime();
+            String startTime = currentData.getStartTime();
+            String idNo = currentData.getIdNo();
+            String subject = currentData.getSubject();
+            String date = currentData.getDate();
+
+            int id = Integer.parseInt(idNo);
+
+            String sql = "UPDATE TutorTools.TutoringSessions SET fname = ?, lname=?, tutor=?, subject=?, endTime=?, startTime=?, date=? where id =? ";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            myStmt.setString(1, fname);
+            myStmt.setString(2, lname);
+            myStmt.setString(3, tutor);
+            myStmt.setString(4, subject);
+            myStmt.setString(5, startTime);
+            myStmt.setString(6, endTime);
+            myStmt.setString(7, date);
+            myStmt.setInt(8, id);
+
+            myStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+
 
     
 }

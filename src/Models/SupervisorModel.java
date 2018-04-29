@@ -51,17 +51,17 @@ public class SupervisorModel {
     public void updateSupervisor(String idNo, String fname, String lname, String email, String phone, String password) throws SQLException {
         try {
 
-            int tutorid = Integer.parseInt(idNo);
+            int supervisorid = Integer.parseInt(idNo);
 
-            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=?, password=? where id =? ";
+            String sql = "UPDATE Supervisor SET fname = ?, lname=?, email=?, phone=?, password=? where idSupervisor =? ";
             PreparedStatement myStmt = conn.preparedStatement(sql);
 
-            myStmt.setInt(1, tutorid);
-            myStmt.setString(2, fname);
-            myStmt.setString(3, lname);
-            myStmt.setString(4, email);
-            myStmt.setString(5, phone);
-            myStmt.setString(6, password);
+            myStmt.setString(1, fname);
+            myStmt.setString(2, lname);
+            myStmt.setString(3, email);
+            myStmt.setString(4, phone);
+            myStmt.setString(5, password);
+            myStmt.setInt(6, supervisorid);
 
             myStmt.executeUpdate();
 
@@ -77,12 +77,12 @@ public class SupervisorModel {
         public void deleteSupervisor(String idNo) throws SQLException {
         try {
 
-            int studentid = Integer.parseInt(idNo);
+            int supervisorid = Integer.parseInt(idNo);
 
             String sql = "DELETE FROM TutorTools.Supervisor where idSupervisor =?";
             PreparedStatement myStmt = conn.preparedStatement(sql);
 
-            myStmt.setInt(1, studentid);
+            myStmt.setInt(1, supervisorid);
 
             myStmt.executeUpdate();
 
