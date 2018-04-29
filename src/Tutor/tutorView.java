@@ -69,7 +69,7 @@ public class tutorView extends BorderPane {
         top.setBackground(new Background(background));
         top.setPadding(new Insets(10,10,10,10));
         
-        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
         logo.setFitHeight(30);

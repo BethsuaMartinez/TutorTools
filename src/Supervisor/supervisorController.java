@@ -7,6 +7,8 @@ package Supervisor;
 
 import Login.loginController;
 import Login.loginView;
+import Mail.MailView;
+import Mail.mailController;
 import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
@@ -17,6 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -81,7 +85,67 @@ public class supervisorController {
 
             }
         });
-    }
+        
+
+        tiv.getAdd().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage newTutorStage = new Stage();
+                newTutorStage.initModality(Modality.APPLICATION_MODAL);
+                newTutorStage.initOwner(window);
+
+                                
+                VBox newTutorVbox = new VBox();
+                newTutorVbox = tiv.addTutor();
+                
+                Scene newTutorScene = new Scene(newTutorVbox, 300, 270);
+                
+                newTutorStage.setTitle("New Tutor");
+                newTutorStage.setScene(newTutorScene);
+                newTutorStage.show();
+
+            }
+        });
+        
+        tiv.getNewTutorSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.close();
+                tiv.ClearFields();
+            }
+        });
+
+        tiv.getEmail().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                MailView mv = new MailView();
+                mailController mc = new mailController(mv);
+
+                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage signInStage = new Stage();
+                signInStage.initModality(Modality.APPLICATION_MODAL);
+                signInStage.initOwner(window);
+
+                VBox layout = new VBox();
+                layout = mv;
+
+                Scene newIdScene = new Scene(layout, 500, 300);
+
+                signInStage.setTitle("E-Mail");
+
+                signInStage.setScene(newIdScene);
+
+                signInStage.show();
+
+
+
+            }
+        });
+            }
 }
+        
+              
+
 
 

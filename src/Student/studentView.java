@@ -55,11 +55,7 @@ public class studentView extends BorderPane {
 
     StudentModel sm = new StudentModel();
     SessionModel ssm = new SessionModel();
-    private GridPane gridpane = new GridPane();
-    private GridPane newStudentGridpane = new GridPane();
-    private GridPane studentIdGridpane = new GridPane();
-    private GridPane studentIdGridpane2 = new GridPane();
-    private GridPane newSessionGridpane = new GridPane();
+    
 
     private Button addBtn = new Button("Add Session");
 
@@ -121,7 +117,7 @@ public class studentView extends BorderPane {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
         hb.setPadding(new Insets(10,10,10,10));
-        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
         logo.setFitHeight(30);
@@ -734,16 +730,6 @@ public class studentView extends BorderPane {
     /**
      * @return the gridpane
      */
-    public GridPane getGridpane() {
-        return gridpane;
-    }
-
-    /**
-     * @param gridpane the gridpane to set
-     */
-    public void setGridpane(GridPane gridpane) {
-        this.gridpane = gridpane;
-    }
 
     /**
      * @return the supervisor
@@ -776,45 +762,7 @@ public class studentView extends BorderPane {
     /**
      * @return the newStudentGridpane
      */
-    public GridPane getNewStudentGridpane() {
-        return newStudentGridpane;
-    }
-
-    /**
-     * @param newStudentGridpane the newStudentGridpane to set
-     */
-    public void setNewStudentGridpane(GridPane newStudentGridpane) {
-        this.newStudentGridpane = newStudentGridpane;
-    }
-
-    /**
-     * @return the studentIdGridpane
-     */
-    public GridPane getStudentIdGridpane() {
-        return studentIdGridpane;
-    }
-
-    /**
-     * @param studentIdGridpane the studentIdGridpane to set
-     */
-    public void setStudentIdGridpane(GridPane studentIdGridpane) {
-        this.studentIdGridpane = studentIdGridpane;
-    }
-
-    /**
-     * @return the oldStudentGridpane
-     */
-    public GridPane getOldStudentGridpane() {
-        return newSessionGridpane;
-    }
-
-    /**
-     * @param oldStudentGridpane the oldStudentGridpane to set
-     */
-    public void setOldStudentGridpane(GridPane oldStudentGridpane) {
-        this.newSessionGridpane = oldStudentGridpane;
-    }
-
+    
     /**
      * @return the submitId
      */
@@ -847,20 +795,6 @@ public class studentView extends BorderPane {
     public void setBackNew(Button backNew) {
         this.backNew = backNew;
     }
-
-    /**
-     * @return the studentIdGridpane2
-     */
-    public GridPane getStudentIdGridpane2() {
-        return studentIdGridpane2;
-    }
-
-    /**
-     * @param studentIdGridpane2 the studentIdGridpane2 to set
-     */
-    public void setStudentIdGridpane2(GridPane studentIdGridpane2) {
-        this.studentIdGridpane2 = studentIdGridpane2;
-    }
-
+    
 }
 

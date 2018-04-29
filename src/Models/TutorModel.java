@@ -114,15 +114,15 @@ public class TutorModel {
 
             int tutorid = Integer.parseInt(idNo);
 
-            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=?, password=? where id =? ";
+            String sql = "UPDATE Tutors SET fname = ?, lname=?, email=?, phone=?, password=? where idTutor =? ";
             PreparedStatement myStmt = conn.preparedStatement(sql);
 
-            myStmt.setInt(1, tutorid);
-            myStmt.setString(2, fname);
-            myStmt.setString(3, lname);
-            myStmt.setString(4, email);
-            myStmt.setString(5, phone);
-            myStmt.setString(6, password);
+            myStmt.setString(1, fname);
+            myStmt.setString(2, lname);
+            myStmt.setString(3, email);
+            myStmt.setString(4, phone);
+            myStmt.setString(5, password);
+            myStmt.setInt(6, tutorid);
 
             myStmt.executeUpdate();
 

@@ -129,7 +129,10 @@ public class studentController {
                 TutorInformationView tiv = new TutorInformationView();
                 supervisorController sc = new supervisorController(tiv);
 
+
+                
                 Scene scene2 = new Scene(tiv, 1300, 500);
+
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Supervisor");
                 window.setScene(scene2);

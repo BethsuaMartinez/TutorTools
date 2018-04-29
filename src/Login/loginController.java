@@ -44,9 +44,6 @@ public final class loginController {
                 String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 
-                if ("".equals(un) || "".equals(psswd)) {
-                    logv.wrongId();
-                }
                 try {
                     if (logm.loginDB(un, psswd) == true) {
 
@@ -74,9 +71,7 @@ public final class loginController {
                 String un = logv.getUsername().getText();
                 String psswd = logv.getPassword().getText();
 
-                if ("".equals(un) || "".equals(psswd)) {
-                    logv.wrongId();
-                }
+
                 try {
                     if (logm.loginDB(un, psswd) == true) {
 

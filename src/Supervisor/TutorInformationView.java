@@ -38,7 +38,12 @@ public class TutorInformationView extends BorderPane {
     TutorModel tm = new TutorModel();
     private Label lasName = new Label("Enter Last Name of Student");
     private TextField lastNameTF = new TextField();
-    private Button email = new Button("email");
+
+    
+    
+
+    private Button email = new Button("E-Mail");
+
     private Button add = new Button("Add");
     private Button delete = new Button("Delete");
     private Button modify = new Button("Modify");
@@ -46,6 +51,9 @@ public class TutorInformationView extends BorderPane {
     private Button back = new Button("Back");
     private Button activity= new Button("Activity Log");
     private Button signOut = new Button("Log Out");
+    
+    private Button newTutorSubmitBtn = new Button("Submit");
+    private Button studentSubmitBtn = new Button("Submit");
     
     TableView table = new TableView();
     TableView table2 = new TableView();
@@ -71,6 +79,44 @@ public class TutorInformationView extends BorderPane {
     private Label student = new Label("Student");
     private Label tutor = new Label("Tutor");
     
+    
+    private Label studentIdLabel = new Label ("ID Number");
+    private TextField studentIdTF = new TextField();
+    
+    private Label studentFNameLabel = new Label ("First Name");
+    private TextField studentFNameTF = new TextField();
+    
+    private Label studentLNameLabel = new Label ("Last Name");
+    private TextField studentLNameTF = new TextField();
+    
+    private Label studentEmailLabel = new Label("E-Mail");
+    private TextField studentEmailTF = new TextField();
+    
+    private Label studentPhoneLabel = new Label ("Phone Number");
+    private TextField studentPhoneTF = new TextField();
+   
+    
+    //vboxes for tutor form
+    private VBox idVbox = new VBox(idLabel, idTF);
+    private VBox fNameVbox = new VBox(fNameLabel, fNameTF);
+    private VBox lNameVbox = new VBox(lNameLabel, lNameTF);
+    private VBox emailVbox = new VBox(emailLabel, emailTF);
+    private VBox phoneVbox = new VBox(phoneLabel, phoneTF);
+    private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
+    
+    private HBox nameHbox = new HBox(fNameVbox, lNameVbox);
+    
+    //vboxes for student form
+    private VBox studentIdVbox = new VBox(studentIdLabel, studentIdTF);
+    private VBox studentFNameVbox = new VBox(studentFNameLabel, studentFNameTF);
+    private VBox studentLNameVbox = new VBox(studentLNameLabel, studentLNameTF);
+    private VBox studentEmailVbox = new VBox(studentEmailLabel, studentEmailTF);
+    private VBox studentPhoneVbox = new VBox(studentPhoneLabel, studentPhoneTF);
+    
+    private HBox studentNameHbox = new HBox(studentFNameVbox, studentLNameVbox);
+    
+
+    
     ObservableList<TutorInformationView.tutorRowData> tutortableData = FXCollections.observableArrayList(new TutorInformationView.tutorRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "math", "(123)456-789"));
     ObservableList<TutorInformationView.studentRowData> studenttableData = FXCollections.observableArrayList(new TutorInformationView.studentRowData("123456", "Elyvic", "Cabais", "kenneth.segarra01@utrgv.edu", "math", "(123)456-789"));
 
@@ -84,7 +130,7 @@ public class TutorInformationView extends BorderPane {
         hb.setBackground(new Background(background));
         hb.setPadding(new Insets(10,10,10,10));
         
-        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.png")));
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
         
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
@@ -101,7 +147,7 @@ public class TutorInformationView extends BorderPane {
         hb.setPadding(new Insets(5,0,5,20));
        
         tutor.setAlignment(Pos.TOP_CENTER);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(getAdd(), getDelete(), getModify());
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         VBox vb = new VBox();
@@ -182,6 +228,32 @@ public class TutorInformationView extends BorderPane {
         this.setLeft(vb2);
         this.setRight(vb);
     }
+    
+    public VBox addTutor() {
+        VBox layout = new VBox();
+
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5, 5, 5, 5));
+
+        nameHbox.setSpacing(5);
+
+        layout.getChildren().addAll(idVbox, nameHbox, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+
+        return layout;
+    }
+    
+    public VBox addStudent(){
+        VBox layout = new VBox();
+
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5, 5, 5, 5));
+
+        nameHbox.setSpacing(5);
+
+        layout.getChildren().addAll(studentIdVbox, studentNameHbox, studentEmailVbox, studentPhoneVbox, studentSubmitBtn);
+
+        return layout;
+    }
 
      public static class tutorRowData {
          
@@ -202,6 +274,8 @@ public class TutorInformationView extends BorderPane {
             this.email = new SimpleStringProperty(email);
            
      }
+        
+       
 
         /**
          * @return the firstName
@@ -778,6 +852,188 @@ public class TutorInformationView extends BorderPane {
      */
     public void setSignOut(Button signOut) {
         this.signOut = signOut;
+    }
+
+    /**
+<<<<<<< HEAD
+     * @return the add
+     */
+    public Button getAdd() {
+        return add;
+    }
+
+    /**
+     * @param add the add to set
+     */
+    public void setAdd(Button add) {
+        this.add = add;
+    }
+
+    /**
+     * @return the delete
+     */
+    public Button getDelete() {
+        return delete;
+    }
+
+    /**
+     * @param delete the delete to set
+     */
+    public void setDelete(Button delete) {
+        this.delete = delete;
+    }
+
+    /**
+     * @return the modify
+     */
+    public Button getModify() {
+        return modify;
+    }
+
+    /**
+     * @param modify the modify to set
+     */
+    public void setModify(Button modify) {
+        this.modify = modify;
+    }
+
+    /**
+     * @return the newTutorSubmitBtn
+     */
+    public Button getNewTutorSubmitBtn() {
+        return newTutorSubmitBtn;
+    }
+
+    /**
+     * @param newTutorSubmitBtn the newTutorSubmitBtn to set
+     */
+    public void setNewTutorSubmitBtn(Button newTutorSubmitBtn) {
+        this.newTutorSubmitBtn = newTutorSubmitBtn;
+    }
+
+    /**
+     * @return the idVbox
+     */
+    public VBox getIdVbox() {
+        return idVbox;
+    }
+
+    /**
+     * @param idVbox the idVbox to set
+     */
+    public void setIdVbox(VBox idVbox) {
+        this.idVbox = idVbox;
+    }
+
+    /**
+     * @return the fNameVbox
+     */
+    public VBox getfNameVbox() {
+        return fNameVbox;
+    }
+
+    /**
+     * @param fNameVbox the fNameVbox to set
+     */
+    public void setfNameVbox(VBox fNameVbox) {
+        this.fNameVbox = fNameVbox;
+    }
+
+    /**
+     * @return the lNameVbox
+     */
+    public VBox getlNameVbox() {
+        return lNameVbox;
+    }
+
+    /**
+     * @param lNameVbox the lNameVbox to set
+     */
+    public void setlNameVbox(VBox lNameVbox) {
+        this.lNameVbox = lNameVbox;
+    }
+
+    /**
+     * @return the emailVbox
+     */
+    public VBox getEmailVbox() {
+        return emailVbox;
+    }
+
+    /**
+     * @param emailVbox the emailVbox to set
+     */
+    public void setEmailVbox(VBox emailVbox) {
+        this.emailVbox = emailVbox;
+    }
+
+    /**
+     * @return the phoneVbox
+     */
+    public VBox getPhoneVbox() {
+        return phoneVbox;
+    }
+
+    /**
+     * @param phoneVbox the phoneVbox to set
+     */
+    public void setPhoneVbox(VBox phoneVbox) {
+        this.phoneVbox = phoneVbox;
+    }
+
+    /**
+     * @return the subjectVbox
+     */
+    public VBox getSubjectVbox() {
+        return subjectVbox;
+    }
+
+    /**
+     * @param subjectVbox the subjectVbox to set
+     */
+    public void setSubjectVbox(VBox subjectVbox) {
+        this.subjectVbox = subjectVbox;
+    }
+
+    /**
+     * @return the nameHbox
+     */
+    public HBox getNameHbox() {
+        return nameHbox;
+    }
+
+    /**
+     * @param nameHbox the nameHbox to set
+     */
+    public void setNameHbox(HBox nameHbox) {
+        this.nameHbox = nameHbox;
+    }
+
+    /**
+     * @return the studentSubmitBtn
+     */
+    public Button getStudentSubmitBtn() {
+        return studentSubmitBtn;
+    }
+
+    /**
+     * @param studentSubmitBtn the studentSubmitBtn to set
+     */
+    public void setStudentSubmitBtn(Button studentSubmitBtn) {
+        this.studentSubmitBtn = studentSubmitBtn;
+    }
+     /* @return the email
+     */
+    public Button getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(Button email) {
+        this.email = email;
+
     }
     
 }
