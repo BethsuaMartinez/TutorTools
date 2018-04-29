@@ -12,6 +12,7 @@ import Supervisor.TutorInformationView;
 import Supervisor.supervisorController;
 import Tutor.tutorController;
 import Tutor.tutorView;
+
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,8 +23,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -49,16 +52,32 @@ public class studentController {
 
             @Override
             public void handle(ActionEvent event) {
+                
+                
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Stage signInStage = new Stage();
                 signInStage.initModality(Modality.APPLICATION_MODAL);
                 signInStage.initOwner(window);
-                GridPane studentIdGridpane = new GridPane();
-                studentIdGridpane=gui.addSession();
-                Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
+
+                
+                VBox layout = new VBox();
+                layout = gui.addSession();     
+                
+                Scene newIdScene = new Scene(layout, 210, 110);
+
+
+
+                
+ 
+
                 signInStage.setTitle("Sign-In");
+                
                 signInStage.setScene(newIdScene);
+                        
+                
                 signInStage.show();
+                
+               
             }
         });
         //Submit to table
@@ -74,7 +93,8 @@ public class studentController {
                 String tutor = gui.getTutorTF().getText();
                 String subject = gui.getSubjectTF().getText();
                 String startTime = dateFormat.format(date);
-
+                System.out.println(idNo + tutor + subject + startTime);
+                
                 int id = Integer.parseInt(idNo);
 
                 Student student;
@@ -82,16 +102,15 @@ public class studentController {
                     student = model.getStudent(id);
                     String fname = student.getFname();
                     String lname = student.getLname();
-                    
-                    System.out.println(fname);
-                    System.out.println(lname);
-                    
                     Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
                     gui.updateTable(currentSession);
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 signInStage.close();
+                gui.ClearFields();
                 //((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
                 
             }
@@ -114,6 +133,7 @@ public class studentController {
             public void handle(ActionEvent event) {
                 TutorInformationView tiv = new TutorInformationView();
                 supervisorController sc = new supervisorController(tiv);
+
                 Scene scene2 = new Scene(tiv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Supervisor");
@@ -131,31 +151,37 @@ public class studentController {
                 }
                 String id = gui.getIdNoTF().getText();
                 int x = Integer.parseInt(id);
+                
                 try {
                     if (true == model.verifyUser(x)) {
-                        GridPane newSessionGridpane = gui.newSession();
-                        Scene newSessionScene = new Scene(newSessionGridpane, 375, 350);
+                        //GridPane newSessionGridpane = gui.newSession();
+                        VBox newSessionVbox = gui.newSessionVBox();
+                        Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
+                        
+                        
                     } else {
-                        GridPane newStudentGridpane = gui.newStudent();
-                        Scene newStudentScene = new Scene(newStudentGridpane, 375, 350);
+                        VBox newStudentVbox =  gui.newStudentVBox();
+                        Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
                         signInStage.setScene(newStudentScene);
                         signInStage.show();
+                        
                     }
 
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                
+                
             }
         });
 
         gui.getBackNew().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                GridPane studentIdGridpane = gui.addSession();
-                Scene newIdScene = new Scene(studentIdGridpane, 375, 350);
+                VBox studentIdVbox = gui.addSession();
+                Scene newIdScene = new Scene(studentIdVbox, 210, 110);
                 signInStage.setTitle("Sign-In");
                 signInStage.setScene(newIdScene);
                 signInStage.show();
@@ -165,25 +191,25 @@ public class studentController {
         gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
-                if ("".equals(gui.getNewStudentIdNoTF().getText())) {
-                    gui.wrongPass();
-                }
-                String idNo = gui.getNewStudentIdNoTF().getText();
+                //if ("".equals(gui.getIdNoTF().getText())) {
+                 //   gui.wrongPass();
+                //}
+                String idNo = gui.getIdNoTF().getText();
                 String firstName = gui.getFirstNameTF().getText();
                 String lastName = gui.getLastNameTF().getText();
                 String email = gui.getEmailTF().getText();
                 String phone = gui.getPhoneNoTF().getText();
+                
                 try {
                     Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     model.insertStudent(idNo, firstName, lastName, email, phone);
-                    GridPane newSessionGridpane = gui.newSession();
-                    Scene newSessionScene = new Scene(newSessionGridpane, 375, 350);
+                    VBox newSession = gui.newSessionVBox();
+                    Scene newSessionScene = new Scene(newSession, 250, 130);
                     signInStage.setScene(newSessionScene);
                     signInStage.show();
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         });
 
