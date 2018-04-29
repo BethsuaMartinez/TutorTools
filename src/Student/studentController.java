@@ -36,6 +36,7 @@ public class studentController {
     studentModel model = new studentModel();
     studentView gui = new studentView();
 
+
     public studentController(studentView gui, studentModel model) {
         this.model = model;
         this.gui = gui;
@@ -81,9 +82,10 @@ public class studentController {
                     student = model.getStudent(id);
                     String fname = student.getFname();
                     String lname = student.getLname();
-                    String email = student.getEmail();
-                    String phone = student.getPhone();
-
+                    
+                    System.out.println(fname);
+                    System.out.println(lname);
+                    
                     Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
                     gui.updateTable(currentSession);
                 } catch (SQLException ex) {

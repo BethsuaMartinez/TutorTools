@@ -48,7 +48,7 @@ public final class loginController {
                 try {
                     if (logm.loginDB(un, psswd) == true) {          
 
-                       studentView sv = new studentView();
+                        studentView sv = new studentView();
                         studentModel sm = new studentModel();
                         studentController sc = new studentController(sv, sm);
                         Scene scene2 = new Scene(sv, 1000, 500);
