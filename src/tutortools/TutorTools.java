@@ -6,8 +6,8 @@
 package tutortools;
 
 import Login.loginController;
-import Login.loginModel;
 import Login.loginView;
+import Models.LoginModel;
 import java.sql.SQLException; 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -25,11 +25,14 @@ public class TutorTools extends Application {
     public void start(Stage primaryStage) throws SQLException {
         
         loginView lv = new loginView();
-        loginModel lm = new loginModel();
+        LoginModel lm = new LoginModel();
 
         loginController lc = new loginController(lv, lm);
        
-        Scene scene = new Scene(lv, 1000, 550);
+
+
+        Scene scene = new Scene(lv, 1300, 500);
+
  
         primaryStage.getIcons().add(new Image("/resources/Logo.png"));
         primaryStage.setTitle("TutorTools");

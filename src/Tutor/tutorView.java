@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -27,6 +29,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 /**
@@ -53,29 +57,76 @@ public class tutorView extends BorderPane {
 
     public tutorView() {
 
+        HBox top = new HBox();
+        HBox hb2 = new HBox();
+        HBox hb3 = new HBox();
+        HBox hb4 = new HBox();
+        
         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT);
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        top.setBackground(new Background(background));
+        top.setPadding(new Insets(10,10,10,10));
+        
+        ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
+        logo.setPreserveRatio(true);
+        logo.setFitWidth(120);
+        logo.setFitHeight(30);
+        hb2.getChildren().add(logo);
+        hb2.setPadding(new Insets(0,0,0,30));
+        
+        
+        hb4.getChildren().addAll(back, signOut);
+        hb4.setSpacing(5);
+        hb3.getChildren().addAll(hb4);
+        hb3.setAlignment(Pos.CENTER_RIGHT);
+        hb3.setPadding(new Insets(0, 20, 0, 0));
+        HBox.setHgrow(hb3, Priority.ALWAYS);
+        top.getChildren().addAll(logo, hb3);
+        top.setPadding(new Insets(5,0,5,20));
 
-        // this.setBackground(new Background(background));
+        this.searchBtn.setMaxSize(100, 20);       
+        this.calender.setMaxSize(100, 20);
+        this.back.setMaxSize(200, 20);
+        this.signOut.setMaxSize(100, 20);  
+        
+        this.searchBtn.setPadding(new Insets(3,3,3,3));
+        this.calender.setPadding(new Insets(3,3,3,3));
+        this.back.setPadding(new Insets(5,10,5,10));
+        this.signOut.setPadding(new Insets(5,10,5,10));
+        
+        this.searchBtn.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        this.calender.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
+        this.back.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
+        this.signOut.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
+
         table.setItems(data);
+       
 
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("firstName"));
+        firstNameCol.setPrefWidth(110);
+        
         TableColumn lastNameCol = new TableColumn("Last Name");
         lastNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("lastName"));
+        lastNameCol.setPrefWidth(110);
 
         TableColumn subjectcol = new TableColumn("Subject");
         subjectcol.setCellValueFactory(
                 new PropertyValueFactory<>("subject"));
-        TableColumn timeInCol = new TableColumn("TimeIn");
+        subjectcol.setPrefWidth(110);
+        
+        TableColumn timeInCol = new TableColumn("Time In");
         timeInCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeIn"));
+        timeInCol.setPrefWidth(90);
+        
         TableColumn timeOutCol = new TableColumn("Time Out");
         timeOutCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOut"));
+        timeOutCol.setPrefWidth(90);
+        
         TableColumn actionCol = new TableColumn("Action");
 
         //Adding the Button to the cell
@@ -88,26 +139,27 @@ public class tutorView extends BorderPane {
             }
 
         });
+        
+        table.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         table.getColumns().addAll(firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, actionCol);
-        table.setPrefWidth(600);
-
-        BorderPane sidebar = new BorderPane();
-        HBox menu = new HBox();
-        Label userName = new Label("User: Bethsua");
-        userName.setStyle("-fx-text-fill: black; -fx-font-size: 10pt; -fx-padding: 5");
-        menu.setAlignment(Pos.CENTER_RIGHT);
-
-        menu.getChildren().addAll(userName, signOut);
-        sidebar.setTop(menu);
+        table.setPrefWidth(640);
+       
+        
+        this.searchTf.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
 
         HBox search = new HBox();
-        sidebar.setBottom(search);
-        search.getChildren().addAll(searchTf, searchBtn, calender, back);
+        search.getChildren().addAll(searchTf, searchBtn, calender);
+        search.setSpacing(10);
         search.setStyle(" -fx-padding: 10");
+       
+        VBox left = new VBox();
+        left.getChildren().addAll(search,table);
+       
+        BorderPane.setMargin(left, new Insets(0,10,0,10));
 
-        this.setRight(sidebar);
-
-        this.setLeft(table);
+        this.setLeft(left);
+        this.setTop(top);
     }
 
     /**

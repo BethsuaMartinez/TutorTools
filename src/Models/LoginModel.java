@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Login;
+package Models;
 
 import Database.SQLConnector;
 import java.sql.PreparedStatement;
@@ -14,11 +14,11 @@ import java.sql.SQLException;
  *
  * @author beths
  */
-public class loginModel {
+public class LoginModel {
 
     SQLConnector conn = SQLConnector.getDbCon();
     ResultSet myRs = null;
-    ResultSet myRs2 =null;
+    ResultSet myRs2 = null;
 
     /**
      *
@@ -36,24 +36,22 @@ public class loginModel {
 
             myStmt = conn.preparedStatement(sql);
             myStmt.setString(1, un);
-            
+
             myRs = myStmt.executeQuery();
-            
+
             myStmt2 = conn.preparedStatement(sql1);
             myStmt2.setString(1, un);
-            
-            
+
             myRs2 = myStmt2.executeQuery();
 
             String chkpsswd = null;
             if (myRs.next()) {
                 chkpsswd = myRs.getString("password");
                 return chkpsswd.equals(psswd);
-              
-            }
-            else if(myRs2.next()){
-               chkpsswd = myRs2.getString("password");
-               return chkpsswd.equals(psswd);
+
+            } else if (myRs2.next()) {
+                chkpsswd = myRs2.getString("password");
+                return chkpsswd.equals(psswd);
             }
         } catch (SQLException exc) {
         } finally {

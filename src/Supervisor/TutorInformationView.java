@@ -5,17 +5,14 @@
  */
 package Supervisor;
 
-import com.sun.prism.impl.Disposer;
+import Models.TutorModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,7 +28,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 /**
  *
@@ -40,11 +36,8 @@ import javafx.util.Callback;
 public class TutorInformationView extends BorderPane {
 
     TutorModel tm = new TutorModel();
-    
     private Label lasName = new Label("Enter Last Name of Student");
-    
     private TextField lastNameTF = new TextField();
-    
     private Button email = new Button("email");
     private Button add = new Button("Add");
     private Button delete = new Button("Delete");
@@ -56,7 +49,6 @@ public class TutorInformationView extends BorderPane {
     
     TableView table = new TableView();
     TableView table2 = new TableView();
-    
     
     private Label idLabel = new Label ("ID Number");
     private TextField idTF = new TextField();
@@ -91,10 +83,13 @@ public class TutorInformationView extends BorderPane {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
         hb.setPadding(new Insets(10,10,10,10));
+        
         ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
+        
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
         logo.setFitHeight(30);
+        
         hb2.getChildren().add(logo);
         hb2.setPadding(new Insets(0,0,0,30));
         hb3.getChildren().addAll(email,activity,back, signOut);
@@ -110,6 +105,7 @@ public class TutorInformationView extends BorderPane {
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         VBox vb = new VBox();
+       
         table.setItems(tutortableData);
         table.setMaxSize(525, 250);
         vb.setPadding(new Insets(100, 20, 10, 20));
@@ -118,36 +114,30 @@ public class TutorInformationView extends BorderPane {
         
         TableColumn tutoridCol = new TableColumn("ID");
         tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tutoridCol.setPrefWidth(110);
         
         TableColumn tutorfNameCol = new TableColumn("First Name");
         tutorfNameCol.setCellValueFactory(new PropertyValueFactory<>("fName"));
+        tutoridCol.setPrefWidth(110);
         
         TableColumn tutorlNameCol = new TableColumn("Last Name");
         tutorlNameCol.setCellValueFactory(new PropertyValueFactory<>("lName"));
+        tutoridCol.setPrefWidth(110);
         
         TableColumn tutoremailCol = new TableColumn("Email");
         tutoremailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tutoridCol.setPrefWidth(110);
         
         TableColumn tutorphoneCol = new TableColumn("Phone");
         tutorphoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        tutoridCol.setPrefWidth(110);
         
         TableColumn tutorsubjectCol = new TableColumn("Subject");
         tutorsubjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        
-        TableColumn tutoractionCol = new TableColumn("Action");
-        
-        tutoractionCol.setCellFactory(
-                new Callback<TableColumn<Disposer.Record, Boolean>, TableCell<Disposer.Record, Boolean>>() {
-
-            @Override
-            public TableCell<Disposer.Record, Boolean> call(TableColumn<Disposer.Record, Boolean> p) {
-                return new TutorInformationView.ButtonCell();
-            }
-
-        });
+        tutoridCol.setPrefWidth(110);
         
         table.getColumns().addAll(tutoridCol, tutorfNameCol, tutorlNameCol, tutoremailCol, tutorsubjectCol, tutorphoneCol);
-        table.setPrefWidth(1500);
+        table.setMinWidth(687);
         
         table2.setMaxSize(650, 350);
         table2.setTranslateX(5);
@@ -167,36 +157,27 @@ public class TutorInformationView extends BorderPane {
         
         TableColumn studentidCol = new TableColumn("ID");
         studentidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        studentidCol.setPrefWidth(110);
         
         TableColumn studentfNameCol = new TableColumn("First Name");
         studentfNameCol.setCellValueFactory(new PropertyValueFactory<>("fName"));
+        studentfNameCol.setPrefWidth(110);        
         
         TableColumn studentlNameCol = new TableColumn("Last Name");
         studentlNameCol.setCellValueFactory(new PropertyValueFactory<>("lName"));
+        studentlNameCol.setPrefWidth(110);        
         
         TableColumn studentemailCol = new TableColumn("Email");
         studentemailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        studentemailCol.setPrefWidth(110);        
         
         TableColumn studentphoneCol = new TableColumn("Phone");
         studentphoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        studentphoneCol.setPrefWidth(110);              
         
-        TableColumn studentsubjectCol = new TableColumn("Subject");
-        studentsubjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        
-        TableColumn studentactionCol = new TableColumn("Action");
-        
-        studentactionCol.setCellFactory(
-                new Callback<TableColumn<Disposer.Record, Boolean>, TableCell<Disposer.Record, Boolean>>() {
-
-            @Override
-            public TableCell<Disposer.Record, Boolean> call(TableColumn<Disposer.Record, Boolean> p) {
-                return new TutorInformationView.ButtonCellstudent();
-            }
-
-        });
-        
-        table2.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentsubjectCol, studentphoneCol);
-       
+        table2.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentphoneCol);
+        table2.setMinWidth(550);
+                
         this.setTop(hb);
         this.setLeft(vb2);
         this.setRight(vb);
@@ -422,7 +403,6 @@ public class TutorInformationView extends BorderPane {
     }
       
      /* public void updateTable(Data currentData) {
-
         String fName = currentData.getFirstName();
         String lName = currentData.getLastName();
         String subject = currentData.getTutor();
@@ -433,7 +413,7 @@ public class TutorInformationView extends BorderPane {
         tutortableData.add(tutorRowData);
         table.setItems(tutortableData);
     }*/
-     
+/*     
  private class ButtonCell extends TableCell<Disposer.Record, Boolean> {
 
         final Button submit = new Button("Submit");
@@ -451,23 +431,20 @@ public class TutorInformationView extends BorderPane {
                    /*TutorInformationView.RowData currentPerson = (TutorInformationView.RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     Date date = new Date();
-
                     String idNo = currentPerson.getId();
                     String firstName = currentPerson.getFirstName();
                     String lastName = currentPerson.getLastName();
                     String email = currentPerson.getEmail();
                     String subject = currentPerson.getSubject();
                     String time = dateFormat.format(date);
-
              //       Data currentSession = new Data(idNo, lastName, firstName, email, time, subject, startTime);
-
                 /*    try {
                         tm.WriteDatabase(currentSession);//remove selected item from the table list
                         tutortableData.remove(currentPerson);
                     } catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                     }*/
-                }
+   /*             }
             });
         }
 
@@ -483,7 +460,7 @@ public class TutorInformationView extends BorderPane {
         }
 
     }
- 
+ */
   /*public void ClearStudentFields() {
         getIdTF().clear();
         getfNameTF().clear();
@@ -491,11 +468,9 @@ public class TutorInformationView extends BorderPane {
         getPhoneTF().clear();
         getEmailTF().clear();
         getSubjectTF().clear();
-
     }
       
      /* public void updateTable(Data currentData) {
-
         String fName = currentData.getFirstName();
         String lName = currentData.getLastName();
         String subject = currentData.getTutor();
@@ -507,7 +482,7 @@ public class TutorInformationView extends BorderPane {
         table.setItems(tutortableData);
     }*/
      
- private class ButtonCellstudent extends TableCell<Disposer.Record, Boolean> {
+ /*private class ButtonCellstudent extends TableCell<Disposer.Record, Boolean> {
 
         final Button submit = new Button("Submit");
         HBox cellBox = new HBox();
@@ -524,23 +499,20 @@ public class TutorInformationView extends BorderPane {
                    /*TutorInformationView.RowData currentPerson = (TutorInformationView.RowData) ButtonCellstudent.this.getTableView().getItems().get(ButtonCellstudent.this.getIndex());
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     Date date = new Date();
-
                     String idNo = currentPerson.getId();
                     String firstName = currentPerson.getFirstName();
                     String lastName = currentPerson.getLastName();
                     String email = currentPerson.getEmail();
                     String subject = currentPerson.getSubject();
                     String time = dateFormat.format(date);
-
              //       Data currentSession = new Data(idNo, lastName, firstName, email, time, subject, startTime);
-
                 /*    try {
                         tm.WriteDatabase(currentSession);//remove selected item from the table list
                         tutortableData.remove(currentPerson);
                     } catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                     }*/
-                }
+  /*              }
             });
         }
 
@@ -556,7 +528,7 @@ public class TutorInformationView extends BorderPane {
         }
 
     }
-
+*/
     /**
      * @return the lasName
      */

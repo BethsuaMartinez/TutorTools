@@ -21,15 +21,13 @@ public final class SQLConnector {
         String dbName = "TutorTools";			//modify according to your DB
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";				//modify according to your user
-
         String password = "root";				//modify according to your password
 
         try {
             Class.forName(driver).newInstance();
             this.conn = (Connection)DriverManager.getConnection(url+dbName,userName,password);
         }
-        catch (Exception sqle) {
-            sqle.printStackTrace();
+        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException sqle) {
         }
     }
     /**
@@ -41,7 +39,6 @@ public final class SQLConnector {
             db = new SQLConnector();
         }
         return db;
- 
     }
     /**
      *

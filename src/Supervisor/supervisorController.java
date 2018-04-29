@@ -6,10 +6,11 @@
 package Supervisor;
 
 import Login.loginController;
-import Login.loginModel;
 import Login.loginView;
+import Models.LoginModel;
+import Models.SessionModel;
+import Models.StudentModel;
 import Student.studentController;
-import Student.studentModel;
 import Student.studentView;
 import Tutor.tutorView;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 
 /**
  *
@@ -32,17 +34,16 @@ public class supervisorController {
         attachHandlers();
     }
 
-            private void attachHandlers() {
 
-    
+     private void attachHandlers() {    
 
         tiv.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 loginView v = new loginView();
-                loginModel m = new loginModel();
+                LoginModel m = new LoginModel();
                 loginController logc = new loginController(v, m);
-                Scene scene2 = new Scene(v, 1000, 500);
+                Scene scene2 = new Scene(v, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Sign In");
                 window.setScene(scene2);
@@ -54,10 +55,11 @@ public class supervisorController {
             public void handle(ActionEvent event) {
                 
                 studentView sv = new studentView();
-                studentModel sm = new studentModel();
-                studentController sc = new studentController(sv, sm);
+                StudentModel sm = new StudentModel();
+                SessionModel ssm = new SessionModel();
+                studentController sc = new studentController(sv, sm, ssm);
 
-                Scene scene3 = new Scene(sv, 1000, 500);
+                Scene scene3 = new Scene(sv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Student List");
                 window.setScene(scene3);
@@ -71,7 +73,7 @@ public class supervisorController {
                 ActivitylogView alv = new ActivitylogView();
                 activityController ac = new activityController(alv);
 
-                Scene scene3 = new Scene(alv, 1000, 500);
+                Scene scene3 = new Scene(alv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Activity Log");
                 window.setScene(scene3);
