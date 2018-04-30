@@ -84,6 +84,34 @@ public class supervisorController {
 
             }
         });
+        tiv.getAdd().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Stage newTutorStage = new Stage();
+                newTutorStage.initModality(Modality.APPLICATION_MODAL);
+                newTutorStage.initOwner(window);
+
+                                
+                VBox newTutorVbox = new VBox();
+                newTutorVbox = tiv.addTutor();
+                
+                Scene newTutorScene = new Scene(newTutorVbox, 300, 270);
+                
+                newTutorStage.setTitle("New Tutor");
+                newTutorStage.setScene(newTutorScene);
+                newTutorStage.show();
+
+            }
+        });
+        
+        tiv.getNewTutorSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.close();
+                tiv.ClearFields();
+            }
+        });
 
         tiv.getEmail().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -103,8 +131,7 @@ public class supervisorController {
                 signInStage.setTitle("E-Mail");
                 signInStage.setScene(newIdScene);
                 signInStage.show();
-
             }
         });
-    }
+            }
 }

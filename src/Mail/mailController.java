@@ -59,7 +59,7 @@ public class mailController {
                     System.out.println("Could not send email.");
                     ex.printStackTrace();
                 }
-                try {
+               try {
                     EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);
                     System.out.println("Email sent.");
@@ -89,10 +89,8 @@ public class mailController {
                     //actionStatus.setText("PDF file selection cancelled.");
 
                 }
+
             }
-             
         });*/
-}
-        
-               
+        }  
 }
