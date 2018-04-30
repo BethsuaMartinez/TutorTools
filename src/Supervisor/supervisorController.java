@@ -12,9 +12,13 @@ import Mail.mailController;
 import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
+import Models.SupervisorModel;
+import Student.Student;
 import Student.studentController;
 import Student.studentView;
 import Tutor.tutorView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -32,6 +36,11 @@ public class supervisorController {
     TutorInformationView tiv = new TutorInformationView();
     tutorView tv = new tutorView();
     ActivitylogView alv = new ActivitylogView();
+    SupervisorModel sm = new SupervisorModel();
+    private ObservableList<Student> students = FXCollections.observableArrayList();
+    private ObservableList<Tutor> tutors = FXCollections.observableArrayList();
+    Student currentStudent = new Student();
+    Tutor currentTutor = new Tutor();
 
     public supervisorController(TutorInformationView tiv) {
         this.tiv = tiv;
@@ -59,7 +68,7 @@ public class supervisorController {
             StudentModel sm = new StudentModel();
             SessionModel ssm = new SessionModel();
             studentController sc = new studentController(sv, sm, ssm);
-            
+
             Scene scene3 = new Scene(sv, 1300, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Student List");
@@ -80,39 +89,82 @@ public class supervisorController {
             Stage newTutorStage = new Stage();
             newTutorStage.initModality(Modality.APPLICATION_MODAL);
             newTutorStage.initOwner(window);
-            
-            
-            VBox newTutorVbox = new VBox();
-            newTutorVbox = tiv.addTutor();
-            
-            Scene newTutorScene = new Scene(newTutorVbox, 300, 270);
-            
-            newTutorStage.setTitle("New Tutor");
+
+            Scene newTutorScene = new Scene(tiv.addType(), 150, 150);
+
+            newTutorStage.setTitle("Add");
             newTutorStage.setScene(newTutorScene);
             newTutorStage.show();
         });
-        
+        tiv.getAddType().setOnAction((ActionEvent event) -> {
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newTutorScene;
+
+            if ("Tutor".equals(tiv.getTypePerson())) {
+                newTutorScene = new Scene(tiv.addTutor(), 350, 250);
+            } else {
+                newTutorScene = new Scene(tiv.addStudent(), 350, 250);
+            }
+            window.setTitle("Add");
+            window.setScene(newTutorScene);
+            window.show();
+
+        });
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
+
+            String idNo = tiv.getIdTF().getText();
+            String firstName = tiv.getfNameTF().getText();
+            String lastName = tiv.getlNameTF().getText();
+            String email = tiv.getEmailTF().getText();
+            String phoneNo = tiv.getPhoneTF().getText();
+            String subject = tiv.getSubjectTF().getText();
+            
+            int id = Integer.parseInt(idNo);
+            
+            System.out.println(id+firstName+lastName);
+            
+            Tutor currentTutor=new Tutor(id, firstName, lastName, email, phoneNo, subject);
+            tiv.updateTutorTable(currentTutor);
+            
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.close();
             tiv.ClearFields();
         });
 
+        tiv.getStudentSubmitBtn().setOnAction((ActionEvent event) -> {
+
+            String idNo = tiv.getIdTF().getText();
+            String firstName = tiv.getfNameTF().getText();
+            String lastName = tiv.getlNameTF().getText();
+            String email = tiv.getEmailTF().getText();
+            String phoneNo = tiv.getPhoneTF().getText();
+
+            int id = Integer.parseInt(idNo);
+            
+            System.out.println(id+firstName+lastName);
+            
+            Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
+            tiv.updateStudentTable(currentStudent);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.close();
+            tiv.ClearFields();
+        });
         tiv.getEmail().setOnAction((ActionEvent event) -> {
             MailView mv = new MailView();
             mailController mc = new mailController(mv);
-            
+
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Stage signInStage = new Stage();
             signInStage.initModality(Modality.APPLICATION_MODAL);
             signInStage.initOwner(window);
-            
+
             VBox layout = mv;
-            
+
             Scene newIdScene = new Scene(layout, 500, 300);
             signInStage.setTitle("E-Mail");
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
-            }
+    }
 }

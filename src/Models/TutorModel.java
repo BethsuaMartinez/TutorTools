@@ -72,9 +72,10 @@ public class TutorModel {
         String lastName = rs.getString("lname");
         String firstName = rs.getString("fname");
         String email = rs.getString("email");
-        int phone = rs.getInt("phone");
-
-        Tutor tempTutor = new Tutor(id, lastName, firstName, phone);
+        String phone = rs.getString("phone");
+        String subject = rs.getString("subject");
+        
+        Tutor tempTutor = new Tutor(id, firstName, firstName, email, phone, subject);
 
         return tempTutor;
 
