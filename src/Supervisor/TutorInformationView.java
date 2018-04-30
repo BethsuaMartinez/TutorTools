@@ -99,7 +99,7 @@ public class TutorInformationView extends BorderPane {
         HBox hb2 = new HBox();
         HBox hb3 = new HBox();
         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+                                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
         hb.setPadding(new Insets(10,10,10,10));
         
@@ -120,7 +120,7 @@ public class TutorInformationView extends BorderPane {
         hb.setPadding(new Insets(5,0,5,20));
        
         tutor.setAlignment(Pos.TOP_CENTER);
-        HBox hb4 = new HBox(getAdd(), getDelete(), getModify());
+        HBox hb4 = new HBox(add, delete, modify);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         VBox vb = new VBox();
@@ -167,7 +167,7 @@ public class TutorInformationView extends BorderPane {
         student.setAlignment(Pos.BASELINE_CENTER);
         student.setPadding(new Insets(5,0,5,0));
         
-        HBox hbox1= new HBox(getlNameLabel(), getlNameTF(), search);
+        HBox hbox1= new HBox(lNameLabel, lNameTF, search);
         hbox1.setPadding(new Insets(5));
         hbox1.setSpacing(20);
         hbox1.setTranslateX(5);
