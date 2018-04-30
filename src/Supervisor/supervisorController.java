@@ -54,84 +54,65 @@ public class supervisorController {
             }
         });
 
-        tiv.getBack().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                studentView sv = new studentView();
-                StudentModel sm = new StudentModel();
-                SessionModel ssm = new SessionModel();
-                studentController sc = new studentController(sv, sm, ssm);
-
-                Scene scene3 = new Scene(sv, 1300, 500);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Student List");
-                window.setScene(scene3);
-                window.show();
-
-            }
+        tiv.getBack().setOnAction((ActionEvent event) -> {
+            studentView sv = new studentView();
+            StudentModel sm = new StudentModel();
+            SessionModel ssm = new SessionModel();
+            studentController sc = new studentController(sv, sm, ssm);
+            
+            Scene scene3 = new Scene(sv, 1300, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Student List");
+            window.setScene(scene3);
+            window.show();
         });
-        tiv.getActivity().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                ActivitylogView alv = new ActivitylogView();
-                activityController ac = new activityController(alv);
-
-                Scene scene3 = new Scene(alv, 1300, 500);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Activity Log");
-                window.setScene(scene3);
-                window.show();
-
-            }
+        tiv.getActivity().setOnAction((ActionEvent event) -> {
+            ActivitylogView alv1 = new ActivitylogView();
+            activityController ac = new activityController(alv1);
+            Scene scene3 = new Scene(alv1, 1300, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Activity Log");
+            window.setScene(scene3);
+            window.show();
         });
-        tiv.getAdd().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Stage newTutorStage = new Stage();
-                newTutorStage.initModality(Modality.APPLICATION_MODAL);
-                newTutorStage.initOwner(window);
-
-                                
-                VBox newTutorVbox = new VBox();
-                newTutorVbox = tiv.addTutor();
-                
-                Scene newTutorScene = new Scene(newTutorVbox, 300, 270);
-                
-                newTutorStage.setTitle("New Tutor");
-                newTutorStage.setScene(newTutorScene);
-                newTutorStage.show();
-
-            }
+        tiv.getAdd().setOnAction((ActionEvent event) -> {
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage newTutorStage = new Stage();
+            newTutorStage.initModality(Modality.APPLICATION_MODAL);
+            newTutorStage.initOwner(window);
+            
+            
+            VBox newTutorVbox = new VBox();
+            newTutorVbox = tiv.addTutor();
+            
+            Scene newTutorScene = new Scene(newTutorVbox, 300, 270);
+            
+            newTutorStage.setTitle("New Tutor");
+            newTutorStage.setScene(newTutorScene);
+            newTutorStage.show();
         });
         
-        tiv.getNewTutorSubmitBtn().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.close();
-                tiv.ClearFields();
-            }
+        tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.close();
+            tiv.ClearFields();
         });
 
-        tiv.getEmail().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                MailView mv = new MailView();
-                mailController mc = new mailController(mv);
-                
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Stage signInStage = new Stage();
-                signInStage.initModality(Modality.APPLICATION_MODAL);
-                signInStage.initOwner(window);
-
-                VBox layout = new VBox();
-                layout = mv;
-
-                Scene newIdScene = new Scene(layout, 500, 300);
-                signInStage.setTitle("E-Mail");
-                signInStage.setScene(newIdScene);
-                signInStage.show();
-            }
+        tiv.getEmail().setOnAction((ActionEvent event) -> {
+            MailView mv = new MailView();
+            mailController mc = new mailController(mv);
+            
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage signInStage = new Stage();
+            signInStage.initModality(Modality.APPLICATION_MODAL);
+            signInStage.initOwner(window);
+            
+            VBox layout = mv;
+            
+            Scene newIdScene = new Scene(layout, 500, 300);
+            signInStage.setTitle("E-Mail");
+            signInStage.setScene(newIdScene);
+            signInStage.show();
         });
             }
 }

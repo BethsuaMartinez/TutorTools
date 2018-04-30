@@ -33,6 +33,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,6 +57,9 @@ public class studentView extends BorderPane {
     StudentModel sm = new StudentModel();
     SessionModel ssm = new SessionModel();
     
+            
+    private ChoiceBox<String> tutors = new ChoiceBox<>();
+    private ChoiceBox<String> subjects = new ChoiceBox<>();
 
     private Button addBtn = new Button("Add Session");
 
@@ -73,8 +77,6 @@ public class studentView extends BorderPane {
 
     private Label idNoLabel = new Label("ID Number");
     private TextField idNoTF = new TextField();
-
-    private Label newStudentIdNoLabel = new Label("ID Number");
     
 
     private Label firstNameLabel = new Label("First Name");
@@ -100,8 +102,8 @@ public class studentView extends BorderPane {
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneNoVbox = new VBox(phoneNoLabel, phoneNoTF);
-    private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
-    private VBox tutorVbox = new VBox(tutorLabel, tutorTF);
+    private VBox subjectVbox = new VBox(subjectLabel, subjects);
+    private VBox tutorVbox = new VBox(tutorLabel, tutors);
     
     private HBox nameHBox = new HBox(firstNameVbox, lastNameVbox);
 
@@ -258,6 +260,14 @@ public class studentView extends BorderPane {
 
     public VBox newSessionVBox(){
         VBox layout = new VBox();
+
+        subjects.getItems().addAll("Computer Science", "English", "History");
+        subjects.setValue("Computer Science");
+        
+        tutors.getItems().add("Luis");
+        tutors.getItems().addAll("Elyvic", "Bethsua");
+        tutors.setValue("Luis");
+        
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(5,5,5,5));
         layout.setSpacing(5);
@@ -794,6 +804,36 @@ public class studentView extends BorderPane {
      */
     public void setBackNew(Button backNew) {
         this.backNew = backNew;
+    }
+
+    /**
+     * @return the tutors
+     */
+    public String getTutors() {
+        String tutor = tutors.getValue();
+        return tutor;
+    }
+
+    /**
+     * @param tutors the tutors to set
+     */
+    public void setTutors(ChoiceBox<String> tutors) {
+        this.tutors = tutors;
+    }
+
+    /**
+     * @return the subjects
+     */
+    public String getSubjects() {
+        String subject = subjects.getValue();
+        return subject;
+    }
+
+    /**
+     * @param subjects the subjects to set
+     */
+    public void setSubjects(ChoiceBox<String> subjects) {
+        this.subjects = subjects;
     }
     
 }
