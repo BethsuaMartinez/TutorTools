@@ -7,6 +7,7 @@ package Mail;
 
 import java.io.IOException;
 import java.security.Security;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -107,7 +108,7 @@ public class EmailAttachmentSender {
 	}
 	public static void sendEmailWithAttachmentsCC(String host, String port,
 		final String userName, final String password, String toAddress,
-		String subject, String message, String[] attachFiles,String[] ccEmails)
+		String subject, String message, String[] attachFiles,ArrayList<String> ccEmails)
 		throws AddressException, MessagingException {
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		
@@ -151,10 +152,10 @@ public class EmailAttachmentSender {
 		// for cc
 		int ccLength=0;
 		if (ccEmails != null) {
-			ccLength = ccEmails.length;
+			ccLength = ccEmails.size();
 		}
 		for (int i = 0; i < ccLength; i++) {
-			msg.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmails[i], false));
+			msg.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmails.get(i), false));
 		  }
 		// for cc end //
 		msg.setSubject(subject);

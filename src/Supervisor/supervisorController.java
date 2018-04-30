@@ -23,12 +23,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author selvera
  */
 public class supervisorController {
+
     TutorInformationView tiv = new TutorInformationView();
     tutorView tv = new tutorView();
     ActivitylogView alv = new ActivitylogView();
@@ -38,8 +38,7 @@ public class supervisorController {
         attachHandlers();
     }
 
-
-     private void attachHandlers() {    
+    private void attachHandlers() {
 
         tiv.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -54,10 +53,10 @@ public class supervisorController {
                 window.show();
             }
         });
-        
+
         tiv.getBack().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                
+
                 studentView sv = new studentView();
                 StudentModel sm = new StudentModel();
                 SessionModel ssm = new SessionModel();
@@ -73,7 +72,7 @@ public class supervisorController {
         });
         tiv.getActivity().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                
+
                 ActivitylogView alv = new ActivitylogView();
                 activityController ac = new activityController(alv);
 
@@ -85,14 +84,14 @@ public class supervisorController {
 
             }
         });
-        
+
         tiv.getEmail().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                
+
                 MailView mv = new MailView();
                 mailController mc = new mailController(mv);
-
-                                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Stage signInStage = new Stage();
                 signInStage.initModality(Modality.APPLICATION_MODAL);
                 signInStage.initOwner(window);
@@ -101,17 +100,11 @@ public class supervisorController {
                 layout = mv;
 
                 Scene newIdScene = new Scene(layout, 500, 300);
-
                 signInStage.setTitle("E-Mail");
-
                 signInStage.setScene(newIdScene);
-
                 signInStage.show();
-
 
             }
         });
     }
 }
-
-
