@@ -99,7 +99,7 @@ public class studentController {
         gui.getTutor().setOnAction((ActionEvent event) -> {
             tutorView tv = new tutorView();
             tutorController tc = new tutorController(tv);
-            Scene scene3 = new Scene(tv, 1300, 500);
+            Scene scene3 = new Scene(tv, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Tutor Information");
             window.setScene(scene3);
@@ -110,9 +110,7 @@ public class studentController {
             TutorInformationView tiv = new TutorInformationView();
             supervisorController sc = new supervisorController(tiv);
             
-            
-            
-            Scene scene2 = new Scene(tiv, 1300, 500);
+            Scene scene2 = new Scene(tiv, 1000, 500);
             
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Supervisor");
@@ -182,6 +180,8 @@ public class studentController {
                 }
             }
         });
+        
+       // gui.getSe
 
         gui.getSignOut().setOnAction((ActionEvent event) -> {
             loginView v = new loginView();

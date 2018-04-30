@@ -41,7 +41,7 @@ public class tutorController {
             loginView v = new loginView();
             LoginModel m = new LoginModel();
             loginController logc = new loginController(v, m);
-            Scene scene2 = new Scene(v, 1300, 500);
+            Scene scene2 = new Scene(v, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Sign In");
             window.setScene(scene2);
@@ -54,7 +54,7 @@ public class tutorController {
             SessionModel ssm = new SessionModel();
             studentController sc = new studentController(sv, sm, ssm);
             
-            Scene scene3 = new Scene(sv, 1300, 500);
+            Scene scene3 = new Scene(sv, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Student List");
             window.setScene(scene3);

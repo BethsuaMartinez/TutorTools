@@ -96,41 +96,68 @@ public class TutorInformationView extends BorderPane {
     public  TutorInformationView() {
        
         HBox hb = new HBox();
+        
         HBox hb2 = new HBox();
+        hb2.setPadding(new Insets(0,0,0,30));
+        
         HBox hb3 = new HBox();
+        HBox.setHgrow(hb3, Priority.ALWAYS);
+        hb3.getChildren().addAll(email,activity,back, signOut);
+        hb3.setSpacing(10);
+        hb3.setAlignment(Pos.CENTER_RIGHT);
+        hb3.setPadding(new Insets(0, 20, 0, 0));
+        
         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
                                          BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
         hb.setPadding(new Insets(10,10,10,10));
         
         ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
-        
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
         logo.setFitHeight(30);
         
         hb2.getChildren().add(logo);
-        hb2.setPadding(new Insets(0,0,0,30));
-        hb3.getChildren().addAll(email,activity,back, signOut);
-        hb3.setSpacing(10);
-        hb3.setAlignment(Pos.CENTER_RIGHT);
-        hb3.setPadding(new Insets(0, 20, 0, 0));
-        HBox.setHgrow(hb3, Priority.ALWAYS);
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
-       
-        //-------------------------Tutor Table--------------------------------------
+        
         tutor.setAlignment(Pos.TOP_CENTER);
+        
         HBox hb4 = new HBox(add, delete, modify);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
-        VBox vb = new VBox();
-       
-        tutorTable.setItems(tutortableData);
-        tutorTable.setMaxSize(525, 250);
-        vb.setPadding(new Insets(100, 20, 10, 20));
         hb4.setAlignment(Pos.BOTTOM_CENTER);
-        vb.getChildren().addAll(tutor,tutorTable,hb4);
+        
+        this.setTop(hb);
+        studentList();
+        this.setBottom(hb4);
+    }
+    
+    public void tutorList(){
+        
+       
+        //-------------------------Tutor Table--------------------------------------
+        tutorTable.setItems(tutortableData);
+        tutorTable.setTranslateX(5);
+        
+        tutorTable.setMaxSize(650, 250);
+        tutorTable.setTranslateX(5);
+        
+        tutor.setPrefSize(100, 10);
+        tutor.setTranslateX(10);
+        tutor.setAlignment(Pos.BASELINE_CENTER);
+        tutor.setPadding(new Insets(5,0,5,0));
+        
+        typePerson.getItems().addAll("Student", "Tutor");
+        typePerson.setValue("Student");
+        
+        HBox hbox1= new HBox(lNameLabel, lNameTF, search, typePerson);
+        hbox1.setPadding(new Insets(5));
+        hbox1.setSpacing(20);
+        hbox1.setTranslateX(5);
+        
+        VBox vb = new VBox();
+        vb.getChildren().addAll(tutor,hbox1,tutorTable);
         
         TableColumn tutoridCol = new TableColumn("ID");
         tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -159,22 +186,32 @@ public class TutorInformationView extends BorderPane {
         tutorTable.getColumns().addAll(tutoridCol, tutorfNameCol, tutorlNameCol, tutoremailCol, tutorsubjectCol, tutorphoneCol);
         tutorTable.setMinWidth(687);
         
+         this.setCenter(vb);
+        
+    }
+    
+    public void studentList(){
         //------------------------Table Student----------------------------------------------
-        studentTable.setMaxSize(650, 350);
+        studentTable.setItems(studenttableData);
+        
+        studentTable.setMaxSize(650, 250);
         studentTable.setTranslateX(5);
+        
         search.setPrefSize(100, 10);
         student.setTranslateX(10);
         student.setAlignment(Pos.BASELINE_CENTER);
         student.setPadding(new Insets(5,0,5,0));
         
-        HBox hbox1= new HBox(lNameLabel, lNameTF, search);
+        typePerson.getItems().addAll("Student", "Tutor");
+        typePerson.setValue("Student");
+        
+        HBox hbox1= new HBox(lNameLabel, lNameTF, search, typePerson);
         hbox1.setPadding(new Insets(5));
         hbox1.setSpacing(20);
         hbox1.setTranslateX(5);
+        
         VBox vb2 =new VBox();
         vb2.getChildren().addAll(student,hbox1, studentTable);
-       
-        studentTable.setItems(studenttableData);
         
         TableColumn studentidCol = new TableColumn("ID");
         studentidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -190,19 +227,17 @@ public class TutorInformationView extends BorderPane {
         
         TableColumn studentemailCol = new TableColumn("Email");
         studentemailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        studentemailCol.setPrefWidth(110);        
+        studentemailCol.setPrefWidth(210);        
         
         TableColumn studentphoneCol = new TableColumn("Phone");
         studentphoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         studentphoneCol.setPrefWidth(110);              
         
         studentTable.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentphoneCol);
-        studentTable.setMinWidth(750);
-                
-        this.setTop(hb);
-        this.setLeft(vb2);
-        this.setRight(vb);
+        studentTable.setMinWidth(652);
+        this.setCenter(vb2);
     }
+    
     public VBox addType(){
         VBox layout = new VBox();
         layout.setPadding(new Insets(5,5,5,5));

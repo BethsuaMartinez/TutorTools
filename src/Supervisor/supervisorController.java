@@ -55,7 +55,7 @@ public class supervisorController {
                 loginView v = new loginView();
                 LoginModel m = new LoginModel();
                 loginController logc = new loginController(v, m);
-                Scene scene2 = new Scene(v, 1300, 500);
+                Scene scene2 = new Scene(v, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Sign In");
                 window.setScene(scene2);
@@ -69,7 +69,7 @@ public class supervisorController {
             SessionModel ssm = new SessionModel();
             studentController sc = new studentController(sv, sm, ssm);
 
-            Scene scene3 = new Scene(sv, 1300, 500);
+            Scene scene3 = new Scene(sv, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Student List");
             window.setScene(scene3);
@@ -78,7 +78,7 @@ public class supervisorController {
         tiv.getActivity().setOnAction((ActionEvent event) -> {
             ActivitylogView alv1 = new ActivitylogView();
             activityController ac = new activityController(alv1);
-            Scene scene3 = new Scene(alv1, 1300, 500);
+            Scene scene3 = new Scene(alv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Activity Log");
             window.setScene(scene3);
@@ -118,14 +118,14 @@ public class supervisorController {
             String email = tiv.getEmailTF().getText();
             String phoneNo = tiv.getPhoneTF().getText();
             String subject = tiv.getSubjectTF().getText();
-            
+
             int id = Integer.parseInt(idNo);
-            
-            System.out.println(phoneNo+" "+subject);
-            
-            Tutor currentTutor=new Tutor(id, firstName, lastName, email, phoneNo, subject);
+
+            System.out.println(phoneNo + " " + subject);
+
+            Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
             tiv.updateTutorTable(currentTutor);
-            
+
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.close();
             tiv.ClearFields();
@@ -140,9 +140,9 @@ public class supervisorController {
             String phoneNo = tiv.getPhoneTF().getText();
 
             int id = Integer.parseInt(idNo);
-            
-            System.out.println(id+firstName+lastName+email+phoneNo);
-            
+
+            System.out.println(id + firstName + lastName + email + phoneNo);
+
             Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
             tiv.updateStudentTable(currentStudent);
 
@@ -165,6 +165,16 @@ public class supervisorController {
             signInStage.setTitle("E-Mail");
             signInStage.setScene(newIdScene);
             signInStage.show();
+        });
+        tiv.getSearch().setOnAction((ActionEvent event) -> {
+            Scene scene2;
+
+            if ("Tutor".equals(tiv.getTypePerson())) {
+                tiv.tutorList();
+            } else {
+                tiv.studentList();
+            }
+
         });
     }
 }
