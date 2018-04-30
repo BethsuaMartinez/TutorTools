@@ -41,11 +41,11 @@ public class tutorView extends BorderPane {
 
     ObservableList<RowData> data
             = FXCollections.observableArrayList(
-                    new RowData("Jacob", "Smith", "jacob.smith@example.com", "12:00", "2:20"),
-                    new RowData("Isabella", "Johnson", "isabella.johnson@example.com", "", ""),
-                    new RowData("Ethan", "Williams", "ethan.williams@example.com", "", ""),
-                    new RowData("Emma", "Jones", "emma.jones@example.com", "", ""),
-                    new RowData("Michael", "Brown", "michael.brown@example.com", "", ""));
+                    new RowData("Jacob", "Smith", "jacob.smith@example.com", "12:00", "14:20"),
+                    new RowData("Isabella", "Johnson", "isabella.johnson@example.com", "16:30", "17:00"),
+                    new RowData("Ethan", "Williams", "ethan.williams@example.com", "9:40", "11:20"),
+                    new RowData("Emma", "Jones", "emma.jones@example.com", "10:00", "13:10"),
+                    new RowData("Michael", "Brown", "michael.brown@example.com", "8:30", "8:45"));
 
     private final TableView table = new TableView();
 
@@ -142,7 +142,7 @@ public class tutorView extends BorderPane {
         
         table.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         table.getColumns().addAll(firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, actionCol);
-        table.setPrefWidth(640);
+        table.setPrefWidth(654.5);
        
         
         this.searchTf.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"

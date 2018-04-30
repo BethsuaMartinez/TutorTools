@@ -35,7 +35,7 @@ import javafx.scene.layout.VBox;
  *
  * @author segarra
  */
-public class TutorInformationView extends BorderPane {
+public class infoView extends BorderPane {
 
     TutorModel tm = new TutorModel();
     
@@ -90,10 +90,14 @@ public class TutorInformationView extends BorderPane {
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     
     //----------------------Data for Tables---------------------------------
-    ObservableList<TutorInformationView.tutorRowData> tutortableData = FXCollections.observableArrayList(new TutorInformationView.tutorRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "math", "(123)456-789"));
-    ObservableList<TutorInformationView.studentRowData> studenttableData = FXCollections.observableArrayList(new TutorInformationView.studentRowData("123456", "Elyvic", "Cabais", "kenneth.segarra01@utrgv.edu", "(123)456-789"));
+    ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList(
+            new infoView.tutorRowData("769873", "Michael", "Gutierrez", "michael.gutierrez@utrgv.edu", "Math", "(123) 456-789"),
+            new infoView.tutorRowData("765434", "Jose", "Herrera", "jose.herrera@utrgv.edu", "English", "(956) 566-234"));
+    ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList(
+            new infoView.studentRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "(833) 234-1234"),
+            new infoView.studentRowData("54643", "Elyvic", "Cabais", "elyvic.cabais01@utrgv.edu", "(325) 213-4573"));
 
-    public  TutorInformationView() {
+    public  infoView() {
        
         HBox hb = new HBox();
         
@@ -244,12 +248,9 @@ public class TutorInformationView extends BorderPane {
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(5);
         
-        typePerson.getItems().addAll("Student", "Tutor");
-        typePerson.setValue("Student");
-        
         typebox.setSpacing(5);
         typebox.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(typebox, addType);
+        layout.getChildren().addAll(typebox,typePerson, addType);
         
         return layout;
     }
@@ -509,7 +510,7 @@ public static class studentRowData {
         int idNo = currentTutor.getID();
         String id = String.valueOf(idNo);
         String phone = currentTutor.getPhone();
-        TutorInformationView.tutorRowData tutorRowData = new TutorInformationView.tutorRowData(id, fName, lName,email, subject, phone);
+        infoView.tutorRowData tutorRowData = new infoView.tutorRowData(id, fName, lName,email, subject, phone);
         tutortableData.add(tutorRowData);
         tutorTable.setItems(tutortableData);
     }
@@ -521,7 +522,7 @@ public static class studentRowData {
         int idNo = currentStudent.getIdStudent();
         String id = String.valueOf(idNo);
         String phone = currentStudent.getPhone();
-        TutorInformationView.studentRowData studentRowData = new TutorInformationView.studentRowData(id, fName, lName, email, phone);
+        infoView.studentRowData studentRowData = new infoView.studentRowData(id, fName, lName, email, phone);
         studenttableData.add(studentRowData);
         studentTable.setItems(studenttableData);
     }
@@ -540,7 +541,7 @@ public static class studentRowData {
                 @Override
                 public void handle(ActionEvent t) {
                     // get Selected Item
-                   /*TutorInformationView.RowData currentPerson = (TutorInformationView.RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
+                   /*infoView.RowData currentPerson = (infoView.RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     Date date = new Date();
                     String idNo = currentPerson.getId();
@@ -589,7 +590,7 @@ public static class studentRowData {
         String email = currentData.getStartTime();
         String id = currentData.getIdNo();
         String phone = currentData.getSubject();
-        TutorInformationView.tutorRowData tutorRowData = new TutorInformationView.tutorRowData(fName, lName, subject, phone, id, email);
+        infoView.tutorRowData tutorRowData = new infoView.tutorRowData(fName, lName, subject, phone, id, email);
         tutortableData.add(tutorRowData);
         tutorTable.setItems(tutortableData);
     }*/
@@ -608,7 +609,7 @@ public static class studentRowData {
                 @Override
                 public void handle(ActionEvent t) {
                     // get Selected Item
-                   /*TutorInformationView.RowData currentPerson = (TutorInformationView.RowData) ButtonCellstudent.this.getTableView().getItems().get(ButtonCellstudent.this.getIndex());
+                   /*infoView.RowData currentPerson = (infoView.RowData) ButtonCellstudent.this.getTableView().getItems().get(ButtonCellstudent.this.getIndex());
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     Date date = new Date();
                     String idNo = currentPerson.getId();
