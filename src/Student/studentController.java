@@ -120,35 +120,32 @@ public class studentController {
             window.show();
         });
 
-        gui.getSubmitId().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                if ("".equals(gui.getIdNoTF().getText())) {
-                    gui.wrongPass();
+        gui.getSubmitId().setOnAction((ActionEvent event) -> {
+            Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            if ("".equals(gui.getIdNoTF().getText())) {
+                gui.wrongPass();
+            }
+            String id = gui.getIdNoTF().getText();
+            int x = Integer.parseInt(id);
+            
+            try {
+                if (true == model.verifyUser(x)) {
+                    //GridPane newSessionGridpane = gui.newSession();
+                    VBox newSessionVbox = gui.newSessionVBox();
+                    Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
+                    signInStage.setScene(newSessionScene);
+                    signInStage.show();
+                    
+                } else {
+                    VBox newStudentVbox = gui.newStudentVBox();
+                    Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
+                    signInStage.setScene(newStudentScene);
+                    signInStage.show();
+                    
                 }
-                String id = gui.getIdNoTF().getText();
-                int x = Integer.parseInt(id);
-
-                try {
-                    if (true == model.verifyUser(x)) {
-                        //GridPane newSessionGridpane = gui.newSession();
-                        VBox newSessionVbox = gui.newSessionVBox();
-                        Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
-                        signInStage.setScene(newSessionScene);
-                        signInStage.show();
-
-                    } else {
-                        VBox newStudentVbox = gui.newStudentVBox();
-                        Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
-                        signInStage.setScene(newStudentScene);
-                        signInStage.show();
-
-                    }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 

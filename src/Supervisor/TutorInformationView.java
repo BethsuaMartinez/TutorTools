@@ -472,7 +472,7 @@ public class TutorInformationView extends BorderPane {
         String email = currentTutor.getEmail();
         int idNo = currentTutor.getID();
         String id = String.valueOf(idNo);
-        String phone = currentTutor.getSubject();
+        String phone = currentTutor.getPhone();
         TutorInformationView.tutorRowData tutorRowData = new TutorInformationView.tutorRowData(id, fName, lName,email, subject, phone);
         tutortableData.add(tutorRowData);
         tutorTable.setItems(tutortableData);

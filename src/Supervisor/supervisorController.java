@@ -121,7 +121,7 @@ public class supervisorController {
             
             int id = Integer.parseInt(idNo);
             
-            System.out.println(id+firstName+lastName);
+            System.out.println(phoneNo+" "+subject);
             
             Tutor currentTutor=new Tutor(id, firstName, lastName, email, phoneNo, subject);
             tiv.updateTutorTable(currentTutor);
@@ -141,7 +141,7 @@ public class supervisorController {
 
             int id = Integer.parseInt(idNo);
             
-            System.out.println(id+firstName+lastName);
+            System.out.println(id+firstName+lastName+email+phoneNo);
             
             Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
             tiv.updateStudentTable(currentStudent);
