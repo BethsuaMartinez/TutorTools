@@ -85,13 +85,9 @@ public class TutorInformationView extends BorderPane {
     //----------Vboxes----------------------------
     VBox typebox = new VBox(type, typePerson);
     private VBox idVbox = new VBox(idLabel, idTF);
-    private VBox fNameVbox = new VBox(fNameLabel, fNameTF);
-    private VBox lNameVbox = new VBox(lNameLabel, lNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneVbox = new VBox(phoneLabel, phoneTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
-    
-    private HBox nameHBox = new HBox(fNameVbox, lNameVbox);
     
     //----------------------Data for Tables---------------------------------
     ObservableList<TutorInformationView.tutorRowData> tutortableData = FXCollections.observableArrayList(new TutorInformationView.tutorRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "math", "(123)456-789"));
@@ -228,8 +224,20 @@ public class TutorInformationView extends BorderPane {
 
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(6, 6, 6, 6));
-
-        layout.getChildren().addAll(idVbox, nameHBox, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        
+        layout.getChildren().add(idVbox);
+        layout.getChildren().add(h);
+        layout.getChildren().add(emailVbox);
+        layout.getChildren().add(phoneVbox);
+        layout.getChildren().add(subjectVbox);
+        layout.getChildren().add(newTutorSubmitBtn);
+        
+        //layout.getChildren().addAll(idVbox, nameHBox, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
     }
@@ -241,7 +249,16 @@ public class TutorInformationView extends BorderPane {
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(6, 6, 6, 6));
 
-        layout.getChildren().addAll(idVbox, nameHBox, emailVbox,phoneVbox, studentSubmitBtn);
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        
+        layout.getChildren().add(idVbox);
+        layout.getChildren().add(h);
+        layout.getChildren().add(emailVbox);
+        layout.getChildren().add(phoneVbox);
+        layout.getChildren().add(studentSubmitBtn);
 
         return layout;
     }
@@ -883,33 +900,6 @@ public class TutorInformationView extends BorderPane {
         this.idVbox = idVbox;
     }
 
-    /**
-     * @return the fNameVbox
-     */
-    public VBox getfNameVbox() {
-        return fNameVbox;
-    }
-
-    /**
-     * @param fNameVbox the fNameVbox to set
-     */
-    public void setfNameVbox(VBox fNameVbox) {
-        this.fNameVbox = fNameVbox;
-    }
-
-    /**
-     * @return the lNameVbox
-     */
-    public VBox getlNameVbox() {
-        return lNameVbox;
-    }
-
-    /**
-     * @param lNameVbox the lNameVbox to set
-     */
-    public void setlNameVbox(VBox lNameVbox) {
-        this.lNameVbox = lNameVbox;
-    }
 
     /**
      * @return the emailVbox
