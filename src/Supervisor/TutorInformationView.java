@@ -119,6 +119,7 @@ public class TutorInformationView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
        
+        //-------------------------Tutor Table--------------------------------------
         tutor.setAlignment(Pos.TOP_CENTER);
         HBox hb4 = new HBox(add, delete, modify);
         hb4.setPadding(new Insets(10));
@@ -131,7 +132,6 @@ public class TutorInformationView extends BorderPane {
         hb4.setAlignment(Pos.BOTTOM_CENTER);
         vb.getChildren().addAll(tutor,tutorTable,hb4);
         
-        //-------------------------Tutor Table--------------------------------------
         TableColumn tutoridCol = new TableColumn("ID");
         tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         tutoridCol.setPrefWidth(110);
@@ -197,7 +197,7 @@ public class TutorInformationView extends BorderPane {
         studentphoneCol.setPrefWidth(110);              
         
         studentTable.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentphoneCol);
-        studentTable.setMinWidth(550);
+        studentTable.setMinWidth(750);
                 
         this.setTop(hb);
         this.setLeft(vb2);
@@ -368,93 +368,94 @@ public class TutorInformationView extends BorderPane {
         }
      }
      
-     public static class studentRowData {
-        private SimpleStringProperty stfName;
-        private SimpleStringProperty stlName;
-        private SimpleStringProperty stphone;
-        private SimpleStringProperty stemail;
-        private SimpleStringProperty stid;
-
-        private studentRowData(String stid, String stfName, String stlName, String stemail, String stphone) {
-            this.stid = new SimpleStringProperty(stid);
-            this.stfName = new SimpleStringProperty(stfName);
-            this.stlName = new SimpleStringProperty(stlName);
-            this.stphone = new SimpleStringProperty(stphone);
-            this.stemail = new SimpleStringProperty(stemail);
-        }
-
-        /**
-         * @return the stfName
-         */
-        public String getStfName() {
-            return stfName.get();
-        }
-
-        /**
-         * @param stfName the stfName to set
-         */
-        public void setStfName(SimpleStringProperty stfName) {
-            this.stfName = stfName;
-        }
-
-        /**
-         * @return the stlName
-         */
-        public String getStlName() {
-            return stlName.get();
-        }
-
-        /**
-         * @param stlName the stlName to set
-         */
-        public void setStlName(SimpleStringProperty stlName) {
-            this.stlName = stlName;
-        }
-        
-        /**
-         * @return the stphone
-         */
-        public String getStphone() {
-            return stphone.get();
-        }
-
-        /**
-         * @param stphone the stphone to set
-         */
-        public void setStphone(SimpleStringProperty stphone) {
-            this.stphone = stphone;
-        }
-
-        /**
-         * @return the stemail
-         */
-        public String getStemail() {
-            return stemail.get();
-        }
-
-        /**
-         * @param stemail the stemail to set
-         */
-        public void setStemail(SimpleStringProperty stemail) {
-            this.stemail = stemail;
-        }
-
-        /**
-         * @return the stid
-         */
-        public String getStid() {
-            return stid.get();
-        }
-
-        /**
-         * @param stid the stid to set
-         */
-        public void setStid(SimpleStringProperty stid) {
-            this.stid = stid;
-        }
-        
-     }
+public static class studentRowData {     
      
+        private SimpleStringProperty fName;
+        private SimpleStringProperty lName;
+        private SimpleStringProperty phone;
+        private SimpleStringProperty email;
+        private SimpleStringProperty id;
+
+        private studentRowData(String id, String fName, String lName, String email, String phone) {
+            this.id = new SimpleStringProperty(id);
+            this.fName = new SimpleStringProperty(fName);
+            this.lName = new SimpleStringProperty(lName);
+            this.phone = new SimpleStringProperty(phone);
+            this.email = new SimpleStringProperty(email);
+           
+     }
+        
+       
+
+        /**
+         * @return the firstName
+         */
+        public String getFName() {
+            return fName.get();
+        }
+
+        /**
+         */
+        public void setFName(SimpleStringProperty fName) {
+            this.fName = fName;
+        }
+
+        /**
+         * @return the lastName
+         */
+        public String getLName() {
+            return lName.get();
+        }
+
+        /**
+         * @param lastName the lastName to set
+         */
+        public void setLName(SimpleStringProperty lName) {
+            this.lName = lName;
+        }
+
+        /**
+         * @return the phone
+         */
+        public String getPhone() {
+            return phone.get();
+        }
+
+        /**
+         * @param phone the phone to set
+         */
+        public void setPhone(SimpleStringProperty phone) {
+            this.phone = phone;
+        }
+
+        /**
+         * @return the email
+         */
+        public String getEmail() {
+            return email.get();
+        }
+
+        /**
+         * @param email the email to set
+         */
+        public void setEmail(SimpleStringProperty email) {
+            this.email = email;
+        }
+
+        /**
+         * @return the id
+         */
+        public String getId() {
+            return id.get();
+        }
+
+        /**
+         * @param id the id to set
+         */
+        public void setId(SimpleStringProperty id) {
+            this.id = id;
+        }
+     }     
       public void ClearFields() {
         getIdTF().clear();
         getfNameTF().clear();
