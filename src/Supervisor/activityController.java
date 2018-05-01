@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  */
 public class activityController {
 
-    TutorInformationView tiv = new TutorInformationView();
+    infoView tiv = new infoView();
     ActivitylogView alv = new ActivitylogView();
 
     public activityController(ActivitylogView alv) {
@@ -42,7 +42,7 @@ public class activityController {
         });
 
         alv.getBack().setOnAction((ActionEvent event) -> {
-            TutorInformationView tiv1 = new TutorInformationView();
+            infoView tiv1 = new infoView();
             supervisorController sc = new supervisorController(tiv1);
             Scene scene3 = new Scene(tiv1, 1300, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

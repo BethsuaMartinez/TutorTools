@@ -68,7 +68,8 @@ public class studentView extends BorderPane {
     private Button submitSs = new Button("Submit");
     private Button submitId = new Button("Submit");
 
-    ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"));
+    ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"),
+            new studentView.RowData("John", "Williamson", "Math", "16:00", "43342", "Bethsua"));
 
     private final TableView table = new TableView();
 
