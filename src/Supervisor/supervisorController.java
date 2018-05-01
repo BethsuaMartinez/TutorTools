@@ -85,10 +85,10 @@ public class supervisorController {
             window.show();
         });
         tiv.getAdd().setOnAction((ActionEvent event) -> {
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Stage newTutorStage = new Stage();
             newTutorStage.initModality(Modality.APPLICATION_MODAL);
-            newTutorStage.initOwner(window);
+            //newTutorStage.initOwner(window);
 
             Scene newTutorScene = new Scene(tiv.addType(), 150, 150);
 
@@ -105,7 +105,7 @@ public class supervisorController {
             } else {
                 newTutorScene = new Scene(tiv.addStudent(), 350, 250);
             }
-            window.setTitle("Add");
+            
             window.setScene(newTutorScene);
             window.show();
 
@@ -120,8 +120,6 @@ public class supervisorController {
             String subject = tiv.getSubjectTF().getText();
 
             int id = Integer.parseInt(idNo);
-
-            System.out.println(phoneNo + " " + subject);
 
             Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
             tiv.updateTutorTable(currentTutor);
@@ -140,8 +138,6 @@ public class supervisorController {
             String phoneNo = tiv.getPhoneTF().getText();
 
             int id = Integer.parseInt(idNo);
-
-            System.out.println(id + firstName + lastName + email + phoneNo);
 
             Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
             tiv.updateStudentTable(currentStudent);
@@ -170,10 +166,10 @@ public class supervisorController {
             Scene scene2;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
-                tiv.clearTutorList();
+              //  tiv.clearTutorList();
                 tiv.tutorList();
             } else {
-                tiv.clearStudentList();
+               // tiv.clearStudentList();
                 tiv.studentList();
             }
 

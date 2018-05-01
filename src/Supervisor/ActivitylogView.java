@@ -97,19 +97,19 @@ public class ActivitylogView extends BorderPane {
 
         XYChart.Series series5 = new XYChart.Series();
         series5.setName("Luis");
-        series5.getData().add(new XYChart.Data(math, 100));
+        series5.getData().add(new XYChart.Data(math, 34));
 
         XYChart.Series series6 = new XYChart.Series();
         series6.setName("Kenneth");
-        series6.getData().add(new XYChart.Data(science, 300));
+        series6.getData().add(new XYChart.Data(science, 20));
 
         XYChart.Series series7 = new XYChart.Series();
         series7.setName("Elyvic");
-        series7.getData().add(new XYChart.Data(english, 250));
+        series7.getData().add(new XYChart.Data(english, 15));
 
         XYChart.Series series8 = new XYChart.Series();
         series8.setName("Bethsua");
-        series8.getData().add(new XYChart.Data(computerScience, 50));
+        series8.getData().add(new XYChart.Data(computerScience, 26));
 
         bc2.getData().addAll(series5, series6, series7, series8);
 
