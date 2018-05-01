@@ -41,11 +41,11 @@ public class tutorView extends BorderPane {
 
     ObservableList<RowData> data
             = FXCollections.observableArrayList(
-                    new RowData("Jacob", "Smith", "jacob.smith@example.com", "12:00", "14:20"),
-                    new RowData("Isabella", "Johnson", "isabella.johnson@example.com", "16:30", "17:00"),
-                    new RowData("Ethan", "Williams", "ethan.williams@example.com", "9:40", "11:20"),
-                    new RowData("Emma", "Jones", "emma.jones@example.com", "10:00", "13:10"),
-                    new RowData("Michael", "Brown", "michael.brown@example.com", "8:30", "8:45"));
+                    new RowData("324872834","Jacob", "Smith", "Math", "12:00", "14:20", "04/05/2018"),
+                    new RowData("34234","Isabella", "Johnson", "English", "16:30", "17:00", "03/24/2018"),
+                    new RowData("876543","Ethan", "Williams", "History", "9:40", "11:20", "10/31/2018"),
+                    new RowData("454656","Emma", "Jones", "Computer Science", "10:00", "13:10", "12/25/2018"),
+                    new RowData("2346734","Michael", "Brown", "Physics", "8:30", "8:45", "04/06/2018"));
 
     private final TableView table = new TableView();
 
@@ -288,13 +288,14 @@ public class tutorView extends BorderPane {
         private SimpleStringProperty timeOut;
         private SimpleStringProperty date;
 
-        private RowData(String fName, String lName, String subject, String timeIn, String timeOut) {
+        private RowData(String studentID,String fName, String lName, String subject, String timeIn, String timeOut, String date) {
+            this.studentID=new SimpleStringProperty(studentID);
             this.firstName = new SimpleStringProperty(fName);
             this.lastName = new SimpleStringProperty(lName);
             this.subject = new SimpleStringProperty(subject);
             this.timeIn = new SimpleStringProperty(timeIn);
             this.timeOut = new SimpleStringProperty(timeOut);
-
+            this.date = new SimpleStringProperty(date);
         }
 
         /**
@@ -365,6 +366,34 @@ public class tutorView extends BorderPane {
          */
         public void setTimeOut(SimpleStringProperty timeOut) {
             this.timeOut = timeOut;
+        }
+
+        /**
+         * @return the studentID
+         */
+        public String getStudentID() {
+            return studentID.get();
+        }
+
+        /**
+         * @param studentID the studentID to set
+         */
+        public void setStudentID(SimpleStringProperty studentID) {
+            this.studentID = studentID;
+        }
+
+        /**
+         * @return the date
+         */
+        public String getDate() {
+            return date.get();
+        }
+
+        /**
+         * @param date the date to set
+         */
+        public void setDate(SimpleStringProperty date) {
+            this.date = date;
         }
 
     }
