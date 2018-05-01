@@ -6,6 +6,7 @@
 package Mail;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,12 +36,11 @@ public class mailController {
         mv.getSend().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 // message info
                 String mailTo = mv.getToTF().getText();
                 String subject = mv.getSubject().getText();
                 String message = mv.getMessage().getText();
-
+                String ccemail = mv.getCcTF().getText();
                 // attachments
                 String[] attachFiles = new String[1];
                 attachFiles[0] = "job1.pdf";
@@ -48,7 +48,8 @@ public class mailController {
                 //attachFiles[2] = "e:/Test/Video.mp4";
 
                 // CC emails
-                String[] ccEmails = {"bethsua1@hotmail.com"};
+                ArrayList<String> ccEmails = new ArrayList<>();
+                ccEmails.add(ccemail);
 
                 try {
                     EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
@@ -58,7 +59,7 @@ public class mailController {
                     System.out.println("Could not send email.");
                     ex.printStackTrace();
                 }
-               /* try {
+               try {
                     EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);
                     System.out.println("Email sent.");
@@ -69,7 +70,7 @@ public class mailController {
             }
         });
 
-        mv.getBrowseButton().setOnAction(new EventHandler<ActionEvent>() {
+        /*mv.getBrowseButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Stage savedStage = new Stage();
@@ -88,11 +89,8 @@ public class mailController {
                     //actionStatus.setText("PDF file selection cancelled.");
 
                 }
+
             }
-             */
-            }
-        });
-        }
-        
-               
+        });*/
+        }  
 }

@@ -15,13 +15,19 @@ public class Tutor {
     private String LastName;
     private String FirstName;
     private String email;
-    private int phone;
+    private String phone;
+    private String subject;
 
-    public Tutor(int ID, String LastName, String email, int phone) {
+    public Tutor() {
+    }
+
+    public Tutor(int ID,String FirstName,  String LastName, String email, String phone, String subject) {
         this.ID = ID;
+        this.FirstName = FirstName;
         this.LastName = LastName;
         this.email = email;
         this.phone = phone;
+        this.subject= subject;
     }
 
     /**
@@ -83,15 +89,29 @@ public class Tutor {
     /**
      * @return the phone
      */
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    /**
+     * @return the subject
+     */
+    public String getSubject() {
+        return subject;
+    }
+
+    /**
+     * @param subject the subject to set
+     */
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }
 

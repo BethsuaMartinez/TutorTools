@@ -37,35 +37,28 @@ public class tutorController {
 
     private void attachHandlers() {
 
-        tv.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                loginView v = new loginView();
-                LoginModel m = new LoginModel();
-                loginController logc = new loginController(v, m);
-                Scene scene2 = new Scene(v, 1300, 500);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Sign In");
-                window.setScene(scene2);
-                window.show();
-            }
+        tv.getSignOut().setOnAction((ActionEvent event) -> {
+            loginView v = new loginView();
+            LoginModel m = new LoginModel();
+            loginController logc = new loginController(v, m);
+            Scene scene2 = new Scene(v, 1000, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Sign In");
+            window.setScene(scene2);
+            window.show();
         });
 
-        tv.getBack().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                studentView sv = new studentView();
-                StudentModel sm = new StudentModel();
-                SessionModel ssm = new SessionModel();
-                studentController sc = new studentController(sv, sm, ssm);
-
-                Scene scene3 = new Scene(sv, 1300, 500);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Student List");
-                window.setScene(scene3);
-                window.show();
-
-            }
+        tv.getBack().setOnAction((ActionEvent event) -> {
+            studentView sv = new studentView();
+            StudentModel sm = new StudentModel();
+            SessionModel ssm = new SessionModel();
+            studentController sc = new studentController(sv, sm, ssm);
+            
+            Scene scene3 = new Scene(sv, 1000, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Student List");
+            window.setScene(scene3);
+            window.show();
         });
 
     }

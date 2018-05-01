@@ -31,7 +31,7 @@ public class TutorTools extends Application {
        
 
 
-        Scene scene = new Scene(lv, 1300, 500);
+        Scene scene = new Scene(lv, 1000, 500);
 
  
         primaryStage.getIcons().add(new Image("/resources/Logo.png"));
