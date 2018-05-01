@@ -80,7 +80,7 @@ public class infoView extends BorderPane {
     Label type = new Label("Enter a new");
     
     //----------Dropdown Menu--------------------
-    private ChoiceBox<String> typePerson= new ChoiceBox<>();
+    private ChoiceBox<String> typePerson = new ChoiceBox<>();
     
     //----------Vboxes----------------------------
     VBox typebox = new VBox(type, typePerson);
@@ -88,6 +88,12 @@ public class infoView extends BorderPane {
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneVbox = new VBox(phoneLabel, phoneTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
+    
+    private VBox vb = new VBox();
+    private VBox vb2 =new VBox();
+    
+    //---------HBoxes---------------
+    HBox hbox = new HBox();
     
     //----------------------Data for Tables---------------------------------
     ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList(
@@ -135,12 +141,12 @@ public class infoView extends BorderPane {
         this.setTop(hb);
         studentList();
         this.setBottom(hb4);
-    }
-    
-    public void tutorList(){
         
-       
-        //-------------------------Tutor Table--------------------------------------
+        
+        
+        search.setPrefSize(100, 10);
+        
+                //-------------------------Tutor Table--------------------------------------
         tutorTable.setItems(tutortableData);
         tutorTable.setTranslateX(5);
         
@@ -152,17 +158,12 @@ public class infoView extends BorderPane {
         tutor.setAlignment(Pos.BASELINE_CENTER);
         tutor.setPadding(new Insets(5,0,5,0));
         
+        
         typePerson.getItems().addAll("Student", "Tutor");
         typePerson.setValue("Student");
         
-        HBox hbox1= new HBox(lNameLabel, lNameTF, search, typePerson);
-        hbox1.setPadding(new Insets(5));
-        hbox1.setSpacing(20);
-        hbox1.setTranslateX(5);
-        
-        VBox vb = new VBox();
-        vb.getChildren().addAll(tutor,hbox1,tutorTable);
-        
+          
+       
         TableColumn tutoridCol = new TableColumn("ID");
         tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         tutoridCol.setPrefWidth(110);
@@ -190,32 +191,23 @@ public class infoView extends BorderPane {
         tutorTable.getColumns().addAll(tutoridCol, tutorfNameCol, tutorlNameCol, tutoremailCol, tutorsubjectCol, tutorphoneCol);
         tutorTable.setMinWidth(687);
         
-         this.setCenter(vb);
         
-    }
-    
-    public void studentList(){
-        //------------------------Table Student----------------------------------------------
+                //------------------------Table Student----------------------------------------------
+       
         studentTable.setItems(studenttableData);
         
         studentTable.setMaxSize(650, 250);
         studentTable.setTranslateX(5);
         
-        search.setPrefSize(100, 10);
+
         student.setTranslateX(10);
         student.setAlignment(Pos.BASELINE_CENTER);
         student.setPadding(new Insets(5,0,5,0));
         
-        typePerson.getItems().addAll("Student", "Tutor");
-        typePerson.setValue("Student");
+ //       typePerson.getItems().addAll("Student", "Tutor");
+ //       typePerson.setValue("Student");
         
-        HBox hbox1= new HBox(lNameLabel, lNameTF, search, typePerson);
-        hbox1.setPadding(new Insets(5));
-        hbox1.setSpacing(20);
-        hbox1.setTranslateX(5);
-        
-        VBox vb2 =new VBox();
-        vb2.getChildren().addAll(student,hbox1, studentTable);
+
         
         TableColumn studentidCol = new TableColumn("ID");
         studentidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -239,6 +231,31 @@ public class infoView extends BorderPane {
         
         studentTable.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentphoneCol);
         studentTable.setMinWidth(652);
+        
+        
+        hbox.getChildren().addAll(lNameLabel, lNameTF, search, typePerson);
+        hbox.setPadding(new Insets(5));
+        hbox.setSpacing(20);
+        hbox.setTranslateX(5);
+        
+    }
+    
+    public void clearTutorList(){
+        vb.getChildren().clear();
+    }
+    
+    public void clearStudentList(){
+        vb2.getChildren().clear();
+    }
+    
+    public void tutorList(){
+        vb.getChildren().addAll(tutor,hbox,tutorTable);
+        this.setCenter(vb);
+        
+    }
+    
+    public void studentList(){
+        vb2.getChildren().addAll(student,hbox, studentTable);
         this.setCenter(vb2);
     }
     

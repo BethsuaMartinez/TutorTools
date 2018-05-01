@@ -170,8 +170,10 @@ public class supervisorController {
             Scene scene2;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
+                tiv.clearTutorList();
                 tiv.tutorList();
             } else {
+                tiv.clearStudentList();
                 tiv.studentList();
             }
 
