@@ -75,12 +75,16 @@ public class infoView extends BorderPane {
     private Label subjectLabel = new Label ("Subject");
     private TextField subjectTF = new TextField();
     
+    private Label searchLabel = new Label("Search");
+    private TextField searchTF = new TextField();
+    
     private Label student = new Label("Student");
     private Label tutor = new Label("Tutor");
     Label type = new Label("Enter a new");
     
     //----------Dropdown Menu--------------------
     private ChoiceBox<String> typePerson = new ChoiceBox<>();
+    private ChoiceBox<String> typePerson2 = new ChoiceBox<>();
     
     //----------Vboxes----------------------------
     VBox typebox = new VBox(type, typePerson);
@@ -142,8 +146,6 @@ public class infoView extends BorderPane {
         studentList();
         this.setBottom(hb4);
         
-        
-        
         search.setPrefSize(100, 10);
         
                 //-------------------------Tutor Table--------------------------------------
@@ -161,6 +163,8 @@ public class infoView extends BorderPane {
         
         typePerson.getItems().addAll("Student", "Tutor");
         typePerson.setValue("Student");
+        typePerson2.getItems().addAll("Student", "Tutor");
+        typePerson2.setValue("Student");
         
           
        
@@ -191,7 +195,6 @@ public class infoView extends BorderPane {
         tutorTable.getColumns().addAll(tutoridCol, tutorfNameCol, tutorlNameCol, tutoremailCol, tutorsubjectCol, tutorphoneCol);
         tutorTable.setMinWidth(687);
         
-        
                 //------------------------Table Student----------------------------------------------
        
         studentTable.setItems(studenttableData);
@@ -199,15 +202,9 @@ public class infoView extends BorderPane {
         studentTable.setMaxSize(650, 250);
         studentTable.setTranslateX(5);
         
-
         student.setTranslateX(10);
         student.setAlignment(Pos.BASELINE_CENTER);
         student.setPadding(new Insets(5,0,5,0));
-        
- //       typePerson.getItems().addAll("Student", "Tutor");
- //       typePerson.setValue("Student");
-        
-
         
         TableColumn studentidCol = new TableColumn("ID");
         studentidCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -233,33 +230,37 @@ public class infoView extends BorderPane {
         studentTable.setMinWidth(652);
         
         
-        hbox.getChildren().addAll(lNameLabel, lNameTF, search, typePerson);
         hbox.setPadding(new Insets(5));
         hbox.setSpacing(20);
         hbox.setTranslateX(5);
+        hbox.getChildren().addAll(searchLabel, searchTF, search,typePerson);
         
     }
     
-    public void clearTutorList(){
+/*    public void clearTutorList(){
         vb.getChildren().clear();
     }
     
     public void clearStudentList(){
         vb2.getChildren().clear();
-    }
+    }*/
     
     public void tutorList(){
+        vb.getChildren().clear();
         vb.getChildren().addAll(tutor,hbox,tutorTable);
         this.setCenter(vb);
         
     }
     
     public void studentList(){
+        
+        vb2.getChildren().clear();
         vb2.getChildren().addAll(student,hbox, studentTable);
         this.setCenter(vb2);
     }
     
     public VBox addType(){
+       
         VBox layout = new VBox();
         layout.setPadding(new Insets(5,5,5,5));
         layout.setAlignment(Pos.CENTER);
@@ -267,7 +268,7 @@ public class infoView extends BorderPane {
         
         typebox.setSpacing(5);
         typebox.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(typebox,typePerson, addType);
+        layout.getChildren().addAll(typebox,typePerson2, addType);
         
         return layout;
     }
@@ -283,14 +284,15 @@ public class infoView extends BorderPane {
         
         HBox h = new HBox(v, v1);
         
-        layout.getChildren().add(idVbox);
+        /*layout.getChildren().add(idVbox);
         layout.getChildren().add(h);
         layout.getChildren().add(emailVbox);
         layout.getChildren().add(phoneVbox);
         layout.getChildren().add(subjectVbox);
         layout.getChildren().add(newTutorSubmitBtn);
+        */
         
-        //layout.getChildren().addAll(idVbox, nameHBox, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
     }
@@ -1079,6 +1081,34 @@ public static class studentRowData {
      */
     public void setStudentTable(TableView studentTable) {
         this.studentTable = studentTable;
+    }
+
+    /**
+     * @return the searchLabel
+     */
+    public Label getSearchLabel() {
+        return searchLabel;
+    }
+
+    /**
+     * @param searchLabel the searchLabel to set
+     */
+    public void setSearchLabel(Label searchLabel) {
+        this.searchLabel = searchLabel;
+    }
+
+    /**
+     * @return the searchTF
+     */
+    public TextField getSearchTF() {
+        return searchTF;
+    }
+
+    /**
+     * @param searchTF the searchTF to set
+     */
+    public void setSearchTF(TextField searchTF) {
+        this.searchTF = searchTF;
     }
     
 }
