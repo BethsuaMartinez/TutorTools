@@ -117,7 +117,7 @@ public class studentController {
                 tutorController tc = new tutorController(tv);
                 Scene scene3 = new Scene(tv, 1300, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Tutor Information");
+                window.setTitle("Tutoring Sessions");
                 window.setScene(scene3);
                 window.show();
 
