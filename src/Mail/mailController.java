@@ -49,8 +49,10 @@ public class mailController {
                 ccEmails.add(ccemail);
                 
                 try {
-                    EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
+                    if("".equals(ccemail))
+                        EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles);
+<<<<<<< HEAD
                     mv.emailSent();
                     //System.out.println("Email sent.");
                 } catch (Exception ex) {
@@ -61,6 +63,11 @@ public class mailController {
                     EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);
                     System.out.println("Email sent.");
+=======
+                    else{
+                        EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
+                            subject, message, attachFiles, ccEmails);}
+>>>>>>> a93ad61b01198e2e21eddbed3dec4c65a1dce866
                 } catch (Exception ex) {
                     System.out.println("Could not send email.");
                     ex.printStackTrace();
@@ -74,8 +81,8 @@ public class mailController {
                 Stage stage = new Stage();
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Select file");
-                fileChooser.setInitialDirectory(new File("C:\\Users\\beths\\Desktop"));
-             
+                //fileChooser.setInitialDirectory(new File("C:\\Users\\beths\\Desktop"));
+                fileChooser.setInitialDirectory(new File("//home//selvera"));
                List <File> files = fileChooser.showOpenMultipleDialog(stage);
          
                 attachFiles = new File[files.size()];
