@@ -34,7 +34,7 @@ public class activityController {
             loginView v = new loginView();
             LoginModel m = new LoginModel();
             loginController logc = new loginController(v, m);
-            Scene scene2 = new Scene(v, 1300, 500);
+            Scene scene2 = new Scene(v, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Sign In");
             window.setScene(scene2);
@@ -44,7 +44,7 @@ public class activityController {
         alv.getBack().setOnAction((ActionEvent event) -> {
             infoView tiv1 = new infoView();
             supervisorController sc = new supervisorController(tiv1);
-            Scene scene3 = new Scene(tiv1, 1300, 500);
+            Scene scene3 = new Scene(tiv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Supervisor");
             window.setScene(scene3);

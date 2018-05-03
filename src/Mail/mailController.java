@@ -25,6 +25,7 @@ public class mailController {
     String port = "465";
     String mailFrom = "tutor.tools.01@gmail.com";
     String password = "TutorToolsadmin";
+    File[] attachFiles = null;
 
     public mailController(MailView mv) {
         this.mv = mv;
@@ -41,11 +42,6 @@ public class mailController {
                 String subject = mv.getSubject().getText();
                 String message = mv.getMessage().getText();
                 String ccemail = mv.getCcTF().getText();
-                // attachments
-                String[] attachFiles = new String[1];
-                attachFiles[0] = "job1.pdf";
-                //attachFiles[1] = "job2.pdf";
-                //attachFiles[2] = "e:/Test/Video.mp4";
 
                 // CC emails
                 ArrayList<String> ccEmails = new ArrayList<>();
@@ -70,27 +66,21 @@ public class mailController {
             }
         });
 
-        /*mv.getBrowseButton().setOnAction(new EventHandler<ActionEvent>() {
+        mv.getBrowseButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage savedStage = new Stage();
+                Stage stage = new Stage();
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Select PDF files");
+                fileChooser.setTitle("Select file");
                 fileChooser.setInitialDirectory(new File("C:\\Users\\beths\\Desktop"));
-                
-             //   fileChooser.getExtensionFilters().addAll(
-             //           new ExtensionFilter("PDF Files", "*.pdf"));
              
-                List<File> selectedFiles = fileChooser.showOpenMultipleDialog(savedStage);
-                if (selectedFiles != null) {
-                    System.out.println("PDF Files selected [" + selectedFiles.size() + "]: " + selectedFiles.get(0).getName() + "..");
-                    //actionStatus.setText("PDF Files selected [" + selectedFiles.size() + "]: " + selectedFiles.get(0).getName() + "..");
-                } else {
-                    //actionStatus.setText("PDF file selection cancelled.");
-
-                }
-
-            }
-        });*/
+               List <File> files = fileChooser.showOpenMultipleDialog(stage);
+         
+                attachFiles = new File[files.size()];
+                files.toArray(attachFiles);
+                
+         
+        }             
+        });
         }  
 }

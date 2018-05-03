@@ -5,6 +5,7 @@
  */
 package Mail;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.Security;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import javax.mail.internet.MimeMultipart;
 public class EmailAttachmentSender {
 	public static void sendEmailWithAttachments(String host, String port,
 		final String userName, final String password, String toAddress,
-		String subject, String message, String[] attachFiles)
+		String subject, String message, File[] attachFiles)
 		throws AddressException, MessagingException {
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		
@@ -91,7 +92,7 @@ public class EmailAttachmentSender {
 
 		// adds attachments
 		if (attachFiles != null && attachFiles.length > 0) {
-			for (String filePath : attachFiles) {
+			for (File filePath : attachFiles) {
 				MimeBodyPart attachPart = new MimeBodyPart();
 				try {
 					attachPart.attachFile(filePath);
@@ -108,7 +109,7 @@ public class EmailAttachmentSender {
 	}
 	public static void sendEmailWithAttachmentsCC(String host, String port,
 		final String userName, final String password, String toAddress,
-		String subject, String message, String[] attachFiles,ArrayList<String> ccEmails)
+		String subject, String message, File[] attachFiles,ArrayList<String> ccEmails)
 		throws AddressException, MessagingException {
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		
@@ -171,7 +172,7 @@ public class EmailAttachmentSender {
 
 		// adds attachments
 		if (attachFiles != null && attachFiles.length > 0) {
-			for (String filePath : attachFiles) {
+			for (File filePath : attachFiles) {
 				MimeBodyPart attachPart = new MimeBodyPart();
 				try {
 					attachPart.attachFile(filePath);
