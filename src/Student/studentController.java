@@ -11,7 +11,7 @@ import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
 import Supervisor.infoView;
-import Supervisor.supervisorController;
+import Supervisor.infoController;
 import Tutor.tutorController;
 import Tutor.tutorView;
 
@@ -110,7 +110,7 @@ public class studentController {
 
         gui.getSupervisor().setOnAction((ActionEvent event) -> {
             infoView tiv = new infoView();
-            supervisorController sc = new supervisorController(tiv);
+            infoController sc = new infoController(tiv);
             
             Scene scene2 = new Scene(tiv, 1000, 500);
             

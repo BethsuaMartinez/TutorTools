@@ -81,12 +81,13 @@ public class TutorModel {
 
     }
 
-    public void insertTutor(String idNo, String fname, String lname, String email, String phone, String password, String subject) throws SQLException {
+    public void insertTutor(String idNo, String fname, String lname, 
+            String email, String phone, String password, String subject) throws SQLException {
         try {
 
             int tutorid = Integer.parseInt(idNo);
 
-            String sql = "INSERT INTO TutorTools.Students "
+            String sql = "INSERT INTO TutorTools.Tutors "
                     + "(idTutor, fname, lname, email, phone, password, subject )"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement myStmt = conn.preparedStatement(sql);

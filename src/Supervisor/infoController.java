@@ -13,10 +13,14 @@ import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
 import Models.SupervisorModel;
+import Models.TutorModel;
 import Student.Student;
 import Student.studentController;
 import Student.studentView;
 import Tutor.tutorView;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,18 +35,20 @@ import javafx.stage.Stage;
  *
  * @author selvera
  */
-public class supervisorController {
+public class infoController {
 
     infoView tiv = new infoView();
     tutorView tv = new tutorView();
     ActivitylogView alv = new ActivitylogView();
     SupervisorModel sm = new SupervisorModel();
+    StudentModel stm = new StudentModel();
     private ObservableList<Student> students = FXCollections.observableArrayList();
     private ObservableList<Tutor> tutors = FXCollections.observableArrayList();
     Student currentStudent = new Student();
     Tutor currentTutor = new Tutor();
+    TutorModel tm = new TutorModel();
 
-    public supervisorController(infoView tiv) {
+    public infoController(infoView tiv) {
         this.tiv = tiv;
         attachHandlers();
     }
@@ -89,15 +95,6 @@ public class supervisorController {
             Stage newTutorStage = new Stage();
             newTutorStage.initModality(Modality.APPLICATION_MODAL);
             //newTutorStage.initOwner(window);
-
-            Scene newTutorScene = new Scene(tiv.addType(), 150, 150);
-
-            newTutorStage.setTitle("Add");
-            newTutorStage.setScene(newTutorScene);
-            newTutorStage.show();
-        });
-        tiv.getAddType().setOnAction((ActionEvent event) -> {
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newTutorScene;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
@@ -106,22 +103,26 @@ public class supervisorController {
                 newTutorScene = new Scene(tiv.addStudent(), 350, 250);
             }
             
-            window.setScene(newTutorScene);
-            window.show();
-
+            newTutorStage.setScene(newTutorScene);
+            newTutorStage.show();
         });
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
-
+            System.out.println("here in tutor send");
             String idNo = tiv.getIdTF().getText();
             String firstName = tiv.getfNameTF().getText();
             String lastName = tiv.getlNameTF().getText();
             String email = tiv.getEmailTF().getText();
             String phoneNo = tiv.getPhoneTF().getText();
             String subject = tiv.getSubjectTF().getText();
-
+            String password="";
             int id = Integer.parseInt(idNo);
 
             Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
+            try {
+                tm.insertTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             tiv.updateTutorTable(currentTutor);
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -140,8 +141,13 @@ public class supervisorController {
             int id = Integer.parseInt(idNo);
 
             Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
+            try {
+                stm.insertStudent(idNo, firstName, lastName, email, phoneNo);
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             tiv.updateStudentTable(currentStudent);
-
+            
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.close();
             tiv.ClearFields();
@@ -163,7 +169,6 @@ public class supervisorController {
             signInStage.show();
         });
         tiv.getSearch().setOnAction((ActionEvent event) -> {
-            Scene scene2;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
               //  tiv.clearTutorList();

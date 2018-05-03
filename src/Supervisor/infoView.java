@@ -284,15 +284,16 @@ public class infoView extends BorderPane {
         
         HBox h = new HBox(v, v1);
         
-        /*layout.getChildren().add(idVbox);
+        layout.getChildren().add(idVbox);
         layout.getChildren().add(h);
         layout.getChildren().add(emailVbox);
         layout.getChildren().add(phoneVbox);
         layout.getChildren().add(subjectVbox);
         layout.getChildren().add(newTutorSubmitBtn);
-        */
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        
+      //  layout.getChildren().addAll(idVbox, h, 
+      //          emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
     }

@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -54,28 +55,22 @@ public class mailController {
                     else{
                         EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);}
-                } catch (Exception ex) {
+                } catch (MessagingException ex) {
                     System.out.println("Could not send email.");
-                    ex.printStackTrace();
                 }
             }
         });
 
-        mv.getBrowseButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage stage = new Stage();
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Select file");
-                //fileChooser.setInitialDirectory(new File("C:\\Users\\beths\\Desktop"));
-                fileChooser.setInitialDirectory(new File("//home//selvera"));
-               List <File> files = fileChooser.showOpenMultipleDialog(stage);
-         
-                attachFiles = new File[files.size()];
-                files.toArray(attachFiles);
-                
-         
-        }             
+        mv.getBrowseButton().setOnAction((ActionEvent event) -> {
+            Stage stage = new Stage();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select file");
+            //fileChooser.setInitialDirectory(new File("C:\\Users\\beths\\Desktop"));
+            fileChooser.setInitialDirectory(new File("//home//selvera"));
+            List <File> files = fileChooser.showOpenMultipleDialog(stage);
+            
+            attachFiles = new File[files.size()];
+            files.toArray(attachFiles);             
         });
         }  
 }
