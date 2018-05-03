@@ -49,25 +49,14 @@ public class mailController {
                 ccEmails.add(ccemail);
                 
                 try {
-                    if("".equals(ccemail))
+                    if("".equals(ccemail)){
                         EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles);
-<<<<<<< HEAD
-                    mv.emailSent();
-                    //System.out.println("Email sent.");
-                } catch (Exception ex) {
-                    System.out.println("Could not send email.");
-                    ex.printStackTrace();
-                }
-               try {
-                    EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
-                            subject, message, attachFiles, ccEmails);
-                    System.out.println("Email sent.");
-=======
+                    mv.emailSent();}
+                    //System.out.println("Email sent.");}
                     else{
                         EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);}
->>>>>>> a93ad61b01198e2e21eddbed3dec4c65a1dce866
                 } catch (Exception ex) {
                     System.out.println("Could not send email.");
                     ex.printStackTrace();

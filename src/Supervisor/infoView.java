@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -239,14 +240,7 @@ public class infoView extends BorderPane {
         hbox.getChildren().addAll(searchLabel, searchTF, search,typePerson);
         
     }
-    
-/*    public void clearTutorList(){
-        vb.getChildren().clear();
-    }
-    
-    public void clearStudentList(){
-        vb2.getChildren().clear();
-    }*/
+   
     
     public void tutorList(){
         vb.getChildren().clear();
@@ -260,6 +254,28 @@ public class infoView extends BorderPane {
         vb2.getChildren().clear();
         vb2.getChildren().addAll(student,hbox, studentTable);
         this.setCenter(vb2);
+    }
+    
+    public VBox modifyTutor(){
+        VBox layout = new VBox();
+        //-------fixing------
+        //infoView.tutorRowData person  = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
+        tutorTable.getSelectionModel().setCellSelectionEnabled(true);
+        ObservableList selectedCells = tutorTable.getSelectionModel().getSelectedCells();
+
+//        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+        
+    
+        return layout;
+    }
+    
+    
+    public VBox modifyStudent(){
+        VBox layout = new VBox();
+        
+    
+        return layout;
+    
     }
     
     public VBox addType(){

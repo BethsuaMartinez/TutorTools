@@ -174,5 +174,18 @@ public class infoController {
             }
 
         });
+        
+        tiv.getModify().setOnAction((ActionEvent event) ->{ 
+            
+            Stage modifyStage = new Stage();
+            modifyStage.initModality(Modality.APPLICATION_MODAL);
+
+            Scene modifyScene = new Scene(tiv.modifyTutor(), 300, 300);
+
+            modifyStage.setTitle("Modify");
+            modifyStage.setScene(modifyScene);
+            modifyStage.show();
+        });
+        
     }
 }
