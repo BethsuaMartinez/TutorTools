@@ -6,6 +6,7 @@
 package Supervisor;
 
 import Login.loginController;
+import Supervisor.infoController;
 import Login.loginView;
 import Models.LoginModel;
 import javafx.event.ActionEvent;
@@ -43,7 +44,7 @@ public class activityController {
 
         alv.getBack().setOnAction((ActionEvent event) -> {
             infoView tiv1 = new infoView();
-            supervisorController sc = new supervisorController(tiv1);
+            infoController sc = new infoController( tiv1);
             Scene scene3 = new Scene(tiv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Supervisor");

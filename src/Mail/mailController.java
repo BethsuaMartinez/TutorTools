@@ -43,14 +43,16 @@ public class mailController {
                 String message = mv.getMessage().getText();
                 String ccemail = mv.getCcTF().getText();
 
+                 mv.sending();
                 // CC emails
                 ArrayList<String> ccEmails = new ArrayList<>();
                 ccEmails.add(ccemail);
-
+                
                 try {
                     EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles);
-                    System.out.println("Email sent.");
+                    mv.emailSent();
+                    //System.out.println("Email sent.");
                 } catch (Exception ex) {
                     System.out.println("Could not send email.");
                     ex.printStackTrace();

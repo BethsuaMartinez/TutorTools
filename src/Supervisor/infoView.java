@@ -135,7 +135,10 @@ public class infoView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
         
-        tutor.setAlignment(Pos.TOP_CENTER);
+
+        tutor.setTranslateX(10);
+        tutor.setAlignment(Pos.BASELINE_CENTER);
+        tutor.setPadding(new Insets(5,0,5,0));
         
         HBox hb4 = new HBox(add, delete, modify);
         hb4.setPadding(new Insets(10));
@@ -151,15 +154,13 @@ public class infoView extends BorderPane {
                 //-------------------------Tutor Table--------------------------------------
         tutorTable.setItems(tutortableData);
         tutorTable.setTranslateX(5);
+        tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        tutorTable.setMaxWidth(800);
         
         tutorTable.setMaxSize(650, 250);
         tutorTable.setTranslateX(5);
         
         tutor.setPrefSize(100, 10);
-        tutor.setTranslateX(10);
-        tutor.setAlignment(Pos.BASELINE_CENTER);
-        tutor.setPadding(new Insets(5,0,5,0));
-        
         
         typePerson.getItems().addAll("Student", "Tutor");
         typePerson.setValue("Student");
@@ -201,6 +202,8 @@ public class infoView extends BorderPane {
         
         studentTable.setMaxSize(650, 250);
         studentTable.setTranslateX(5);
+        studentTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        studentTable.setMaxWidth(800);
         
         student.setTranslateX(10);
         student.setAlignment(Pos.BASELINE_CENTER);

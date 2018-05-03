@@ -31,7 +31,7 @@ import javafx.stage.Stage;
  *
  * @author selvera
  */
-public class supervisorController {
+public class infoController {
 
     infoView tiv = new infoView();
     tutorView tv = new tutorView();
@@ -42,7 +42,7 @@ public class supervisorController {
     Student currentStudent = new Student();
     Tutor currentTutor = new Tutor();
 
-    public supervisorController(infoView tiv) {
+    public infoController(infoView tiv) {
         this.tiv = tiv;
         attachHandlers();
     }
