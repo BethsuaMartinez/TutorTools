@@ -31,6 +31,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.textfield.CustomPasswordField;
 
 /**
  *
@@ -45,10 +46,12 @@ public class infoView extends BorderPane {
     private Button addType = new Button("Submit");
     private Button add = new Button("Add");
     private Button delete = new Button("Delete");
-    private Button modify = new Button("Modify");
+//    private Button modifyTutorBtn = new Button("Modify");
+//    private Button modifyStudentBtn = new Button("Modify");
     private Button search = new Button("Search");
     private Button back = new Button("Back");
     private Button activity= new Button("Activity Log");
+    private Button modify = new Button("Modify");
     private Button signOut = new Button("Log Out");
     private Button newTutorSubmitBtn = new Button("Submit");
     private Button studentSubmitBtn = new Button("Submit");
@@ -83,6 +86,9 @@ public class infoView extends BorderPane {
     private Label tutor = new Label("Tutor");
     Label type = new Label("Enter a new");
     
+    private Label password = new Label("Password");
+    private CustomPasswordField passwordTF = new CustomPasswordField();
+    
     //----------Dropdown Menu--------------------
     private ChoiceBox<String> typePerson = new ChoiceBox<>();
     private ChoiceBox<String> typePerson2 = new ChoiceBox<>();
@@ -92,6 +98,7 @@ public class infoView extends BorderPane {
     private VBox idVbox = new VBox(idLabel, idTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneVbox = new VBox(phoneLabel, phoneTF);
+    private VBox passwordVbox = new VBox(password, passwordTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     
     private VBox vb = new VBox();
@@ -154,6 +161,7 @@ public class infoView extends BorderPane {
         
                 //-------------------------Tutor Table--------------------------------------
         tutorTable.setItems(tutortableData);
+        //tutorTable.getItems().add(tutorTableData);
         tutorTable.setTranslateX(5);
         tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         tutorTable.setMaxWidth(800);
@@ -256,15 +264,31 @@ public class infoView extends BorderPane {
         this.setCenter(vb2);
     }
     
+    
     public VBox modifyTutor(){
         VBox layout = new VBox();
-        //-------fixing------
-        //infoView.tutorRowData person  = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
-        tutorTable.getSelectionModel().setCellSelectionEnabled(true);
-        ObservableList selectedCells = tutorTable.getSelectionModel().getSelectedCells();
-
-//        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+     
+        infoView.tutorRowData data;
+        int index = getTutorTable().getSelectionModel().getSelectedIndex();
+        data = (infoView.tutorRowData) tutorTable.getItems().get(index);
+      
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(6, 6, 6, 6));
         
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        idTF.setText(data.getId());
+        emailTF.setText(data.getEmail());
+        phoneTF.setText(data.getPhone());
+        subjectTF.setText(data.getSubject());
+        fNameTF.setText(data.getFName());
+        lNameTF.setText(data.getLName());
+    //    password.setText(data.);
+        
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+
     
         return layout;
     }
@@ -272,7 +296,26 @@ public class infoView extends BorderPane {
     
     public VBox modifyStudent(){
         VBox layout = new VBox();
+     
+        infoView.studentRowData data;
+        int index = getStudentTable().getSelectionModel().getSelectedIndex();
+        data = (infoView.studentRowData) studentTable.getItems().get(index);
+      
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(6, 6, 6, 6));
         
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        idTF.setText(data.getId());
+        emailTF.setText(data.getEmail());
+        phoneTF.setText(data.getPhone());
+        fNameTF.setText(data.getFName());
+        lNameTF.setText(data.getLName());
+        
+        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, newTutorSubmitBtn);
+
     
         return layout;
     
@@ -335,6 +378,34 @@ public class infoView extends BorderPane {
         layout.getChildren().add(studentSubmitBtn);
 
         return layout;
+    }
+
+    /**
+     * @return the password
+     */
+    public Label getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(Label password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the passwordTF
+     */
+    public TextField getPasswordTF() {
+        return passwordTF;
+    }
+
+    /**
+     * @param passwordTF the passwordTF to set
+     */
+    public void setPasswordTF(CustomPasswordField passwordTF) {
+        this.passwordTF = passwordTF;
     }
     
      public static class tutorRowData {     

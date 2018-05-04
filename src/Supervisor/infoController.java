@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -110,6 +111,7 @@ public class infoController {
             window.show();
 
         });
+
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
 
             String idNo = tiv.getIdTF().getText();
@@ -146,6 +148,7 @@ public class infoController {
             window.close();
             tiv.ClearFields();
         });
+        
         tiv.getEmail().setOnAction((ActionEvent event) -> {
             MailView mv = new MailView();
             mailController mc = new mailController(mv);
@@ -162,6 +165,7 @@ public class infoController {
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
+        
         tiv.getSearch().setOnAction((ActionEvent event) -> {
             Scene scene2;
 
@@ -180,11 +184,18 @@ public class infoController {
             Stage modifyStage = new Stage();
             modifyStage.initModality(Modality.APPLICATION_MODAL);
 
-            Scene modifyScene = new Scene(tiv.modifyTutor(), 300, 300);
+            Scene modifyScene; // new Scene(tiv.modifyTutor(), 300, 300);
+            
+            if ("Tutor".equals(tiv.getTypePerson())) {
+                modifyScene = new Scene(tiv.modifyTutor(), 350, 250);
+            } else {
+                modifyScene = new Scene(tiv.modifyStudent(), 350, 250);
+            }
 
             modifyStage.setTitle("Modify");
             modifyStage.setScene(modifyScene);
             modifyStage.show();
+            
         });
         
     }

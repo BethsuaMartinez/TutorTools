@@ -75,7 +75,7 @@ public class TutorModel {
         String phone = rs.getString("phone");
         String subject = rs.getString("subject");
         
-        Tutor tempTutor = new Tutor(id, firstName, firstName, email, phone, subject);
+        Tutor tempTutor = new Tutor(id, lastName, firstName, email, phone, subject);
 
         return tempTutor;
 
