@@ -37,13 +37,13 @@ import javafx.stage.Stage;
  */
 public class infoController {
 
-    infoView tiv = new infoView();
+    infoView tiv;
     tutorView tv = new tutorView();
+    
     ActivitylogView alv = new ActivitylogView();
     SupervisorModel sm = new SupervisorModel();
     StudentModel stm = new StudentModel();
-    private ObservableList<Student> students = FXCollections.observableArrayList();
-    private ObservableList<Tutor> tutors = FXCollections.observableArrayList();
+    
     Student currentStudent = new Student();
     Tutor currentTutor = new Tutor();
     TutorModel tm = new TutorModel();
@@ -102,19 +102,19 @@ public class infoController {
             } else {
                 newTutorScene = new Scene(tiv.addStudent(), 350, 250);
             }
-            
+
             newTutorStage.setScene(newTutorScene);
             newTutorStage.show();
         });
+
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
-            System.out.println("here in tutor send");
             String idNo = tiv.getIdTF().getText();
             String firstName = tiv.getfNameTF().getText();
             String lastName = tiv.getlNameTF().getText();
             String email = tiv.getEmailTF().getText();
             String phoneNo = tiv.getPhoneTF().getText();
             String subject = tiv.getSubjectTF().getText();
-            String password="";
+            String password = "";
             int id = Integer.parseInt(idNo);
 
             Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
@@ -147,11 +147,12 @@ public class infoController {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
             }
             tiv.updateStudentTable(currentStudent);
-            
+
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.close();
             tiv.ClearFields();
         });
+
         tiv.getEmail().setOnAction((ActionEvent event) -> {
             MailView mv = new MailView();
             mailController mc = new mailController(mv);
@@ -168,16 +169,37 @@ public class infoController {
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
+
         tiv.getSearch().setOnAction((ActionEvent event) -> {
 
             if ("Tutor".equals(tiv.getTypePerson())) {
-              //  tiv.clearTutorList();
+                //  tiv.clearTutorList();
                 tiv.tutorList();
             } else {
-               // tiv.clearStudentList();
+                // tiv.clearStudentList();
                 tiv.studentList();
             }
 
         });
+
+        tiv.getModify().setOnAction((ActionEvent event) -> {
+
+            Stage modifyStage = new Stage();
+            modifyStage.initModality(Modality.APPLICATION_MODAL);
+
+            Scene modifyScene; // new Scene(tiv.modifyTutor(), 300, 300);
+
+            if ("Tutor".equals(tiv.getTypePerson())) {
+                modifyScene = new Scene(tiv.modifyTutor(), 350, 250);
+            } else {
+                modifyScene = new Scene(tiv.modifyStudent(), 350, 250);
+            }
+
+            modifyStage.setTitle("Modify");
+            modifyStage.setScene(modifyScene);
+            modifyStage.show();
+
+        });
+
     }
 }

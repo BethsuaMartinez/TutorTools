@@ -7,9 +7,12 @@ package Models;
 
 import Database.SQLConnector;
 import Supervisor.Tutor;
+import Supervisor.infoView;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -75,7 +78,7 @@ public class TutorModel {
         String phone = rs.getString("phone");
         String subject = rs.getString("subject");
         
-        Tutor tempTutor = new Tutor(id, firstName, firstName, email, phone, subject);
+        Tutor tempTutor = new Tutor(id, lastName, firstName, email, phone, subject);
 
         return tempTutor;
 
@@ -111,6 +114,36 @@ public class TutorModel {
         }
     }
 
+    public ObservableList<infoView.tutorRowData> populateTable() throws SQLException{
+        try {
+            ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList();
+            String sql="Select * from TutorTools.Tutors";
+            ResultSet myRs = conn.query(sql);
+            int id;
+            String fname,  lname,  email,  phone,  password,  subject;
+
+            while (myRs.next()) {
+                id = myRs.getInt("idTutor");
+                fname = myRs.getString("fname");
+                lname = myRs.getString("lname");
+                email = myRs.getString("email");
+                phone = myRs.getString("phone");
+                subject = myRs.getString("subject");
+                
+                String idNo=String.valueOf(id);
+                
+                Tutor currentTutor= new Tutor(id, fname, lname, email, phone, subject);
+                infoView.tutorRowData tutorRowData = new infoView.tutorRowData(idNo, fname, lname,email, subject, phone);
+                tutortableData.add(tutorRowData);
+            }
+            return tutortableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+    
     public void updateTutor(String idNo, String fname, String lname, String email, String phone, String password, String subject) throws SQLException {
         try {
 

@@ -44,14 +44,17 @@ public class mailController {
                 String message = mv.getMessage().getText();
                 String ccemail = mv.getCcTF().getText();
 
+                 mv.sending();
                 // CC emails
                 ArrayList<String> ccEmails = new ArrayList<>();
                 ccEmails.add(ccemail);
-
+                
                 try {
-                    if("".equals(ccemail))
+                    if("".equals(ccemail)){
                         EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles);
+                    mv.emailSent();}
+                    //System.out.println("Email sent.");}
                     else{
                         EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);}

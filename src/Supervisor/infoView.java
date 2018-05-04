@@ -5,8 +5,10 @@
  */
 package Supervisor;
 
+import Models.StudentModel;
 import Models.TutorModel;
 import Student.Student;
+import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +33,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.textfield.CustomPasswordField;
 
 /**
  *
@@ -38,16 +42,19 @@ import javafx.scene.layout.VBox;
 public class infoView extends BorderPane {
 
     TutorModel tm = new TutorModel();
+    StudentModel sm = new StudentModel();
     
     //-------------------Buttons-----------------------
     private Button email = new Button("E-Mail");
     private Button addType = new Button("Submit");
     private Button add = new Button("Add");
     private Button delete = new Button("Delete");
-    private Button modify = new Button("Modify");
+//    private Button modifyTutorBtn = new Button("Modify");
+//    private Button modifyStudentBtn = new Button("Modify");
     private Button search = new Button("Search");
     private Button back = new Button("Back");
     private Button activity= new Button("Activity Log");
+    private Button modify = new Button("Modify");
     private Button signOut = new Button("Log Out");
     private Button newTutorSubmitBtn = new Button("Submit");
     private Button studentSubmitBtn = new Button("Submit");
@@ -82,6 +89,9 @@ public class infoView extends BorderPane {
     private Label tutor = new Label("Tutor");
     Label type = new Label("Enter a new");
     
+    private Label password = new Label("Password");
+    private CustomPasswordField passwordTF = new CustomPasswordField();
+    
     //----------Dropdown Menu--------------------
     private ChoiceBox<String> typePerson = new ChoiceBox<>();
     private ChoiceBox<String> typePerson2 = new ChoiceBox<>();
@@ -91,6 +101,7 @@ public class infoView extends BorderPane {
     private VBox idVbox = new VBox(idLabel, idTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneVbox = new VBox(phoneLabel, phoneTF);
+    private VBox passwordVbox = new VBox(password, passwordTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjectTF);
     
     private VBox vb = new VBox();
@@ -101,13 +112,13 @@ public class infoView extends BorderPane {
     
     //----------------------Data for Tables---------------------------------
     ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList(
-            new infoView.tutorRowData("769873", "Michael", "Gutierrez", "michael.gutierrez@utrgv.edu", "Math", "(123) 456-789"),
-            new infoView.tutorRowData("765434", "Jose", "Herrera", "jose.herrera@utrgv.edu", "English", "(956) 566-234"));
-    ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList(
-            new infoView.studentRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "(833) 234-1234"),
-            new infoView.studentRowData("54643", "Elyvic", "Cabais", "elyvic.cabais01@utrgv.edu", "(325) 213-4573"));
+      //      new infoView.tutorRowData("769873", "Michael", "Gutierrez", "michael.gutierrez@utrgv.edu", "Math", "(123) 456-789"),
+        /*    new infoView.tutorRowData("765434", "Jose", "Herrera", "jose.herrera@utrgv.edu", "English", "(956) 566-234")*/);
+    private ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList(
+            /*new infoView.studentRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "(833) 234-1234"),
+            new infoView.studentRowData("54643", "Elyvic", "Cabais", "elyvic.cabais01@utrgv.edu", "(325) 213-4573")*/);
 
-    public  infoView() {
+    public  infoView() throws SQLException {
        
         HBox hb = new HBox();
         
@@ -135,7 +146,10 @@ public class infoView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
         
-        tutor.setAlignment(Pos.TOP_CENTER);
+
+        tutor.setTranslateX(10);
+        tutor.setAlignment(Pos.BASELINE_CENTER);
+        tutor.setPadding(new Insets(5,0,5,0));
         
         HBox hb4 = new HBox(add, delete, modify);
         hb4.setPadding(new Insets(10));
@@ -149,24 +163,27 @@ public class infoView extends BorderPane {
         search.setPrefSize(100, 10);
         
                 //-------------------------Tutor Table--------------------------------------
+        
+                
+       tutortableData= tm.populateTable();
+                
         tutorTable.setItems(tutortableData);
+        //tutorTable.getItems().add(tutorTableData);
         tutorTable.setTranslateX(5);
+        tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        tutorTable.setMaxWidth(800);
         
         tutorTable.setMaxSize(650, 250);
         tutorTable.setTranslateX(5);
         
         tutor.setPrefSize(100, 10);
-        tutor.setTranslateX(10);
-        tutor.setAlignment(Pos.BASELINE_CENTER);
-        tutor.setPadding(new Insets(5,0,5,0));
-        
         
         typePerson.getItems().addAll("Student", "Tutor");
         typePerson.setValue("Student");
         typePerson2.getItems().addAll("Student", "Tutor");
         typePerson2.setValue("Student");
         
-          
+        
        
         TableColumn tutoridCol = new TableColumn("ID");
         tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -196,11 +213,15 @@ public class infoView extends BorderPane {
         tutorTable.setMinWidth(687);
         
                 //------------------------Table Student----------------------------------------------
-       
+
+                
+        studenttableData = sm.populateTable();
         studentTable.setItems(studenttableData);
         
         studentTable.setMaxSize(650, 250);
         studentTable.setTranslateX(5);
+        studentTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        studentTable.setMaxWidth(800);
         
         student.setTranslateX(10);
         student.setAlignment(Pos.BASELINE_CENTER);
@@ -236,14 +257,7 @@ public class infoView extends BorderPane {
         hbox.getChildren().addAll(searchLabel, searchTF, search,typePerson);
         
     }
-    
-/*    public void clearTutorList(){
-        vb.getChildren().clear();
-    }
-    
-    public void clearStudentList(){
-        vb2.getChildren().clear();
-    }*/
+   
     
     public void tutorList(){
         vb.getChildren().clear();
@@ -257,6 +271,63 @@ public class infoView extends BorderPane {
         vb2.getChildren().clear();
         vb2.getChildren().addAll(student,hbox, studentTable);
         this.setCenter(vb2);
+    }
+    
+    
+    public VBox modifyTutor(){
+        VBox layout = new VBox();
+     
+        infoView.tutorRowData data;
+        int index = getTutorTable().getSelectionModel().getSelectedIndex();
+        data = (infoView.tutorRowData) tutorTable.getItems().get(index);
+      
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(6, 6, 6, 6));
+        
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        idTF.setText(data.getId());
+        emailTF.setText(data.getEmail());
+        phoneTF.setText(data.getPhone());
+        subjectTF.setText(data.getSubject());
+        fNameTF.setText(data.getFName());
+        lNameTF.setText(data.getLName());
+    //    password.setText(data.);
+        
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+
+    
+        return layout;
+    }
+    
+    
+    public VBox modifyStudent(){
+        VBox layout = new VBox();
+     
+        infoView.studentRowData data;
+        int index = getStudentTable().getSelectionModel().getSelectedIndex();
+        data = (infoView.studentRowData) studentTable.getItems().get(index);
+      
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(6, 6, 6, 6));
+        
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        idTF.setText(data.getId());
+        emailTF.setText(data.getEmail());
+        phoneTF.setText(data.getPhone());
+        fNameTF.setText(data.getFName());
+        lNameTF.setText(data.getLName());
+        
+        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, newTutorSubmitBtn);
+
+    
+        return layout;
+    
     }
     
     public VBox addType(){
@@ -318,6 +389,34 @@ public class infoView extends BorderPane {
 
         return layout;
     }
+
+    /**
+     * @return the password
+     */
+    public Label getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(Label password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the passwordTF
+     */
+    public TextField getPasswordTF() {
+        return passwordTF;
+    }
+
+    /**
+     * @param passwordTF the passwordTF to set
+     */
+    public void setPasswordTF(CustomPasswordField passwordTF) {
+        this.passwordTF = passwordTF;
+    }
     
      public static class tutorRowData {     
      
@@ -328,7 +427,7 @@ public class infoView extends BorderPane {
         private SimpleStringProperty email;
         private SimpleStringProperty id;
 
-        private tutorRowData(String id, String fName, String lName, String email, String subject, String phone) {
+        public tutorRowData(String id, String fName, String lName, String email, String subject, String phone) {
             this.id = new SimpleStringProperty(id);
             this.fName = new SimpleStringProperty(fName);
             this.lName = new SimpleStringProperty(lName);
@@ -432,7 +531,7 @@ public static class studentRowData {
         private SimpleStringProperty email;
         private SimpleStringProperty id;
 
-        private studentRowData(String id, String fName, String lName, String email, String phone) {
+        public studentRowData(String id, String fName, String lName, String email, String phone) {
             this.id = new SimpleStringProperty(id);
             this.fName = new SimpleStringProperty(fName);
             this.lName = new SimpleStringProperty(lName);
@@ -530,6 +629,9 @@ public static class studentRowData {
         int idNo = currentTutor.getID();
         String id = String.valueOf(idNo);
         String phone = currentTutor.getPhone();
+        
+        System.out.println(id+" "+fName+" "+lName+" "+email+" "+phone+" "+subject);
+        
         infoView.tutorRowData tutorRowData = new infoView.tutorRowData(id, fName, lName,email, subject, phone);
         tutortableData.add(tutorRowData);
         tutorTable.setItems(tutortableData);
@@ -1110,6 +1212,20 @@ public static class studentRowData {
      */
     public void setSearchTF(TextField searchTF) {
         this.searchTF = searchTF;
+    }
+
+    /**
+     * @return the studenttableData
+     */
+    public ObservableList<infoView.studentRowData> getStudenttableData() {
+        return studenttableData;
+    }
+
+    /**
+     * @param studenttableData the studenttableData to set
+     */
+    public void setStudenttableData(ObservableList<infoView.studentRowData> studenttableData) {
+        this.studenttableData = studenttableData;
     }
     
 }

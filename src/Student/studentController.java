@@ -109,8 +109,13 @@ public class studentController {
         });
 
         gui.getSupervisor().setOnAction((ActionEvent event) -> {
-            infoView tiv = new infoView();
-            infoController sc = new infoController(tiv);
+            infoView tiv = null;
+            try {
+                tiv = new infoView();
+                infoController sc = new infoController(tiv);
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             Scene scene2 = new Scene(tiv, 1000, 500);
             

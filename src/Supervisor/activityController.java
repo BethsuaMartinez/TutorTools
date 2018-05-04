@@ -6,8 +6,12 @@
 package Supervisor;
 
 import Login.loginController;
+import Supervisor.infoController;
 import Login.loginView;
 import Models.LoginModel;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -20,7 +24,7 @@ import javafx.stage.Stage;
  */
 public class activityController {
 
-    infoView tiv = new infoView();
+    infoView tiv;
     ActivitylogView alv = new ActivitylogView();
 
     public activityController(ActivitylogView alv) {
@@ -42,13 +46,19 @@ public class activityController {
         });
 
         alv.getBack().setOnAction((ActionEvent event) -> {
-            infoView tiv1 = new infoView();
-            infoController sc = new infoController(tiv1);
+            infoView tiv1;
+            try {
+                tiv1 = new infoView();
+            infoController sc = new infoController( tiv1);
             Scene scene3 = new Scene(tiv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Supervisor");
             window.setScene(scene3);
             window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(activityController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
     }
 }
