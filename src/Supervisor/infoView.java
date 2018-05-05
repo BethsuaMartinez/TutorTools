@@ -167,7 +167,7 @@ public class infoView extends BorderPane {
         //tutorTable.getItems().add(tutorTableData);
         tutorTable.setTranslateX(5);
         tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
-        tutorTable.setMaxWidth(800);
+        tutorTable.setMaxWidth(1000);
         
         tutorTable.setMaxSize(650, 250);
         tutorTable.setTranslateX(5);
