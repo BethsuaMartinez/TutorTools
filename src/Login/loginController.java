@@ -28,7 +28,7 @@ public final class loginController {
 
     LoginModel logm = new LoginModel();
     loginView logv = new loginView();
-    studentView sv = new studentView();
+    studentView sv;
 
     public loginController(loginView logv, LoginModel logm) {
         this.logm = logm;
