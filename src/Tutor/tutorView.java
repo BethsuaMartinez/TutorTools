@@ -151,7 +151,7 @@ public class tutorView extends BorderPane {
 
         this.searchTf.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
-        this.searchTf.setPromptText("Ex. Name, ID, Last Name");
+        this.searchTf.setPromptText("Ex. ID, First Name, Last Name");
         this.searchTf.setPrefSize(300, 20);
 
         HBox search = new HBox();
