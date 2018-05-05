@@ -53,7 +53,6 @@ public class studentView extends BorderPane {
 
     StudentModel sm = new StudentModel();
     SessionModel ssm = new SessionModel();
-    
             
     private ChoiceBox<String> tutors = new ChoiceBox<>();
     private ChoiceBox<String> subjects = new ChoiceBox<>();
@@ -68,10 +67,9 @@ public class studentView extends BorderPane {
     private Button submitSs = new Button("Submit");
     private Button submitId = new Button("Submit");
 
-    ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"),
-            new studentView.RowData("John", "Williamson", "Math", "16:00", "43342", "Bethsua"));
+    ObservableList<studentView.RowData> sessiontableData = FXCollections.observableArrayList();
 
-    private final TableView table = new TableView();
+    private final TableView sessiontable = new TableView();
 
     private Label idNoLabel = new Label("ID Number");
     private TextField idNoTF = new TextField();
@@ -108,7 +106,7 @@ public class studentView extends BorderPane {
     private VBox idVbox = new VBox(idNoLabel, idNoTF);
     private VBox vbox10 = new VBox(tutor, supervisor, addBtn);
 
-    public studentView() {
+    public studentView() throws SQLException {
 
         HBox hb = new HBox();
         HBox hb2 = new HBox();
@@ -145,11 +143,6 @@ public class studentView extends BorderPane {
         this.addBtn.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
         this.signOut.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
         
-
-
-       // hb.setPrefSize(300, 40);
-       // hb.setPadding(new Insets(0, 20, 20, 20));
-
         this.tutor.setMaxSize(200, 30);
         this.supervisor.setMaxSize(200, 30);
         this.addBtn.setMaxSize(200, 40);
@@ -178,9 +171,10 @@ public class studentView extends BorderPane {
         vbox10.setSpacing(10);
         vbox10.setPadding(new Insets(5, 0, 0, 20));
 
-        table.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        sessiontable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
 
-        table.setItems(tableData);
+        sessiontableData = ssm.populateCurrentTable();
+        sessiontable.setItems(sessiontableData);
 
         TableColumn idCol = new TableColumn("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -220,8 +214,8 @@ public class studentView extends BorderPane {
             }
 
         });
-        table.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
-        this.table.setPrefWidth(770);
+        sessiontable.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
+        this.sessiontable.setPrefWidth(770);
 
         //Hbox
         //   buttonHbox.setSpacing(3);
@@ -231,11 +225,11 @@ public class studentView extends BorderPane {
         emailVbox.setSpacing(3);
         phoneNoVbox.setSpacing(3);
 
-        BorderPane.setMargin(table, new Insets(10, 10, 10, 10));
+        BorderPane.setMargin(sessiontable, new Insets(10, 10, 10, 10));
         //    BorderPane.setMargin(vbox10, new Insets(10, 10, 10, 10));
 
         //   buttonHbox.setAlignment(Pos.CENTER);
-        this.setRight(table);
+        this.setRight(sessiontable);
         this.setLeft(vbox10);
         this.setTop(hb);
         //  this.setBottom(buttonHbox);
@@ -314,8 +308,8 @@ public class studentView extends BorderPane {
         String id = currentData.getIdNo();
         String subject = currentData.getSubject();
         RowData rowData = new studentView.RowData(fName, lName, subject, timeIn, id, tutor);
-        tableData.add(rowData);
-        table.setItems(tableData);
+        sessiontableData.add(rowData);
+        sessiontable.setItems(sessiontableData);
     }
     
     public void wrongPass() {
@@ -392,8 +386,8 @@ public class studentView extends BorderPane {
                     Session currentSession = new Session(idNo, lastName, firstName, tutor, endTime, subject, startTime, date);
 
                     try {
-                        ssm.insertSession(currentSession);//remove selected item from the table list
-                        tableData.remove(currentPerson);
+                        ssm.insertSession(currentSession);//remove selected item from the sessiontable list
+                        sessiontableData.remove(currentPerson);
                     } catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -423,7 +417,7 @@ public class studentView extends BorderPane {
         private SimpleStringProperty id;
         private SimpleStringProperty tutor;
 
-        private RowData(String fName, String lName, String subject, String timeIn, String id, String tutor) {
+        public RowData(String fName, String lName, String subject, String timeIn, String id, String tutor) {
             this.firstName = new SimpleStringProperty(fName);
             this.lastName = new SimpleStringProperty(lName);
             this.subject = new SimpleStringProperty(subject);
@@ -533,10 +527,10 @@ public class studentView extends BorderPane {
     }
 
     /**
-     * @return the table
+     * @return the sessiontable
      */
     public TableView<Session> getTable() {
-        return table;
+        return sessiontable;
     }
 
     /**

@@ -5,7 +5,9 @@
  */
 package Tutor;
 
+import Models.SessionModel;
 import com.sun.prism.impl.Disposer.Record;
+import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,16 +40,11 @@ import javafx.util.Callback;
  * @author beths
  */
 public class tutorView extends BorderPane {
+    SessionModel sm = new SessionModel();
+    
+    ObservableList<RowData> sessiontableData= FXCollections.observableArrayList();
 
-    ObservableList<RowData> data
-            = FXCollections.observableArrayList(
-                    new RowData("324872834","Jacob", "Smith", "Math", "12:00", "14:20", "04/05/2018"),
-                    new RowData("34234","Isabella", "Johnson", "English", "16:30", "17:00", "03/24/2018"),
-                    new RowData("876543","Ethan", "Williams", "History", "9:40", "11:20", "10/31/2018"),
-                    new RowData("454656","Emma", "Jones", "Computer Science", "10:00", "13:10", "12/25/2018"),
-                    new RowData("2346734","Michael", "Brown", "Physics", "8:30", "8:45", "04/06/2018"));
-
-    private final TableView table = new TableView();
+    private final TableView sessionTable = new TableView();
 
     private Button signOut = new Button("Log Out");
     private Button searchBtn = new Button("Search");
@@ -57,7 +54,7 @@ public class tutorView extends BorderPane {
     private Button modify = new Button("Modify");
     private Button delete = new Button("Delete");
     
-    public tutorView() {
+    public tutorView() throws SQLException {
 
         HBox top = new HBox();
         HBox hb2 = new HBox();
@@ -107,7 +104,9 @@ public class tutorView extends BorderPane {
         this.modify.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
         this.delete.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
 
-        table.setItems(data);
+        sessiontableData= sm.populateSessionTable();
+                
+        sessionTable.setItems(sessiontableData);
         
         TableColumn studentIDcol = new TableColumn("Student ID");
         studentIDcol.setCellValueFactory(
@@ -144,11 +143,11 @@ public class tutorView extends BorderPane {
                 new PropertyValueFactory<>("date"));
         dateCol.setPrefWidth(90);
         
-        table.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
-        table.getColumns().addAll(studentIDcol, firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, dateCol);
-        table.setMaxWidth(800);
+        sessionTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
+        sessionTable.getColumns().addAll(studentIDcol, firstNameCol, lastNameCol, subjectcol, timeInCol, timeOutCol, dateCol);
+        sessionTable.setMaxWidth(800);
       
-        BorderPane.setAlignment(table, Pos.CENTER);
+        BorderPane.setAlignment(sessionTable, Pos.CENTER);
 
         this.searchTf.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
@@ -163,7 +162,7 @@ public class tutorView extends BorderPane {
         
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
-        tableBox.getChildren().add(table);
+        tableBox.getChildren().add(sessionTable);
         
         HBox bottom = new HBox();
         bottom.getChildren().addAll(modify,delete);
@@ -288,7 +287,7 @@ public class tutorView extends BorderPane {
         private SimpleStringProperty timeOut;
         private SimpleStringProperty date;
 
-        private RowData(String studentID,String fName, String lName, String subject, String timeIn, String timeOut, String date) {
+        public RowData(String studentID,String fName, String lName, String subject, String timeIn, String timeOut, String date) {
             this.studentID=new SimpleStringProperty(studentID);
             this.firstName = new SimpleStringProperty(fName);
             this.lastName = new SimpleStringProperty(lName);

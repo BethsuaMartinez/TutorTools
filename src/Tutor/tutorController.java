@@ -12,6 +12,9 @@ import Models.SessionModel;
 import Models.StudentModel;
 import Student.studentController;
 import Student.studentView;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -26,7 +29,7 @@ public class tutorController {
 
     LoginModel logm = new LoginModel();
     loginView logv = new loginView();
-    tutorView tv = new tutorView();
+    tutorView tv;
 
     public tutorController(tutorView tv) {
         this.tv = tv;
@@ -49,16 +52,21 @@ public class tutorController {
         });
 
         tv.getBack().setOnAction((ActionEvent event) -> {
-            studentView sv = new studentView();
-            StudentModel sm = new StudentModel();
-            SessionModel ssm = new SessionModel();
-            studentController sc = new studentController(sv, sm, ssm);
-            
-            Scene scene3 = new Scene(sv, 1000, 500);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Student List");
-            window.setScene(scene3);
-            window.show();
+            studentView sv;
+            try {
+                sv = new studentView();
+                StudentModel sm = new StudentModel();
+                SessionModel ssm = new SessionModel();
+                studentController sc = new studentController(sv, sm, ssm);
+
+                Scene scene3 = new Scene(sv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Student List");
+                window.setScene(scene3);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }

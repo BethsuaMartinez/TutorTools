@@ -21,8 +21,6 @@ import Tutor.tutorView;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -38,12 +36,12 @@ import javafx.stage.Stage;
 public class infoController {
 
     infoView tiv;
-    tutorView tv = new tutorView();
-    
+    tutorView tv;
+
     ActivitylogView alv = new ActivitylogView();
     SupervisorModel sm = new SupervisorModel();
     StudentModel stm = new StudentModel();
-    
+
     Student currentStudent = new Student();
     Tutor currentTutor = new Tutor();
     TutorModel tm = new TutorModel();
@@ -70,16 +68,22 @@ public class infoController {
         });
 
         tiv.getBack().setOnAction((ActionEvent event) -> {
-            studentView sv = new studentView();
-            StudentModel sm = new StudentModel();
-            SessionModel ssm = new SessionModel();
-            studentController sc = new studentController(sv, sm, ssm);
+            studentView sv;
+            try {
+                sv = new studentView();
+                StudentModel sm = new StudentModel();
+                SessionModel ssm = new SessionModel();
+                studentController sc = new studentController(sv, sm, ssm);
 
-            Scene scene3 = new Scene(sv, 1000, 500);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Student List");
-            window.setScene(scene3);
-            window.show();
+                Scene scene3 = new Scene(sv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Student List");
+                window.setScene(scene3);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
         tiv.getActivity().setOnAction((ActionEvent event) -> {
             ActivitylogView alv1 = new ActivitylogView();
@@ -91,10 +95,8 @@ public class infoController {
             window.show();
         });
         tiv.getAdd().setOnAction((ActionEvent event) -> {
-            //Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Stage newTutorStage = new Stage();
             newTutorStage.initModality(Modality.APPLICATION_MODAL);
-            //newTutorStage.initOwner(window);
             Scene newTutorScene;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
@@ -143,14 +145,13 @@ public class infoController {
             Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
             try {
                 stm.insertStudent(idNo, firstName, lastName, email, phoneNo);
+                tiv.updateStudentTable(currentStudent);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.close();
+                tiv.ClearFields();
             } catch (SQLException ex) {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            tiv.updateStudentTable(currentStudent);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.close();
-            tiv.ClearFields();
         });
 
         tiv.getEmail().setOnAction((ActionEvent event) -> {
@@ -171,22 +172,16 @@ public class infoController {
         });
 
         tiv.getSearch().setOnAction((ActionEvent event) -> {
-
             if ("Tutor".equals(tiv.getTypePerson())) {
-                //  tiv.clearTutorList();
                 tiv.tutorList();
             } else {
-                // tiv.clearStudentList();
                 tiv.studentList();
             }
-
         });
 
         tiv.getModify().setOnAction((ActionEvent event) -> {
-
             Stage modifyStage = new Stage();
             modifyStage.initModality(Modality.APPLICATION_MODAL);
-
             Scene modifyScene; // new Scene(tiv.modifyTutor(), 300, 300);
 
             if ("Tutor".equals(tiv.getTypePerson())) {
@@ -194,7 +189,6 @@ public class infoController {
             } else {
                 modifyScene = new Scene(tiv.modifyStudent(), 350, 250);
             }
-
             modifyStage.setTitle("Modify");
             modifyStage.setScene(modifyScene);
             modifyStage.show();

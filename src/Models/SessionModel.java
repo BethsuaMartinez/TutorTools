@@ -7,9 +7,15 @@ package Models;
 
 import Database.SQLConnector;
 import Student.Session;
+import Student.studentView;
+import Supervisor.Tutor;
+import Supervisor.infoView;
+import Tutor.tutorView;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -97,6 +103,69 @@ public class SessionModel {
         }
     }
 
+    public ObservableList<studentView.RowData> populateCurrentTable() throws SQLException{
+        try {
+            ObservableList<studentView.RowData> sessiontableData = FXCollections.observableArrayList();
+            
+            String sql="Select * from TutorTools.TutoringSessions where status=0";
+            ResultSet myRs = myConn.query(sql);
+            int id;
+            String idNo, lastName, firstName, tutor, startTime, subject;
+            String endTime="";
+            String date="";
 
-    
+            while (myRs.next()) {
+                id = myRs.getInt("idStudent");
+                firstName = myRs.getString("fname");
+                lastName = myRs.getString("lname");
+                tutor = myRs.getString("tutor");
+                startTime= myRs.getString("startTime");
+                subject = myRs.getString("subject");
+                        
+                idNo=String.valueOf(id);
+                
+                Session currentSession= new Session(idNo, firstName, lastName, tutor, startTime, subject, endTime, date);
+                studentView.RowData RowData = new studentView.RowData (firstName, lastName, subject, startTime, idNo, tutor);
+                sessiontableData.add(RowData);
+            }
+            return sessiontableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+
+    public ObservableList<tutorView.RowData> populateSessionTable() throws SQLException{
+        try {
+            ObservableList<tutorView.RowData> sessiontableData = FXCollections.observableArrayList();
+            
+            String sql="Select * from TutorTools.TutoringSessions where status=1";
+            ResultSet myRs = myConn.query(sql);
+            int id;
+            String idNo, lastName, firstName, tutor, startTime, subject, endTime, date;
+
+            while (myRs.next()) {
+                id = myRs.getInt("idStudent");
+                firstName = myRs.getString("fname");
+                lastName = myRs.getString("lname");
+                tutor = myRs.getString("tutor");
+                startTime= myRs.getString("startTime");
+                subject = myRs.getString("subject");
+                endTime= myRs.getString("endTime");
+                date= myRs.getString("date");
+                        
+                idNo=String.valueOf(id);
+                
+                Session currentSession= new Session(idNo, firstName, lastName, tutor, startTime, subject, endTime, date);
+                tutorView.RowData RowData = new tutorView.RowData (idNo, firstName, lastName, subject, startTime, startTime, date);
+                sessiontableData.add(RowData);
+            }
+            return sessiontableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
 }
