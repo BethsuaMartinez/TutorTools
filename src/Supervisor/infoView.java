@@ -113,12 +113,8 @@ public class infoView extends BorderPane {
     HBox hbox = new HBox();
     
     //----------------------Data for Tables---------------------------------
-    ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList(
-      //      new infoView.tutorRowData("769873", "Michael", "Gutierrez", "michael.gutierrez@utrgv.edu", "Math", "(123) 456-789"),
-        /*    new infoView.tutorRowData("765434", "Jose", "Herrera", "jose.herrera@utrgv.edu", "English", "(956) 566-234")*/);
-    private ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList(
-            /*new infoView.studentRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "(833) 234-1234"),
-            new infoView.studentRowData("54643", "Elyvic", "Cabais", "elyvic.cabais01@utrgv.edu", "(325) 213-4573")*/);
+    ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList();
+    ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList();
 
     public  infoView() throws SQLException {
        
@@ -224,7 +220,7 @@ public class infoView extends BorderPane {
                 //-------------------------Tutor Table--------------------------------------
         
                 
-       tutortableData= tm.populateTable();
+        tutortableData= tm.populateTable();
                 
         tutorTable.setItems(tutortableData);
         tutorTable.setTranslateX(5);

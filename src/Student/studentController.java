@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class studentController {
 
     StudentModel model = new StudentModel();
-    studentView gui = new studentView();
+    studentView gui;
     SessionModel ssm = new SessionModel();
 
     public studentController(studentView gui, StudentModel model, SessionModel ssm) {
@@ -52,16 +52,16 @@ public class studentController {
             Stage signInStage = new Stage();
             signInStage.initModality(Modality.APPLICATION_MODAL);
             signInStage.initOwner(window);
-            
+
             VBox layout = new VBox();
             layout = gui.addSession();
-            
+
             Scene newIdScene = new Scene(layout, 210, 110);
-            
+
             signInStage.setTitle("Sign-In");
-            
+
             signInStage.setScene(newIdScene);
-            
+
             signInStage.show();
         });
         //Submit to table
@@ -69,42 +69,45 @@ public class studentController {
             Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             DateFormat dateFormat = new SimpleDateFormat("HH:mm");
             Date date = new Date();
-            
+
             String idNo = gui.getIdNoTF().getText();
             String tutor = gui.getTutors();
             String subject = gui.getSubjects();
             String startTime = dateFormat.format(date);
             System.out.println(idNo + tutor + subject + startTime);
-            
+
             int id = Integer.parseInt(idNo);
-            
+
             Student student;
             try {
                 student = model.getStudent(id);
                 String fname = student.getFname();
                 String lname = student.getLname();
-                
+
                 Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
                 gui.updateTable(currentSession);
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             signInStage.close();
             gui.ClearFields();
-            //((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
         });
 
-
         gui.getTutor().setOnAction((ActionEvent event) -> {
-            tutorView tv = new tutorView();
-            tutorController tc = new tutorController(tv);
-            Scene scene3 = new Scene(tv, 1000, 500);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Tutor Information");
-            window.setScene(scene3);
-            window.show();
+            tutorView tv;
+            try {
+                tv = new tutorView();
+                tutorController tc = new tutorController(tv);
+                Scene scene3 = new Scene(tv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Tutor Information");
+                window.setScene(scene3);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
 
@@ -116,9 +119,9 @@ public class studentController {
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             Scene scene2 = new Scene(tiv, 1000, 500);
-            
+
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Supervisor");
             window.setScene(scene2);
@@ -132,7 +135,7 @@ public class studentController {
             }
             String id = gui.getIdNoTF().getText();
             int x = Integer.parseInt(id);
-            
+
             try {
                 if (true == model.verifyUser(x)) {
                     //GridPane newSessionGridpane = gui.newSession();
@@ -140,15 +143,15 @@ public class studentController {
                     Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
                     signInStage.setScene(newSessionScene);
                     signInStage.show();
-                    
+
                 } else {
                     VBox newStudentVbox = gui.newStudentVBox();
                     Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
                     signInStage.setScene(newStudentScene);
                     signInStage.show();
-                    
+
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -187,9 +190,8 @@ public class studentController {
                 }
             }
         });
-        
-       // gui.getSe
 
+        // gui.getSe
         gui.getSignOut().setOnAction((ActionEvent event) -> {
             loginView v = new loginView();
             LoginModel m = new LoginModel();
