@@ -7,12 +7,16 @@ package Supervisor;
 
 import Models.TutorModel;
 import Student.Student;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -46,8 +50,6 @@ public class infoView extends BorderPane {
     private Button addType = new Button("Submit");
     private Button add = new Button("Add");
     private Button delete = new Button("Delete");
-//    private Button modifyTutorBtn = new Button("Modify");
-//    private Button modifyStudentBtn = new Button("Modify");
     private Button search = new Button("Search");
     private Button back = new Button("Back");
     private Button activity= new Button("Activity Log");
@@ -61,13 +63,13 @@ public class infoView extends BorderPane {
     private TableView studentTable = new TableView();
     
     //----------Labels & TF-------------------------
-    private Label idLabel = new Label ("ID Number");
+    private Label idLabel = new Label ("ID Number*");
     private TextField idTF = new TextField();
     
-    private Label fNameLabel = new Label ("First Name");
+    private Label fNameLabel = new Label ("First Name*");
     private TextField fNameTF = new TextField();
     
-    private Label lNameLabel = new Label ("Last Name");
+    private Label lNameLabel = new Label ("Last Name*");
     private TextField lNameTF = new TextField();
     
     private Label emailLabel = new Label("E-Mail");
@@ -76,7 +78,7 @@ public class infoView extends BorderPane {
     private Label phoneLabel = new Label ("Phone Number");
     private TextField phoneTF = new TextField();
     
-    private Label subjectLabel = new Label ("Subject");
+    private Label subjectLabel = new Label ("Subject*");
     private TextField subjectTF = new TextField();
     
     private Label searchLabel = new Label("Search");
@@ -144,24 +146,80 @@ public class infoView extends BorderPane {
         hb.setPadding(new Insets(5,0,5,20));
         
 
-        tutor.setTranslateX(10);
-        tutor.setAlignment(Pos.BASELINE_CENTER);
-        tutor.setPadding(new Insets(5,0,5,0));
-        
-        HBox hb4 = new HBox(add, delete, modify);
-        hb4.setPadding(new Insets(10));
-        hb4.setSpacing(20);
-        hb4.setAlignment(Pos.BOTTOM_CENTER);
+
+        tutor.setAlignment(Pos.CENTER_LEFT);
+        tutor.setPadding(new Insets(5,0,5,10));
+       
         
         this.setTop(hb);
         studentList();
-        this.setBottom(hb4);
         
         search.setPrefSize(100, 10);
         
+        //---------set Buttons  and TF style
+        idTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        fNameTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        lNameTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        emailTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        phoneTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        subjectTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        searchTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        
+        email.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        addType.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        add.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        delete.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        search.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        back.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        activity.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        modify.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        signOut.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        newTutorSubmitBtn.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        studentSubmitBtn.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        
+        typePerson.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        typePerson2.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        
+        //---------set prompts
+        
+    
+        idTF.setPromptText("Enter ID number (integer)");
+        fNameTF.setPromptText("Enter First Name");
+        lNameTF.setPromptText("Enter Last Name");
+        emailTF.setPromptText("Ex. student@example.edu");
+        phoneTF.setPromptText("(956)999-9999");
+        subjectTF.setPromptText("Ex. math");
+        searchTF.setPromptText("Ex. ID, First Name, Last Name");
+        
+        
+        //----------setPref sizes
+        this.activity.setMaxSize(100, 20);       
+        this.email.setMaxSize(100, 20);
+        this.back.setMaxSize(200, 20);
+        this.signOut.setMaxSize(100, 20);  
+        this.modify.setMaxSize(100, 20); 
+        this.delete.setMaxSize(100, 20); 
+        this.add.setMaxSize(100, 20);
+        
+        this.activity.setPadding(new Insets(5,10,5,10));
+        this.email.setPadding(new Insets(5,10,5,10));
+        this.back.setPadding(new Insets(5,10,5,10));
+        this.signOut.setPadding(new Insets(5,10,5,10));
+        this.modify.setPadding(new Insets(3,15,3,15));
+        this.delete.setPadding(new Insets(3,15,3,15));
+        this.add.setPadding(new Insets(3,15,3,15));
+       searchTF.setPrefSize(300, 20);
+        
+        
                 //-------------------------Tutor Table--------------------------------------
         tutorTable.setItems(tutortableData);
-        //tutorTable.getItems().add(tutorTableData);
         tutorTable.setTranslateX(5);
         tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         tutorTable.setMaxWidth(800);
@@ -241,26 +299,41 @@ public class infoView extends BorderPane {
         studentTable.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentphoneCol);
         studentTable.setMinWidth(652);
         
-        
+
         hbox.setPadding(new Insets(5));
         hbox.setSpacing(20);
         hbox.setTranslateX(5);
-        hbox.getChildren().addAll(searchLabel, searchTF, search,typePerson);
-        
+        hbox.getChildren().addAll(searchLabel, searchTF, typePerson, search);
+        hbox.setAlignment(Pos.CENTER);
     }
    
     
     public void tutorList(){
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(tutorTable);
+        HBox hb4 = new HBox(add, delete, modify);
+        hb4.setPadding(new Insets(10));
+        hb4.setSpacing(20);
+        hb4.setAlignment(Pos.BOTTOM_CENTER);
         vb.getChildren().clear();
-        vb.getChildren().addAll(tutor,hbox,tutorTable);
+        vb.getChildren().addAll(tutor,hbox,tableBox,hb4);
+        vb.setSpacing(7);
         this.setCenter(vb);
         
     }
     
     public void studentList(){
-        
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(studentTable);
+        HBox hb4 = new HBox(add, delete, modify);
+        hb4.setPadding(new Insets(10));
+        hb4.setSpacing(20);
+        hb4.setAlignment(Pos.BOTTOM_CENTER);
         vb2.getChildren().clear();
-        vb2.getChildren().addAll(student,hbox, studentTable);
+        vb2.getChildren().addAll(student,hbox, tableBox, hb4);
+        vb2.setSpacing(7);
         this.setCenter(vb2);
     }
     
@@ -285,7 +358,6 @@ public class infoView extends BorderPane {
         subjectTF.setText(data.getSubject());
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
-    //    password.setText(data.);
         
         layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
@@ -300,7 +372,6 @@ public class infoView extends BorderPane {
         infoView.studentRowData data;
         int index = getStudentTable().getSelectionModel().getSelectedIndex();
         data = (infoView.studentRowData) studentTable.getItems().get(index);
-      
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(6, 6, 6, 6));
         
@@ -315,11 +386,38 @@ public class infoView extends BorderPane {
         lNameTF.setText(data.getLName());
         
         layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, newTutorSubmitBtn);
-
+        
     
         return layout;
     
     }
+    
+    public boolean confirmStudentModify(){
+        int index = getStudentTable().getSelectionModel().getSelectedIndex();
+        if (index == -1){
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Not Selected Student Found");
+            alert.setContentText("You must select a student to modify");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean confirmTutorModify(){
+        int index = getTutorTable().getSelectionModel().getSelectedIndex();
+        if (index == -1){
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Not Selected Tutor Found");
+            alert.setContentText("You must select a tutor to modify");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+    
     
     public VBox addType(){
        
@@ -346,14 +444,6 @@ public class infoView extends BorderPane {
         
         HBox h = new HBox(v, v1);
         
-        /*layout.getChildren().add(idVbox);
-        layout.getChildren().add(h);
-        layout.getChildren().add(emailVbox);
-        layout.getChildren().add(phoneVbox);
-        layout.getChildren().add(subjectVbox);
-        layout.getChildren().add(newTutorSubmitBtn);
-        */
-        
         layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
@@ -379,6 +469,39 @@ public class infoView extends BorderPane {
 
         return layout;
     }
+    
+    
+    public void deleteFromTable(){
+        
+   
+        if ("Tutor".equals(getTypePerson())) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Please Confirm Delete Action");
+            alert.setContentText("Are you sure you want to delete this tutor?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
+                tutorTable.getItems().remove(selectedItem);
+            } 
+        } 
+        
+        else {
+
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Please Confirm Delete Action");
+            alert.setContentText("Are you sure you want to delete this student?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                infoView.studentRowData selectedItem = (infoView.studentRowData) studentTable.getSelectionModel().getSelectedItem();
+                studentTable.getItems().remove(selectedItem);
+            } 
+        }
+    }
+
 
     /**
      * @return the password

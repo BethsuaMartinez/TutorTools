@@ -97,7 +97,7 @@ public class loginView extends BorderPane {
         this.loginButton.setPrefSize(250, 30);
         this.username.setLeft(user);
         this.username.setPrefSize(250, 30);
-        this.username.setPromptText("Username");
+        this.username.setPromptText("Email");
         this.password.setLeft(lock);
         this.password.setPrefSize(250, 30);
         this.password.setPromptText("Password");
