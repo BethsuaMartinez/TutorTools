@@ -60,6 +60,8 @@ public class infoView extends BorderPane {
     private Button signOut = new Button("Log Out");
     private Button newTutorSubmitBtn = new Button("Submit");
     private Button studentSubmitBtn = new Button("Submit");
+    private Button modifyStudent = new Button("Modify");
+    private Button modifyTutor = new Button("Modify");
     
     //-------------Table--------------------------------
     private TableView tutorTable = new TableView();
@@ -144,12 +146,9 @@ public class infoView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
         
-
-
         tutor.setAlignment(Pos.CENTER_LEFT);
         tutor.setPadding(new Insets(5,0,5,10));
        
-        
         this.setTop(hb);
         studentList();
         
@@ -364,7 +363,7 @@ public class infoView extends BorderPane {
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, modifyTutor);
 
     
         return layout;
@@ -390,7 +389,7 @@ public class infoView extends BorderPane {
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, modifyStudent);
         
     
         return layout;
@@ -1215,6 +1214,34 @@ public static class studentRowData {
      */
     public void setStudenttableData(ObservableList<infoView.studentRowData> studenttableData) {
         this.studenttableData = studenttableData;
+    }
+
+    /**
+     * @return the modifyStudent
+     */
+    public Button getModifyStudent() {
+        return modifyStudent;
+    }
+
+    /**
+     * @param modifyStudent the modifyStudent to set
+     */
+    public void setModifyStudent(Button modifyStudent) {
+        this.modifyStudent = modifyStudent;
+    }
+
+    /**
+     * @return the modifyTutor
+     */
+    public Button getModifyTutor() {
+        return modifyTutor;
+    }
+
+    /**
+     * @param modifyTutor the modifyTutor to set
+     */
+    public void setModifyTutor(Button modifyTutor) {
+        this.modifyTutor = modifyTutor;
     }
     
 }
