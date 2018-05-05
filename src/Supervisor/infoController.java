@@ -13,12 +13,16 @@ import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
 import Models.SupervisorModel;
+import Models.TutorModel;
 import Student.Student;
 import Student.studentController;
 import Student.studentView;
 import Tutor.tutorView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,14 +42,16 @@ import org.apache.commons.validator.routines.EmailValidator;
  */
 public class infoController {
 
-    infoView tiv = new infoView();
+    infoView tiv;
     tutorView tv = new tutorView();
+    
     ActivitylogView alv = new ActivitylogView();
     SupervisorModel sm = new SupervisorModel();
-    private ObservableList<Student> students = FXCollections.observableArrayList();
-    private ObservableList<Tutor> tutors = FXCollections.observableArrayList();
+    StudentModel stm = new StudentModel();
+    
     Student currentStudent = new Student();
     Tutor currentTutor = new Tutor();
+    TutorModel tm = new TutorModel();
 
     public infoController(infoView tiv) {
         this.tiv = tiv;
@@ -89,30 +95,21 @@ public class infoController {
             window.setScene(scene3);
             window.show();
         });
+
         tiv.getAdd().setOnAction((ActionEvent event) -> {
-           
-            Stage newTutorStage = new Stage();
-            newTutorStage.initModality(Modality.APPLICATION_MODAL);
-
-            Scene newTutorScene = new Scene(tiv.addType(), 150, 150);
-
-            newTutorStage.setTitle("Add");
-            newTutorStage.setScene(newTutorScene);
-            newTutorStage.show();
-        });
-        tiv.getAddType().setOnAction((ActionEvent event) -> {
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene newTutorScene;
+            Stage window = new Stage();
+            window.initModality(Modality.APPLICATION_MODAL);
+            
+            Scene scene;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
-                newTutorScene = new Scene(tiv.addTutor(), 350, 250);
+                scene = new Scene(tiv.addTutor(), 350, 250);
             } else {
-                newTutorScene = new Scene(tiv.addStudent(), 350, 250);
+                scene = new Scene(tiv.addStudent(), 350, 250);
             }
-            
-            window.setScene(newTutorScene);
-            window.show();
 
+            window.setScene(scene);
+            window.show();
         });
 
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
@@ -124,10 +121,15 @@ public class infoController {
                 String email = tiv.getEmailTF().getText();
                 String phoneNo = tiv.getPhoneTF().getText();
                 String subject = tiv.getSubjectTF().getText();
-
+                String password = "";
                 int id = Integer.parseInt(idNo);
 
                 Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
+                try {
+                    tm.insertTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
+                } catch (SQLException ex) {
+                    Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 tiv.updateTutorTable(currentTutor);
 
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -148,14 +150,20 @@ public class infoController {
                 int id = Integer.parseInt(idNo);
 
                 Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
-                tiv.updateStudentTable(currentStudent);
+            try {
+                stm.insertStudent(idNo, firstName, lastName, email, phoneNo);
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tiv.updateStudentTable(currentStudent);
+
 
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.close();
                 tiv.ClearFields();
             }
         });
-        
+
         tiv.getEmail().setOnAction((ActionEvent event) -> {
             MailView mv = new MailView();
             mailController mc = new mailController(mv);
@@ -172,24 +180,23 @@ public class infoController {
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
-        
+
         tiv.getSearch().setOnAction((ActionEvent event) -> {
-            Scene scene2;
 
             if ("Tutor".equals(tiv.getTypePerson())) {
-            
                 tiv.tutorList();
-            } else {
-               
+            }
+            else {
                 tiv.studentList();
             }
 
         });
-        
-        tiv.getModify().setOnAction((ActionEvent event) ->{ 
-            
+
+        tiv.getModify().setOnAction((ActionEvent event) -> {
+
             Stage modifyStage = new Stage();
             modifyStage.initModality(Modality.APPLICATION_MODAL);
+
 
             Scene modifyScene; 
             
@@ -207,6 +214,7 @@ public class infoController {
                     modifyStage.show();
                 }
             }
+
             
         });
         

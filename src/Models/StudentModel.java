@@ -2,7 +2,11 @@ package Models;
 
 import Database.SQLConnector;
 import Student.Student;
+import Supervisor.Tutor;
+import Supervisor.infoView;
 import java.sql.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -77,6 +81,35 @@ public class StudentModel {
             }
         }
         return student;
+    }
+    
+    public ObservableList<infoView.studentRowData> populateTable() throws SQLException{
+        try {
+            ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList();
+            String sql="Select * from TutorTools.Students";
+            ResultSet myRs = myConn.query(sql);
+            int id;
+            String fname,  lname,  email,  phone,  password,  subject;
+
+            while (myRs.next()) {
+                id = myRs.getInt("idStudent");
+                fname = myRs.getString("fname");
+                lname = myRs.getString("lname");
+                email = myRs.getString("email");
+                phone = myRs.getString("phone");
+                
+                String idNo=String.valueOf(id);
+                
+                Student currentStudent= new Student(id, fname, lname, email, phone);
+                infoView.studentRowData studentRowData = new infoView.studentRowData(idNo, fname, lname,email, phone);
+                studenttableData.add(studentRowData);
+            }
+            return studenttableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
     }
 
     public void insertStudent(String idNo, String fname, String lname, String email, String phone) throws SQLException {

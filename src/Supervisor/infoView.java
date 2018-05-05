@@ -5,9 +5,11 @@
  */
 package Supervisor;
 
+import Models.StudentModel;
 import Models.TutorModel;
 import Student.Student;
 import java.util.Optional;
+import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +46,7 @@ import org.controlsfx.control.textfield.CustomPasswordField;
 public class infoView extends BorderPane {
 
     TutorModel tm = new TutorModel();
+    StudentModel sm = new StudentModel();
     
     //-------------------Buttons-----------------------
     private Button email = new Button("E-Mail");
@@ -111,13 +114,13 @@ public class infoView extends BorderPane {
     
     //----------------------Data for Tables---------------------------------
     ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList(
-            new infoView.tutorRowData("769873", "Michael", "Gutierrez", "michael.gutierrez@utrgv.edu", "Math", "(123) 456-789"),
-            new infoView.tutorRowData("765434", "Jose", "Herrera", "jose.herrera@utrgv.edu", "English", "(956) 566-234"));
-    ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList(
-            new infoView.studentRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "(833) 234-1234"),
-            new infoView.studentRowData("54643", "Elyvic", "Cabais", "elyvic.cabais01@utrgv.edu", "(325) 213-4573"));
+      //      new infoView.tutorRowData("769873", "Michael", "Gutierrez", "michael.gutierrez@utrgv.edu", "Math", "(123) 456-789"),
+        /*    new infoView.tutorRowData("765434", "Jose", "Herrera", "jose.herrera@utrgv.edu", "English", "(956) 566-234")*/);
+    private ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList(
+            /*new infoView.studentRowData("123456", "Kenneth", "Segarra", "kenneth.segarra01@utrgv.edu", "(833) 234-1234"),
+            new infoView.studentRowData("54643", "Elyvic", "Cabais", "elyvic.cabais01@utrgv.edu", "(325) 213-4573")*/);
 
-    public  infoView() {
+    public  infoView() throws SQLException {
        
         HBox hb = new HBox();
         
@@ -219,6 +222,10 @@ public class infoView extends BorderPane {
         
         
                 //-------------------------Tutor Table--------------------------------------
+        
+                
+       tutortableData= tm.populateTable();
+                
         tutorTable.setItems(tutortableData);
         tutorTable.setTranslateX(5);
         tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
@@ -234,7 +241,7 @@ public class infoView extends BorderPane {
         typePerson2.getItems().addAll("Student", "Tutor");
         typePerson2.setValue("Student");
         
-          
+        
        
         TableColumn tutoridCol = new TableColumn("ID");
         tutoridCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -264,7 +271,9 @@ public class infoView extends BorderPane {
         tutorTable.setMinWidth(687);
         
                 //------------------------Table Student----------------------------------------------
-       
+
+                
+        studenttableData = sm.populateTable();
         studentTable.setItems(studenttableData);
         
         studentTable.setMaxSize(650, 250);
@@ -419,20 +428,6 @@ public class infoView extends BorderPane {
     }
     
     
-    public VBox addType(){
-       
-        VBox layout = new VBox();
-        layout.setPadding(new Insets(5,5,5,5));
-        layout.setAlignment(Pos.CENTER);
-        layout.setSpacing(5);
-        
-        typebox.setSpacing(5);
-        typebox.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(typebox,typePerson2, addType);
-        
-        return layout;
-    }
-    
     public VBox addTutor() {
         VBox layout = new VBox();
 
@@ -540,7 +535,7 @@ public class infoView extends BorderPane {
         private SimpleStringProperty email;
         private SimpleStringProperty id;
 
-        private tutorRowData(String id, String fName, String lName, String email, String subject, String phone) {
+        public tutorRowData(String id, String fName, String lName, String email, String subject, String phone) {
             this.id = new SimpleStringProperty(id);
             this.fName = new SimpleStringProperty(fName);
             this.lName = new SimpleStringProperty(lName);
@@ -644,7 +639,7 @@ public static class studentRowData {
         private SimpleStringProperty email;
         private SimpleStringProperty id;
 
-        private studentRowData(String id, String fName, String lName, String email, String phone) {
+        public studentRowData(String id, String fName, String lName, String email, String phone) {
             this.id = new SimpleStringProperty(id);
             this.fName = new SimpleStringProperty(fName);
             this.lName = new SimpleStringProperty(lName);
@@ -742,6 +737,9 @@ public static class studentRowData {
         int idNo = currentTutor.getID();
         String id = String.valueOf(idNo);
         String phone = currentTutor.getPhone();
+        
+        System.out.println(id+" "+fName+" "+lName+" "+email+" "+phone+" "+subject);
+        
         infoView.tutorRowData tutorRowData = new infoView.tutorRowData(id, fName, lName,email, subject, phone);
         tutortableData.add(tutorRowData);
         tutorTable.setItems(tutortableData);
@@ -758,122 +756,7 @@ public static class studentRowData {
         studenttableData.add(studentRowData);
         studentTable.setItems(studenttableData);
     }
-/*     
- private class ButtonCell extends TableCell<Disposer.Record, Boolean> {
 
-        final Button submit = new Button("Submit");
-        HBox cellBox = new HBox();
-
-        ButtonCell() {
-
-            cellBox.getChildren().addAll(submit);
-
-            //Action when the button is pressed
-            submit.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    // get Selected Item
-                   /*infoView.RowData currentPerson = (infoView.RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
-                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                    Date date = new Date();
-                    String idNo = currentPerson.getId();
-                    String firstName = currentPerson.getFirstName();
-                    String lastName = currentPerson.getLastName();
-                    String email = currentPerson.getEmail();
-                    String subject = currentPerson.getSubject();
-                    String time = dateFormat.format(date);
-             //       Data currentSession = new Data(idNo, lastName, firstName, email, time, subject, startTime);
-                /*    try {
-                        tm.WriteDatabase(currentSession);//remove selected item from the tutorTable list
-                        tutortableData.remove(currentPerson);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
-   /*             }
-            });
-        }
-
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if (!empty) {
-                setGraphic(cellBox);
-            } else {
-                setGraphic(null);
-            }
-        }
-
-    }
- */
-  /*public void ClearStudentFields() {
-        getIdTF().clear();
-        getfNameTF().clear();
-        getlNameTF().clear();
-        getPhoneTF().clear();
-        getEmailTF().clear();
-        getSubjectTF().clear();
-    }
-      
-     /* public void updateTable(Data currentData) {
-        String fName = currentData.getFirstName();
-        String lName = currentData.getLastName();
-        String subject = currentData.getTutor();
-        String email = currentData.getStartTime();
-        String id = currentData.getIdNo();
-        String phone = currentData.getSubject();
-        infoView.tutorRowData tutorRowData = new infoView.tutorRowData(fName, lName, subject, phone, id, email);
-        tutortableData.add(tutorRowData);
-        tutorTable.setItems(tutortableData);
-    }*/
-     
- /*private class ButtonCellstudent extends TableCell<Disposer.Record, Boolean> {
-
-        final Button submit = new Button("Submit");
-        HBox cellBox = new HBox();
-
-        ButtonCellstudent() {
-
-            cellBox.getChildren().addAll(submit);
-
-            //Action when the button is pressed
-            submit.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    // get Selected Item
-                   /*infoView.RowData currentPerson = (infoView.RowData) ButtonCellstudent.this.getTableView().getItems().get(ButtonCellstudent.this.getIndex());
-                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                    Date date = new Date();
-                    String idNo = currentPerson.getId();
-                    String firstName = currentPerson.getFirstName();
-                    String lastName = currentPerson.getLastName();
-                    String email = currentPerson.getEmail();
-                    String subject = currentPerson.getSubject();
-                    String time = dateFormat.format(date);
-             //       Data currentSession = new Data(idNo, lastName, firstName, email, time, subject, startTime);
-                /*    try {
-                        tm.WriteDatabase(currentSession);//remove selected item from the tutorTable list
-                        tutortableData.remove(currentPerson);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
-  /*              }
-            });
-        }
-
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if (!empty) {
-                setGraphic(cellBox);
-            } else {
-                setGraphic(null);
-            }
-        }
-
-    }
-*/
 
       /**
      * @return the search
@@ -1322,6 +1205,20 @@ public static class studentRowData {
      */
     public void setSearchTF(TextField searchTF) {
         this.searchTF = searchTF;
+    }
+
+    /**
+     * @return the studenttableData
+     */
+    public ObservableList<infoView.studentRowData> getStudenttableData() {
+        return studenttableData;
+    }
+
+    /**
+     * @param studenttableData the studenttableData to set
+     */
+    public void setStudenttableData(ObservableList<infoView.studentRowData> studenttableData) {
+        this.studenttableData = studenttableData;
     }
     
 }
