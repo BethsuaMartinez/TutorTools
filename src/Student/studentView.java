@@ -363,34 +363,27 @@ public class studentView extends BorderPane {
             cellBox.getChildren().addAll(submit);
 
             //Action when the button is pressed
-            submit.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    // get Selected Item
-                    RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
-
-                    DateFormat format1 = new SimpleDateFormat("HH:mm");
-                    DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
-                    Date et = new Date();
-                    Date dt = new Date();
-
-                    String idNo = currentPerson.getId();
-                    String firstName = currentPerson.getFirstName();
-                    String lastName = currentPerson.getLastName();
-                    String tutor = currentPerson.getTutor();
-                    String startTime = currentPerson.getTimeIn();
-                    String subject = currentPerson.getSubject();
-                    String endTime = format1.format(et);
-                    String date = format2.format(dt);
-
-                    Session currentSession = new Session(idNo, lastName, firstName, tutor, endTime, subject, startTime, date);
-
-                    try {
-                        ssm.insertSession(currentSession);//remove selected item from the sessiontable list
-                        sessiontableData.remove(currentPerson);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            submit.setOnAction((ActionEvent t) -> {
+                // get Selected Item
+                RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
+                DateFormat format1 = new SimpleDateFormat("HH:mm");
+                DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+                Date et = new Date();
+                Date dt = new Date();
+                String idNo = currentPerson.getId();
+                String firstName = currentPerson.getFirstName();
+                String lastName = currentPerson.getLastName();
+                String tutor1 = currentPerson.getTutor();
+                String startTime = currentPerson.getTimeIn();
+                String subject = currentPerson.getSubject();
+                String endTime = format1.format(et);
+                String date = format2.format(dt);
+                Session currentSession = new Session(idNo, lastName, firstName, tutor1, endTime, subject, startTime, date);
+                try {
+                    ssm.insertSession(currentSession);//remove selected item from the sessiontable list
+                    sessiontableData.remove(currentPerson);
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }

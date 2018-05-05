@@ -189,9 +189,9 @@ public class infoView extends BorderPane {
         //---------set prompts
         
     
-        idTF.setPromptText("Enter ID number (integer)");
-        fNameTF.setPromptText("Enter First Name");
-        lNameTF.setPromptText("Enter Last Name");
+        idTF.setPromptText("ID number");
+        fNameTF.setPromptText("First Name");
+        lNameTF.setPromptText("Last Name");
         emailTF.setPromptText("Ex. student@example.edu");
         phoneTF.setPromptText("(956)999-9999");
         subjectTF.setPromptText("Ex. math");
@@ -225,7 +225,7 @@ public class infoView extends BorderPane {
         tutorTable.setItems(tutortableData);
         tutorTable.setTranslateX(5);
         tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
-        tutorTable.setMaxWidth(800);
+        tutorTable.setMaxWidth(1000);
         
         tutorTable.setMaxSize(650, 250);
         tutorTable.setTranslateX(5);
@@ -748,6 +748,7 @@ public static class studentRowData {
         int idNo = currentStudent.getIdStudent();
         String id = String.valueOf(idNo);
         String phone = currentStudent.getPhone();
+        
         infoView.studentRowData studentRowData = new infoView.studentRowData(id, fName, lName, email, phone);
         studenttableData.add(studentRowData);
         studentTable.setItems(studenttableData);

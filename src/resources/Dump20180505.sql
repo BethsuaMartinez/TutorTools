@@ -38,7 +38,7 @@ CREATE TABLE `Students` (
 
 LOCK TABLES `Students` WRITE;
 /*!40000 ALTER TABLE `Students` DISABLE KEYS */;
-INSERT INTO `Students` VALUES (2345,'luis','selvera','',''),(4546,'Elyvic','Cabais','elyvic.cabais@aol.com','956-889-988'),(12345,'luis','selvera','luis.selvera@aol.com','512-345-6789'),(9756997,'Osiel','Juarez','osiel.juarez@aol.com','956-453-354'),(20327396,'Carlos','Quinto','quinto@gmail.com','');
+INSERT INTO `Students` VALUES (3333,'andre','gignac','andre@gmail.com','512'),(4546,'Elyvic','Cabais','elyvic.cabais@aol.com','956-889-988'),(7656,'John','Wilson','john@gmail.com','(454) 342-4356'),(12345,'luis','selvera','luis.selvera@aol.com','512-345-6789'),(43567,'pablo','pablo','pablo1@aol.com','9568885566'),(88888,'luis','selvera','gmail','512'),(98097,'monica','revuelta','monica.revuelta@utrgv.edu','956-882-0000'),(98098,'kjklj','lkj','lkj','lkj'),(99999,'luis','selvera','luiselvera@aol.com','809809'),(210048,'monica','revuelta','monica.revuelta@utrgv.edu',''),(909809,'luis','selvera','yahoo','9897'),(9756997,'Osiel','Juarez','osiel.juarez@aol.com','956-453-354'),(9809890,'luis','selvera','gmail.com','9809'),(20327396,'Carlos','Quinto','quinto@gmail.com','');
 /*!40000 ALTER TABLE `Students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,8 +87,9 @@ CREATE TABLE `TutoringSessions` (
   `startTime` varchar(45) DEFAULT NULL,
   `endTime` varchar(45) DEFAULT NULL,
   `date` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +98,7 @@ CREATE TABLE `TutoringSessions` (
 
 LOCK TABLES `TutoringSessions` WRITE;
 /*!40000 ALTER TABLE `TutoringSessions` DISABLE KEYS */;
-INSERT INTO `TutoringSessions` VALUES (1,9809,'selvera','luis','elyvic','english','13:11','14:15','04/25/2018'),(2,23432,'Jacob','Smith','Luis','english','17:12','12:00','04/25/2018'),(3,9756997,'Osiel','Juarez','Bethsua','math','14:00','16:00','04/25/2018'),(8,4546,'Elyvic','Cabais','carla','english','19:12','19:13','04/25/2018');
+INSERT INTO `TutoringSessions` VALUES (1,9809,'selvera','luis','elyvic','english','13:11','14:15','04/25/2018','0'),(2,23432,'Jacob','Smith','Luis','english','17:12','12:00','04/25/2018','0'),(3,9756997,'Osiel','Juarez','Bethsua','math','14:00','16:00','04/25/2018','1'),(8,4546,'Elyvic','Cabais','carla','english','19:12','19:13','04/25/2018','1'),(9,4546,'Elyvic','Cabais','luis','math','04:14','04:14','04/26/2018','1'),(10,4546,'Elyvic','Cabais','luis','math','04:26','04:26','04/26/2018','0'),(11,4546,'Elyvic','Cabais','luis','math','16:33','16:33','04/28/2018','0'),(12,4546,'Elyvic','Cabais','luis','math','19:58','19:58','04/28/2018','0'),(13,99999,'luis','selvera','luis','math','19:58','19:58','04/28/2018','1');
 /*!40000 ALTER TABLE `TutoringSessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +127,7 @@ CREATE TABLE `Tutors` (
 
 LOCK TABLES `Tutors` WRITE;
 /*!40000 ALTER TABLE `Tutors` DISABLE KEYS */;
-INSERT INTO `Tutors` VALUES (0,NULL,NULL,'abc',NULL,'123',NULL),(98120,'Bethsua','Martinez','bethsua.martinez@aol.com','956-659-956','tutor2','Math'),(108115,'Luis','Selvera','luis.selvera@aol.com','512-215-512','tutor1','Computer Science');
+INSERT INTO `Tutors` VALUES (8888,'jesus','duenas','jesus@gmail.com','956','','biology'),(9809,'kljlk','jlk','jlkj','kl','','jlk'),(98120,'Bethsua','Martinez','bethsua.martinez@aol.com','956-659-956','tutor2','Math'),(108115,'Luis','Selvera','luis.selvera@aol.com','512-215-512','tutor1','Computer Science'),(9809809,'jlkjlk','jlk','jlk','jlkj','','lkj'),(90809809,'klj','lkjlk','jkl','jlkjklj','','lkj');
 /*!40000 ALTER TABLE `Tutors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -139,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-26  3:19:26
+-- Dump completed on 2018-05-05 16:01:59

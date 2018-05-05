@@ -28,7 +28,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -100,7 +99,7 @@ public class infoController {
             window.show();
         });
 
-        tiv.getAdd().setOnAction((ActionEvent event) -> {
+/*        tiv.getAdd().setOnAction((ActionEvent event) -> {
             Stage window = new Stage();
             window.initModality(Modality.APPLICATION_MODAL);
             
@@ -114,7 +113,7 @@ public class infoController {
 
             window.setScene(scene);
             window.show();
-        });
+        });*/
 
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
 
@@ -163,9 +162,6 @@ public class infoController {
             } catch (SQLException ex) {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            tiv.updateStudentTable(currentStudent);
-
-
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.close();
                 tiv.ClearFields();
@@ -233,8 +229,6 @@ public class infoController {
         boolean confID = true;
         boolean confFN = true;
         boolean confLN = true;
-        boolean confPhone = true;
-        boolean confE = true;
         boolean confS = true;
         EmailValidator emailValidator = EmailValidator.getInstance();
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
@@ -252,13 +246,27 @@ public class infoController {
         if(tiv.getSubjectTF().getText().isEmpty())
             confS = false;
         
-        if(tiv.getPhoneTF().getText().isEmpty() || (!(m.find() && m.group().equals(tiv.getPhoneTF().getText()))))
-            confPhone = false;
+        if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Phone Format");
+            alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            alert.showAndWait();
+            
+            return false;
+        }
         
-        if(tiv.getEmailTF().getText().isEmpty() || (!(emailValidator.isValid(tiv.getEmailTF().getText()))))
-            confE = false;
-
-        if(confID == false || confFN == false || confLN == false || confPhone == false || confE == false || confS == false)
+        if(!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Email Format");
+            alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            alert.showAndWait();
+            
+            return false;
+        }
+            
+        if(confID == false || confFN == false || confLN == false || confS == false)
         {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
@@ -275,8 +283,7 @@ public class infoController {
         boolean confID = true;
         boolean confFN = true;
         boolean confLN = true;
-        boolean confPhone = true;
-        boolean confE = true;
+
         EmailValidator emailValidator = EmailValidator.getInstance();
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
@@ -290,13 +297,27 @@ public class infoController {
         if(tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+"))
             confLN = false;
         
-        if(tiv.getPhoneTF().getText().isEmpty() || (!(m.find() && m.group().equals(tiv.getPhoneTF().getText()))))
-            confPhone = false;
+       if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Phone Format");
+            alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            alert.showAndWait();
+            
+            return false;
+        }
         
-        if(tiv.getEmailTF().getText().isEmpty() || (!(emailValidator.isValid(tiv.getEmailTF().getText()))))
-            confE = false;
+        if(!(emailValidator.isValid(tiv.getEmailTF().getText()))&& !(tiv.getEmailTF().getText().isEmpty())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Email Format");
+            alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            alert.showAndWait();
+            
+            return false;
+        }
 
-        if(confID == false || confFN == false || confLN == false || confPhone == false || confE == false)
+        if(confID == false || confFN == false || confLN == false)
         {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
