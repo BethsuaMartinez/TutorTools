@@ -66,6 +66,7 @@ public class infoController {
                 loginController logc = new loginController(v, m);
                 Scene scene2 = new Scene(v, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
                 window.setTitle("Sign In");
                 window.setScene(scene2);
                 window.show();
@@ -82,6 +83,7 @@ public class infoController {
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
                 window.setTitle("Student List");
                 window.setScene(scene3);
                 window.show();
@@ -95,6 +97,7 @@ public class infoController {
             activityController ac = new activityController(alv1);
             Scene scene3 = new Scene(alv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setTitle("Activity Log");
             window.setScene(scene3);
             window.show();
@@ -112,7 +115,9 @@ public class infoController {
             } else {
                 scene = new Scene(tiv.addStudent(), 350, 250);
             }
-
+            
+            window.setTitle("Add");
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setScene(scene);
             window.show();
         });
@@ -183,6 +188,7 @@ public class infoController {
 
             Scene newIdScene = new Scene(layout, 500, 300);
             signInStage.setTitle("E-Mail");
+            signInStage.getIcons().add(new Image("/resources/Logo.png"));
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
@@ -198,6 +204,7 @@ public class infoController {
         tiv.getModify().setOnAction((ActionEvent event) -> {
             Stage modifyStage = new Stage();
             modifyStage.initModality(Modality.APPLICATION_MODAL);
+            modifyStage.getIcons().add(new Image("/resources/Logo.png"));
 
             Scene modifyScene;
 

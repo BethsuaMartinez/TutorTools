@@ -407,6 +407,8 @@ public class infoView extends BorderPane {
             alert.setTitle("Warning");
             alert.setHeaderText("Not Selected Student Found");
             alert.setContentText("You must select a student to modify");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }
@@ -420,6 +422,8 @@ public class infoView extends BorderPane {
             alert.setTitle("Warning");
             alert.setHeaderText("Not Selected Tutor Found");
             alert.setContentText("You must select a tutor to modify");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }

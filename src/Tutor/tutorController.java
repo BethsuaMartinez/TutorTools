@@ -72,8 +72,7 @@ public class tutorController {
                
               //  try {
                   //  tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    window.getIcons().add(new Image("/resources/Logo.png"));
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();                    
                     window.close();
                     tv.clearFields();
                // } catch (SQLException ex) {
