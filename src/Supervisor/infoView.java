@@ -60,6 +60,8 @@ public class infoView extends BorderPane {
     private Button signOut = new Button("Log Out");
     private Button newTutorSubmitBtn = new Button("Submit");
     private Button studentSubmitBtn = new Button("Submit");
+    private Button modifyStudent = new Button("Modify");
+    private Button modifyTutor = new Button("Modify");
     
     //-------------Table--------------------------------
     private TableView tutorTable = new TableView();
@@ -144,12 +146,9 @@ public class infoView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
         
-
-
         tutor.setAlignment(Pos.CENTER_LEFT);
         tutor.setPadding(new Insets(5,0,5,10));
        
-        
         this.setTop(hb);
         studentList();
         
@@ -169,6 +168,8 @@ public class infoView extends BorderPane {
         subjectTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
         searchTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        passwordTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
         
         email.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
@@ -195,6 +196,7 @@ public class infoView extends BorderPane {
         emailTF.setPromptText("Ex. student@example.edu");
         phoneTF.setPromptText("(956)999-9999");
         subjectTF.setPromptText("Ex. math");
+        passwordTF.setPromptText("Password");
         searchTF.setPromptText("Ex. ID, First Name, Last Name");
         
         
@@ -364,7 +366,7 @@ public class infoView extends BorderPane {
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, modifyTutor);
 
     
         return layout;
@@ -390,7 +392,7 @@ public class infoView extends BorderPane {
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, modifyStudent);
         
     
         return layout;
@@ -435,7 +437,7 @@ public class infoView extends BorderPane {
         
         HBox h = new HBox(v, v1);
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
     }
@@ -462,24 +464,24 @@ public class infoView extends BorderPane {
     }
     
     
-    public void deleteFromTable(){
-        
-   
+    public void deleteFromTable() {
+
         if ("Tutor".equals(getTypePerson())) {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Please Confirm Delete Action");
-            alert.setContentText("Are you sure you want to delete this tutor?");
+            if (confirmTutorModify()) {
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Please Confirm Delete Action");
+                alert.setContentText("Are you sure you want to delete this tutor?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
-                tutorTable.getItems().remove(selectedItem);
-            } 
-        } 
-        
-        else {
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
 
+                    infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
+                    tutorTable.getItems().remove(selectedItem);
+                }
+
+            }
+        } else if (confirmStudentModify()) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Please Confirm Delete Action");
@@ -489,7 +491,7 @@ public class infoView extends BorderPane {
             if (result.get() == ButtonType.OK) {
                 infoView.studentRowData selectedItem = (infoView.studentRowData) studentTable.getSelectionModel().getSelectedItem();
                 studentTable.getItems().remove(selectedItem);
-            } 
+            }
         }
     }
 
@@ -722,6 +724,7 @@ public static class studentRowData {
         getPhoneTF().clear();
         getEmailTF().clear();
         getSubjectTF().clear();
+        getPasswordTF().clear();
 
     }
       
@@ -1216,6 +1219,34 @@ public static class studentRowData {
      */
     public void setStudenttableData(ObservableList<infoView.studentRowData> studenttableData) {
         this.studenttableData = studenttableData;
+    }
+
+    /**
+     * @return the modifyStudent
+     */
+    public Button getModifyStudent() {
+        return modifyStudent;
+    }
+
+    /**
+     * @param modifyStudent the modifyStudent to set
+     */
+    public void setModifyStudent(Button modifyStudent) {
+        this.modifyStudent = modifyStudent;
+    }
+
+    /**
+     * @return the modifyTutor
+     */
+    public Button getModifyTutor() {
+        return modifyTutor;
+    }
+
+    /**
+     * @param modifyTutor the modifyTutor to set
+     */
+    public void setModifyTutor(Button modifyTutor) {
+        this.modifyTutor = modifyTutor;
     }
     
 }

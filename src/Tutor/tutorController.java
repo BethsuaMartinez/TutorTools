@@ -19,6 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -40,6 +42,50 @@ public class tutorController {
 
     private void attachHandlers() {
 
+        tv.getModify().setOnAction((ActionEvent event) -> {
+            Stage modifyStage = new Stage();
+            modifyStage.initModality(Modality.APPLICATION_MODAL);
+            Scene modifyScene;
+            
+            if(tv.confirmStudentModify()==true){
+                modifyScene = new Scene(tv.modifyView(), 350, 300);
+                modifyStage.setTitle("Modify");
+                modifyStage.setScene(modifyScene);
+                modifyStage.show();
+            }
+
+        });
+        
+        tv.getSubmitModify().setOnAction((ActionEvent event) ->{
+        
+            if(validateFields()==true){
+                String id = tv.getStIDTF().getText();
+                String fname = tv.getfNameTF().getText();
+                String lname = tv.getlNameTF().getText();
+                String tutor = tv.getTutorNameTF().getText();
+                String subject = tv.getSubjectTF().getText();
+                int idNo = Integer.parseInt(id);
+                
+                tutoringSession current = new tutoringSession(idNo, fname, lname, tutor, subject); 
+               
+              //  try {
+                  //  tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.close();
+                    tv.clearFields();
+               // } catch (SQLException ex) {
+               //     Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
+               // }
+                
+               
+            }
+        
+        });
+        
+        tv.getDelete().setOnAction((ActionEvent event) -> {
+            tv.deleteFromTable();
+        });
+       
         tv.getSignOut().setOnAction((ActionEvent event) -> {
             loginView v = new loginView();
             LoginModel m = new LoginModel();
@@ -69,5 +115,42 @@ public class tutorController {
             }
         });
 
+    }
+    
+    boolean validateFields(){
+        boolean confID = true;
+        boolean confFName = true;
+        boolean confLName = true;
+        boolean confTutor = true;
+        boolean confSubj = true;
+        
+   
+        if (tv.getStIDTF().getText().isEmpty() || !(tv.getStIDTF().getText().matches("\\d+"))) 
+            confID = false;
+        
+
+        if (tv.getfNameTF().getText().isEmpty() || tv.getfNameTF().getText().contains("[0-9]+")) 
+            confFName = false;
+   
+
+        if (tv.getlNameTF().getText().isEmpty() || tv.getlNameTF().getText().contains("[0-9]+")) 
+            confLName = false;
+        
+        if (tv.getTutorNameTF().getText().isEmpty() || tv.getTutorNameTF().getText().contains("[0-9]+")) 
+            confLName = false;
+        
+
+        if (tv.getSubjectTF().getText().isEmpty() || tv.getSubjectTF().getText().contains("[0-9]+")) 
+            confSubj = false;
+        
+        if(confID == false || confFName == false || confLName == false || confTutor == false || confSubj == false){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Required Fields/ Wrong Format");
+            alert.setContentText("Invalid input, check information before submit it");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 }

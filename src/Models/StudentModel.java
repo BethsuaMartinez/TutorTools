@@ -144,7 +144,7 @@ public class StudentModel {
 
             int tutorid = Integer.parseInt(idNo);
 
-            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=? where id =? ";
+            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=? where idStudent =? ";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
 
             myStmt.setString(1, fname);
