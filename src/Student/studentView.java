@@ -10,9 +10,6 @@ import Models.SessionModel;
 import Models.StudentModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,7 +27,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
@@ -252,13 +248,10 @@ public class studentView extends BorderPane {
         phoneNoVbox.setSpacing(3);
 
         BorderPane.setMargin(sessiontable, new Insets(10, 10, 10, 10));
-        //    BorderPane.setMargin(vbox10, new Insets(10, 10, 10, 10));
-
-        //   buttonHbox.setAlignment(Pos.CENTER);
+        
         this.setRight(sessiontable);
         this.setLeft(vbox10);
         this.setTop(hb);
-        //  this.setBottom(buttonHbox);
 
     }
     
@@ -406,26 +399,21 @@ public class studentView extends BorderPane {
         ButtonCell() {
 
             cellBox.getChildren().addAll(submit);
-
-            //Action when the button is pressed
             submit.setOnAction((ActionEvent t) -> {
-                // get Selected Item
                 RowData currentPerson = (RowData) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
-                DateFormat format1 = new SimpleDateFormat("HH:mm");
-                DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
-                Date et = new Date();
-                Date dt = new Date();
                 String idNo = currentPerson.getId();
                 String firstName = currentPerson.getFirstName();
                 String lastName = currentPerson.getLastName();
-                String tutor1 = currentPerson.getTutor();
+                String tutor = currentPerson.getTutor();
                 String startTime = currentPerson.getTimeIn();
                 String subject = currentPerson.getSubject();
-                String endTime = format1.format(et);
-                String date = format2.format(dt);
-                Session currentSession = new Session(idNo, lastName, firstName, tutor1, endTime, subject, startTime, date);
-                try {
-                    ssm.insertSession(currentSession);//remove selected item from the sessiontable list
+                
+                System.out.println(startTime);
+                
+                Session currentSession = new Session(idNo, lastName, firstName, tutor, startTime, subject, "", "");
+ 
+                try {  
+                    ssm.endSession(currentSession);
                     sessiontableData.remove(currentPerson);
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);

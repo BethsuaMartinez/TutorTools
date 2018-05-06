@@ -16,7 +16,6 @@ import Supervisor.infoController;
 
 import Tutor.tutorController;
 import Tutor.tutorView;
-
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -87,22 +86,21 @@ public class studentController {
             signInStage.setTitle("Sign-In");
             signInStage.getIcons().add(new Image("/resources/Logo.png"));
             signInStage.setScene(newIdScene);
-
             signInStage.show();
 
         });
-        //Submit to table
+        
         gui.getSubmitSs().setOnAction((ActionEvent event) -> {
             Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            Date date = new Date();
 
             String idNo = gui.getIdNoTF().getText();
             String tutor = gui.getTutors();
             String subject = gui.getSubjects();
+            
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            Date date = new Date();
             String startTime = dateFormat.format(date);
 
-            System.out.println(idNo + tutor + subject + startTime);
 
             int id = Integer.parseInt(idNo);
 
@@ -111,9 +109,14 @@ public class studentController {
                 student = model.getStudent(id);
                 String fname = student.getFname();
                 String lname = student.getLname();
-
+                
                 Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
+                
                 gui.updateTable(currentSession);
+                ssm.insertSession(currentSession);
+                
+                signInStage.close();
+                gui.ClearFields();
 
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -252,6 +255,7 @@ public class studentController {
         gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
+
                 //if ("".equals(gui.getIdNoTF().getText())) {
                 //   gui.wrongPass();
                 //}
@@ -275,6 +279,7 @@ public class studentController {
                     catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
                 }
             }
         });
@@ -315,7 +320,7 @@ public class studentController {
             if (result.isPresent()) {
                 pass = result.get();
                 
-                if(pass == session.getPassword()){
+                
                     
                     loginView v = new loginView();
                     LoginModel m = new LoginModel();
@@ -325,7 +330,7 @@ public class studentController {
                     window.setTitle("Sign In");
                     window.setScene(scene2);
                     window.show();
-            }
+            
             }
             
             
@@ -352,6 +357,41 @@ public class studentController {
             window.setTitle("Sign In");
             window.setScene(scene2);
             window.show();
+        });
+
+        gui.getTutor().setOnAction((ActionEvent event) -> {
+            tutorView tv;
+            Scene scene1 = gui.getTutor().getScene();
+            try {
+                tv = new tutorView();
+                tutorController tc = new tutorController(tv);
+              
+                Scene scene3 = new Scene(tv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Tutor Information");
+                window.setScene(scene3);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        gui.getSupervisor().setOnAction((ActionEvent event) -> {
+            infoView tiv = null;
+            try {
+                tiv = new infoView();
+                infoController sc = new infoController(tiv);
+
+                Scene scene2 = new Scene(tiv, 1000, 500);
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Supervisor");
+                window.setScene(scene2);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
