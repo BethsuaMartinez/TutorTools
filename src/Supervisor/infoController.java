@@ -187,10 +187,28 @@ public class infoController {
         });
 
         tiv.getSearch().setOnAction((ActionEvent event) -> {
-            if ("Tutor".equals(tiv.getTypePerson())) {
-                tiv.tutorList();
-            } else {
-                tiv.studentList();
+            try {
+                String search=tiv.getSearchTF().getText();
+                String idNo = search;
+                String fname = search;
+                String lname = search;
+                String subject = search;
+                
+                if ("Tutor".equals(tiv.getTypePerson())) {
+                    if (search.isEmpty())
+                        tiv.updateTutorTable();
+                    else 
+                        tiv.searchTutor(idNo, fname, lname, subject);
+                } 
+                else {
+                    if (search.isEmpty()) //"".equals(search)
+                        tiv.updateStudentTable();
+                    else {
+                        tiv.searchStudent(idNo, fname, lname);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 
@@ -218,7 +236,12 @@ public class infoController {
         });
 
         tiv.getDelete().setOnAction((ActionEvent event) -> {
-            tiv.deleteFromTable();
+            try {
+                tiv.deleteFromTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
 
         tiv.getModifyTutor().setOnAction((ActionEvent event) -> {
@@ -235,6 +258,7 @@ public class infoController {
                 Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
                 try {
                     tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
+                    tiv.updateTutorTable();
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.close();
                     tiv.ClearFields();
@@ -246,7 +270,6 @@ public class infoController {
         });
 
         tiv.getModifyStudent().setOnAction((ActionEvent event) -> {
-
             if (validateStudentFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -259,7 +282,7 @@ public class infoController {
                 Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
                 try {
                     stm.updateStudent(idNo, firstName, lastName, email, phoneNo);
-
+                    tiv.updateStudentTable();
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.close();
                     tiv.ClearFields();
@@ -267,7 +290,6 @@ public class infoController {
                     Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         });
 
     }

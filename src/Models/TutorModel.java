@@ -24,66 +24,6 @@ public class TutorModel {
     ResultSet myRs = null;
     ResultSet myRs2 = null;
 
-    public List<Tutor> getAllTutor() throws Exception {
-        List<Tutor> list = new ArrayList<>();
-        ResultSet rs = null;
-
-        try {
-
-            rs = conn.query("select * from tutor");
-
-            while (rs.next()) {
-                // Tutor tempTutor = convertRowToTutor(rs);
-                //  list.add(tempTutor);
-            }
-            return list;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-    }
-
-    public List<Tutor> searchTutor(String lastName) throws Exception {
-        List<Tutor> list = new ArrayList<>();
-
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            lastName += "%";
-            stmt = conn.preparedStatement("select * from tutor where lname ?");
-
-            stmt.setString(1, lastName);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                //  Tutor tempTutor = convertRowTutor(rs);
-                //     list.add(tempTutor);
-            }
-
-            return list;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-    }
-
-    private Tutor convertRowToTutor(ResultSet rs) throws SQLException {
-        int id = rs.getInt("idTutors");
-        String lastName = rs.getString("lname");
-        String firstName = rs.getString("fname");
-        String email = rs.getString("email");
-        String phone = rs.getString("phone");
-        String subject = rs.getString("subject");
-        
-        Tutor tempTutor = new Tutor(id, lastName, firstName, email, phone, subject);
-
-        return tempTutor;
-
-    }
-
     public void insertTutor(String idNo, String fname, String lname, 
             String email, String phone, String password, String subject) throws SQLException {
         try {
@@ -143,6 +83,54 @@ public class TutorModel {
             }
         }
     }
+
+        public ObservableList<infoView.tutorRowData> searchTutor(String idNo, String fname, String lname, String subject) throws SQLException{
+        try {
+            
+            int id;
+            
+            ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList();
+            String sql="Select * from TutorTools.Tutors where idTutor =? OR fname =? OR lname=? OR subject=? ";
+            
+            PreparedStatement myStmt = conn.preparedStatement(sql);
+
+            boolean isNumeric = idNo.chars().allMatch( Character::isDigit );
+            if(isNumeric){
+                id = Integer.parseInt(idNo);
+                myStmt.setInt(1, id);}
+            else
+                myStmt.setInt(1,0);
+            
+            myStmt.setString(2, fname);
+            myStmt.setString(3, lname);
+            myStmt.setString(4, subject);
+            
+            String email, phone;
+            
+            myRs = myStmt.executeQuery();
+            
+            while (myRs.next()) {
+                id = myRs.getInt("idTutor");
+                fname = myRs.getString("fname");
+                lname = myRs.getString("lname");
+                email = myRs.getString("email");
+                phone = myRs.getString("phone");
+                subject = myRs.getString("subject");
+                
+                idNo=String.valueOf(id);
+                
+                Tutor currentTutor= new Tutor(id, fname, lname, email, phone, subject);
+                infoView.tutorRowData tutorRowData = new infoView.tutorRowData(idNo, fname, lname,email, subject, phone);
+                tutortableData.add(tutorRowData);
+            }
+            return tutortableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+
     
     public void updateTutor(String idNo, String fname, String lname, String email, String phone, String password, String subject) throws SQLException {
         try {

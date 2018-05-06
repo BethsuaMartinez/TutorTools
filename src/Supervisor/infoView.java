@@ -22,7 +22,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -311,8 +310,28 @@ public class infoView extends BorderPane {
         hbox.setAlignment(Pos.CENTER);
     }
    
+    public void updateTutorTable() throws SQLException{
+        tutortableData = tm.populateTable();
+        tutorTable.setItems(tutortableData);
+        
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(tutorTable);
+        HBox hb4 = new HBox(add, delete, modify);
+        hb4.setPadding(new Insets(10));
+        hb4.setSpacing(20);
+        hb4.setAlignment(Pos.BOTTOM_CENTER);
+        vb2.getChildren().clear();
+        vb2.getChildren().addAll(tutor,hbox, tableBox, hb4);
+        vb2.setSpacing(7);
+        
+        this.setCenter(vb2);
+    }
     
-    public void tutorList(){
+    public void updateStudentTable() throws SQLException{
+        studenttableData = sm.populateTable();
+        studentTable.setItems(studenttableData);
+        
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(tutorTable);
@@ -324,10 +343,62 @@ public class infoView extends BorderPane {
         vb.getChildren().addAll(tutor,hbox,tableBox,hb4);
         vb.setSpacing(7);
         this.setCenter(vb);
-        
     }
     
-    public void studentList(){
+    public void searchTutor(String idNo, String fname, String lname, String subject) throws SQLException{
+        
+        tutortableData = tm.searchTutor(idNo, fname, lname, subject);
+        tutorTable.setItems(tutortableData);
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(tutorTable);
+        HBox hb4 = new HBox(add, delete, modify);
+        hb4.setPadding(new Insets(10));
+        hb4.setSpacing(20);
+        hb4.setAlignment(Pos.BOTTOM_CENTER);
+        vb2.getChildren().clear();
+        vb2.getChildren().addAll(tutor,hbox, tableBox, hb4);
+        vb2.setSpacing(7);
+        
+        this.setCenter(vb2);
+    }
+    
+    public void searchStudent(String idNo, String fname, String lname) throws SQLException{
+        
+        studenttableData = sm.searchStudent(idNo, fname, lname);
+        
+        studentTable.setItems(studenttableData);
+        
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(studentTable);
+        HBox hb4 = new HBox(add, delete, modify);
+        hb4.setPadding(new Insets(10));
+        hb4.setSpacing(20);
+        hb4.setAlignment(Pos.BOTTOM_CENTER);
+        vb.getChildren().clear();
+        vb.getChildren().addAll(student,hbox,tableBox,hb4);
+        vb.setSpacing(7);
+        this.setCenter(vb);
+    }
+    
+    
+    public void tutorList() throws SQLException{
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(tutorTable);
+        HBox hb4 = new HBox(add, delete, modify);
+        hb4.setPadding(new Insets(10));
+        hb4.setSpacing(20);
+        hb4.setAlignment(Pos.BOTTOM_CENTER);
+        vb.getChildren().clear();
+        vb.getChildren().addAll(tutor,hbox,tableBox,hb4);
+        vb.setSpacing(7);
+        this.setCenter(vb);    
+    }
+    
+    public void studentList() throws SQLException{
+
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(studentTable);
@@ -461,9 +532,8 @@ public class infoView extends BorderPane {
     }
     
     
-    public void deleteFromTable(){
+    public void deleteFromTable() throws SQLException{
         
-   
         if ("Tutor".equals(getTypePerson())) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
@@ -473,6 +543,10 @@ public class infoView extends BorderPane {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
+                
+                String idNo=selectedItem.getId();
+                tm.deleteTutor(idNo);
+                
                 tutorTable.getItems().remove(selectedItem);
             } 
         } 
@@ -487,6 +561,10 @@ public class infoView extends BorderPane {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 infoView.studentRowData selectedItem = (infoView.studentRowData) studentTable.getSelectionModel().getSelectedItem();
+                
+                String idNo = selectedItem.getId();
+                sm.deleteStudent(idNo);
+                
                 studentTable.getItems().remove(selectedItem);
             } 
         }
@@ -642,8 +720,6 @@ public static class studentRowData {
             this.email = new SimpleStringProperty(email);
            
      }
-        
-       
 
         /**
          * @return the firstName
