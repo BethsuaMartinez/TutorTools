@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -45,6 +46,7 @@ public class tutorController {
         tv.getModify().setOnAction((ActionEvent event) -> {
             Stage modifyStage = new Stage();
             modifyStage.initModality(Modality.APPLICATION_MODAL);
+            modifyStage.getIcons().add(new Image("/resources/Logo.png"));
             Scene modifyScene;
             
             if(tv.confirmStudentModify()==true){
@@ -71,6 +73,7 @@ public class tutorController {
               //  try {
                   //  tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.getIcons().add(new Image("/resources/Logo.png"));
                     window.close();
                     tv.clearFields();
                // } catch (SQLException ex) {
@@ -92,6 +95,7 @@ public class tutorController {
             loginController logc = new loginController(v, m);
             Scene scene2 = new Scene(v, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setTitle("Sign In");
             window.setScene(scene2);
             window.show();
@@ -107,6 +111,7 @@ public class tutorController {
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
                 window.setTitle("Student List");
                 window.setScene(scene3);
                 window.show();
@@ -148,6 +153,8 @@ public class tutorController {
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
             alert.setContentText("Invalid input, check information before submit it");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }

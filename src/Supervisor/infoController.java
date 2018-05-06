@@ -28,6 +28,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -302,6 +303,8 @@ public class infoController {
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Phone Format");
             alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             
             return false;
@@ -312,19 +315,22 @@ public class infoController {
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
             alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             
             return false;
         }
             
-        if(confID == false || confFN == false || confLN == false || confS == false)
-        {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setHeaderText("Required Fields/ Wrong Format");
-        alert.setContentText("Invalid input, check information before submit it");
-        alert.showAndWait();
-        return false;
+        if (confID == false || confFN == false || confLN == false || confS == false) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Required Fields/ Wrong Format");
+            alert.setContentText("Invalid input, check information before submit it");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            return false;
 
         }
 
@@ -357,6 +363,8 @@ public class infoController {
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Phone Format");
             alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             
             return false;
@@ -367,19 +375,22 @@ public class infoController {
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
             alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             
             return false;
         }
 
-        if(confID == false || confFN == false || confLN == false)
-        {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setHeaderText("Required Fields/ Wrong Format");
-        alert.setContentText("Invalid input, check information before submit it");
-        alert.showAndWait();
-        return false;
+        if (confID == false || confFN == false || confLN == false) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Required Fields/ Wrong Format");
+            alert.setContentText("Invalid input, check information before submit it");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            return false;
         }
 
         return true;

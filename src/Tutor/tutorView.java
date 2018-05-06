@@ -37,6 +37,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -261,6 +262,8 @@ public class tutorView extends BorderPane {
             alert.setTitle("Warning");
             alert.setHeaderText("Not Selected Student Found");
             alert.setContentText("You must select a student to modify");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }
@@ -282,6 +285,8 @@ public class tutorView extends BorderPane {
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Please Confirm Delete Action");
             alert.setContentText("Are you sure you want to delete this tutor?");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
