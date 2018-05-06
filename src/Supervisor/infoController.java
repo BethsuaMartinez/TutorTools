@@ -28,6 +28,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -65,6 +66,7 @@ public class infoController {
                 loginController logc = new loginController(v, m);
                 Scene scene2 = new Scene(v, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
                 window.setTitle("Sign In");
                 window.setScene(scene2);
                 window.show();
@@ -81,6 +83,7 @@ public class infoController {
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
                 window.setTitle("Student List");
                 window.setScene(scene3);
                 window.show();
@@ -94,6 +97,7 @@ public class infoController {
             activityController ac = new activityController(alv1);
             Scene scene3 = new Scene(alv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setTitle("Activity Log");
             window.setScene(scene3);
             window.show();
@@ -104,19 +108,22 @@ public class infoController {
             window.initModality(Modality.APPLICATION_MODAL);
 
             Scene scene;
+            tiv.ClearFields();
 
             if ("Tutor".equals(tiv.getTypePerson())) {
                 scene = new Scene(tiv.addTutor(), 350, 250);
             } else {
                 scene = new Scene(tiv.addStudent(), 350, 250);
             }
-
+            
+            window.setTitle("Add");
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setScene(scene);
             window.show();
         });
 
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
-
+            
             if (validateTutorFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -142,7 +149,7 @@ public class infoController {
         });
 
         tiv.getStudentSubmitBtn().setOnAction((ActionEvent event) -> {
-
+            
             if (validateStudentFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -153,6 +160,7 @@ public class infoController {
                 int id = Integer.parseInt(idNo);
 
                 Student currentStudent = new Student(id, firstName, lastName, email, phoneNo);
+
                 try {
                     stm.insertStudent(idNo, firstName, lastName, email, phoneNo);
                     tiv.updateStudentTable(currentStudent);
@@ -162,9 +170,7 @@ public class infoController {
                 } catch (SQLException ex) {
                     Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.close();
-                tiv.ClearFields();
+
             }
 
         });
@@ -182,6 +188,7 @@ public class infoController {
 
             Scene newIdScene = new Scene(layout, 500, 300);
             signInStage.setTitle("E-Mail");
+            signInStage.getIcons().add(new Image("/resources/Logo.png"));
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
@@ -215,6 +222,7 @@ public class infoController {
         tiv.getModify().setOnAction((ActionEvent event) -> {
             Stage modifyStage = new Stage();
             modifyStage.initModality(Modality.APPLICATION_MODAL);
+            modifyStage.getIcons().add(new Image("/resources/Logo.png"));
 
             Scene modifyScene;
 
@@ -298,88 +306,123 @@ public class infoController {
         boolean confID = true;
         boolean confFN = true;
         boolean confLN = true;
-        boolean confPhone = true;
-        boolean confE = true;
         boolean confS = true;
         EmailValidator emailValidator = EmailValidator.getInstance();
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
 
-        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) 
             confID = false;
-        }
+        
 
-        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) 
             confFN = false;
-        }
+   
 
-        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) 
             confLN = false;
-        }
+        
 
-        if (tiv.getSubjectTF().getText().isEmpty()) {
+        if (tiv.getSubjectTF().getText().isEmpty()) 
             confS = false;
-        }
 
-        if (tiv.getPhoneTF().getText().isEmpty() || (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())))) {
-            confPhone = false;
+        
+        if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Phone Format");
+            alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            
+            return false;
         }
-
-        if (tiv.getEmailTF().getText().isEmpty() || (!(emailValidator.isValid(tiv.getEmailTF().getText())))) {
-            confE = false;
+        
+        if(!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Email Format");
+            alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            
+            return false;
         }
-
-        if (confID == false || confFN == false || confLN == false || confPhone == false || confE == false || confS == false) {
+            
+        if (confID == false || confFN == false || confLN == false || confS == false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
             alert.setContentText("Invalid input, check information before submit it");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
+
         }
 
         return true;
     }
 
-    boolean validateStudentFields() {
+    boolean validateStudentFields(){
         boolean confID = true;
         boolean confFN = true;
         boolean confLN = true;
-        boolean confPhone = true;
-        boolean confE = true;
+
         EmailValidator emailValidator = EmailValidator.getInstance();
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
 
-        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) 
             confID = false;
-        }
+    
 
-        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) 
             confFN = false;
-        }
+        
 
-        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) 
             confLN = false;
+
+        
+       if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Phone Format");
+            alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            
+            return false;
+        }
+        
+        if(!(emailValidator.isValid(tiv.getEmailTF().getText()))&& !(tiv.getEmailTF().getText().isEmpty())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Email Format");
+            alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            
+            return false;
         }
 
-        if (tiv.getPhoneTF().getText().isEmpty() || (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())))) {
-            confPhone = false;
-        }
-
-        if (tiv.getEmailTF().getText().isEmpty() || (!(emailValidator.isValid(tiv.getEmailTF().getText())))) {
-            confE = false;
-        }
-
-        if (confID == false || confFN == false || confLN == false || confPhone == false || confE == false) {
+        if (confID == false || confFN == false || confLN == false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
             alert.setContentText("Invalid input, check information before submit it");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }
 
         return true;
     }
+       
 }

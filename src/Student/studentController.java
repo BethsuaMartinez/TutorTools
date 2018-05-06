@@ -24,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -56,7 +57,9 @@ public class studentController {
             layout = gui.addSession();
 
             Scene newIdScene = new Scene(layout, 210, 110);
+            
             signInStage.setTitle("Sign-In");
+            signInStage.getIcons().add(new Image("/resources/Logo.png"));
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
@@ -87,11 +90,48 @@ public class studentController {
                 
                 signInStage.close();
                 gui.ClearFields();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            signInStage.close();
+            gui.ClearFields();
+        });
+
+        gui.getTutor().setOnAction((ActionEvent event) -> {
+            tutorView tv;
+            try {
+                tv = new tutorView();
+                tutorController tc = new tutorController(tv);
+                Scene scene3 = new Scene(tv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
+                window.setTitle("Tutor Information");
+                window.setScene(scene3);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        gui.getSupervisor().setOnAction((ActionEvent event) -> {
+            infoView tiv = null;
+            try {
+                tiv = new infoView();
+                infoController sc = new infoController(tiv);
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Scene scene2 = new Scene(tiv, 1000, 500);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.getIcons().add(new Image("/resources/Logo.png"));
+            window.setTitle("Supervisor");
+            window.setScene(scene2);
+            window.show();
         });
 
         gui.getSubmitId().setOnAction((ActionEvent event) -> {
@@ -108,11 +148,13 @@ public class studentController {
                     VBox newSessionVbox = gui.newSessionVBox();
                     Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
                     signInStage.setScene(newSessionScene);
+                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
                     signInStage.show();
 
                 } else {
                     VBox newStudentVbox = gui.newStudentVBox();
                     Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
+                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
                     signInStage.setScene(newStudentScene);
                     signInStage.show();
 
@@ -128,6 +170,7 @@ public class studentController {
             VBox studentIdVbox = gui.addSession();
             Scene newIdScene = new Scene(studentIdVbox, 210, 110);
             signInStage.setTitle("Sign-In");
+            signInStage.getIcons().add(new Image("/resources/Logo.png"));
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
@@ -147,6 +190,7 @@ public class studentController {
                     VBox newSession = gui.newSessionVBox();
                     Scene newSessionScene = new Scene(newSession, 250, 130);
                     signInStage.setScene(newSessionScene);
+                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
                     signInStage.show();
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,6 +205,7 @@ public class studentController {
             loginController logc = new loginController(v, m);
             Scene scene2 = new Scene(v, 1300, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setTitle("Sign In");
             window.setScene(scene2);
             window.show();

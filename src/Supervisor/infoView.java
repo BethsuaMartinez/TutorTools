@@ -36,6 +36,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomPasswordField;
 
 /**
@@ -168,6 +169,8 @@ public class infoView extends BorderPane {
                 + "    -fx-background-insets: 1;");
         searchTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
+        passwordTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
         
         email.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
         addType.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
@@ -187,12 +190,13 @@ public class infoView extends BorderPane {
         //---------set prompts
         
     
-        idTF.setPromptText("Enter ID number (integer)");
-        fNameTF.setPromptText("Enter First Name");
-        lNameTF.setPromptText("Enter Last Name");
+        idTF.setPromptText("ID number");
+        fNameTF.setPromptText("First Name");
+        lNameTF.setPromptText("Last Name");
         emailTF.setPromptText("Ex. student@example.edu");
         phoneTF.setPromptText("(956)999-9999");
         subjectTF.setPromptText("Ex. math");
+        passwordTF.setPromptText("Password");
         searchTF.setPromptText("Ex. ID, First Name, Last Name");
         
         
@@ -474,6 +478,8 @@ public class infoView extends BorderPane {
             alert.setTitle("Warning");
             alert.setHeaderText("Not Selected Student Found");
             alert.setContentText("You must select a student to modify");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }
@@ -487,6 +493,8 @@ public class infoView extends BorderPane {
             alert.setTitle("Warning");
             alert.setHeaderText("Not Selected Tutor Found");
             alert.setContentText("You must select a tutor to modify");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
         }
@@ -505,7 +513,7 @@ public class infoView extends BorderPane {
         
         HBox h = new HBox(v, v1);
         
-        layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
     }
@@ -531,32 +539,35 @@ public class infoView extends BorderPane {
         return layout;
     }
     
-    
-    public void deleteFromTable() throws SQLException{
-        
+ 
+    public void deleteFromTable() throws SQLException {
+
         if ("Tutor".equals(getTypePerson())) {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Please Confirm Delete Action");
-            alert.setContentText("Are you sure you want to delete this tutor?");
+            if (confirmTutorModify()) {
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Please Confirm Delete Action");
+                alert.setContentText("Are you sure you want to delete this tutor?");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("/resources/Logo.png"));
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
-                
-                String idNo=selectedItem.getId();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+
+                    infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
+                            String idNo=selectedItem.getId();
                 tm.deleteTutor(idNo);
-                
-                tutorTable.getItems().remove(selectedItem);
-            } 
-        } 
-        
-        else {
+                    tutorTable.getItems().remove(selectedItem);
+                }
 
+            }
+        } else if (confirmStudentModify()) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Please Confirm Delete Action");
             alert.setContentText("Are you sure you want to delete this student?");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
@@ -566,7 +577,7 @@ public class infoView extends BorderPane {
                 sm.deleteStudent(idNo);
                 
                 studentTable.getItems().remove(selectedItem);
-            } 
+            }
         }
     }
 
@@ -797,6 +808,7 @@ public static class studentRowData {
         getPhoneTF().clear();
         getEmailTF().clear();
         getSubjectTF().clear();
+        getPasswordTF().clear();
 
     }
       
@@ -823,6 +835,7 @@ public static class studentRowData {
         int idNo = currentStudent.getIdStudent();
         String id = String.valueOf(idNo);
         String phone = currentStudent.getPhone();
+        
         infoView.studentRowData studentRowData = new infoView.studentRowData(id, fName, lName, email, phone);
         studenttableData.add(studentRowData);
         studentTable.setItems(studenttableData);

@@ -196,7 +196,8 @@ public class SessionModel {
                 idNo = String.valueOf(id);
 
                 Session currentSession = new Session(idNo, firstName, lastName, tutor, startTime, subject, endTime, date);
-                tutorView.RowData RowData = new tutorView.RowData(idNo, firstName, lastName, subject, startTime, endTime, date);
+                tutorView.RowData RowData = new tutorView.RowData(idNo, firstName, lastName, subject,tutor, startTime, endTime, date);
+
                 sessiontableData.add(RowData);
             }
             return sessiontableData;
