@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -73,6 +74,23 @@ public class MailView extends VBox {
         this.getChildren().addAll(top, hb1, hb2, hb3, message, hb4);
 
     }
+    
+    public void sending(){
+        this.getChildren().clear();
+        Label sent = new Label("Sending...");
+        sent.setFont(new Font("Arial", 50));
+        this.setAlignment(Pos.CENTER);
+        this.getChildren().add(sent); 
+    }
+    
+    public void emailSent(){
+        this.getChildren().clear();
+        Label sent = new Label("Email sent!");
+        sent.setFont(new Font("Arial", 50));
+        this.setAlignment(Pos.CENTER);
+        this.getChildren().add(sent); 
+    }
+    
 
     /**
      * @return the send

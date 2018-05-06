@@ -11,7 +11,9 @@ import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
 import Supervisor.infoView;
-import Supervisor.supervisorController;
+
+import Supervisor.infoController;
+
 import Tutor.tutorController;
 import Tutor.tutorView;
 
@@ -28,9 +30,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
+
+import javafx.scene.image.Image;
+
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -42,7 +48,7 @@ import javafx.stage.Stage;
 public class studentController {
 
     StudentModel model = new StudentModel();
-    studentView gui = new studentView();
+    studentView gui;
     SessionModel ssm = new SessionModel();
 
     public studentController(studentView gui, StudentModel model, SessionModel ssm) {
@@ -54,9 +60,11 @@ public class studentController {
 
     public void AttachHandler() {
 
+
         gui.getAddBtn().setOnAction((ActionEvent event) -> {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Stage signInStage = new Stage();
+
 
             signInStage.initModality(Modality.APPLICATION_MODAL);
             signInStage.initOwner(window);
@@ -66,6 +74,7 @@ public class studentController {
 
             Scene newIdScene = new Scene(layout, 210, 110);
 
+
             signInStage.setTitle("Sign-In");
 
             signInStage.setScene(newIdScene);
@@ -73,6 +82,14 @@ public class studentController {
             signInStage.show();
 
             gui.ClearFields();
+
+            
+            signInStage.setTitle("Sign-In");
+            signInStage.getIcons().add(new Image("/resources/Logo.png"));
+            signInStage.setScene(newIdScene);
+
+            signInStage.show();
+
         });
         //Submit to table
         gui.getSubmitSs().setOnAction((ActionEvent event) -> {
@@ -84,6 +101,8 @@ public class studentController {
             String tutor = gui.getTutors();
             String subject = gui.getSubjects();
             String startTime = dateFormat.format(date);
+
+            System.out.println(idNo + tutor + subject + startTime);
 
             int id = Integer.parseInt(idNo);
 
@@ -102,23 +121,32 @@ public class studentController {
 
             signInStage.close();
             gui.ClearFields();
+
             //((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
         });
 
         gui.getTutor().setOnAction((ActionEvent event) -> {
-            tutorView tv = new tutorView();
-            tutorController tc = new tutorController(tv);
+            tutorView tv;
+            try {
+                tv = new tutorView();
+                            tutorController tc = new tutorController(tv);
             Scene scene3 = new Scene(tv, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Tutor Information");
             window.setScene(scene3);
             window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
 
         });
 
         gui.getSupervisor().setOnAction((ActionEvent event) -> {
-            infoView tiv = new infoView();
-            supervisorController sc = new supervisorController(tiv);
+            infoView tiv;
+            try {
+                tiv = new infoView();
+                
 
             Scene scene2 = new Scene(tiv, 1000, 500);
 
@@ -126,37 +154,86 @@ public class studentController {
             window.setTitle("Supervisor");
             window.setScene(scene2);
             window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+       
+
+        gui.getTutor().setOnAction((ActionEvent event) -> {
+            tutorView tv;
+            try {
+                tv = new tutorView();
+                tutorController tc = new tutorController(tv);
+                Scene scene3 = new Scene(tv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
+                window.setTitle("Tutor Information");
+                window.setScene(scene3);
+                window.show();
+            } 
+            catch (SQLException ex) {
+               Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+
+        });
+
+        gui.getSupervisor().setOnAction((ActionEvent event) -> {
+            infoView tiv = null;
+           
+            try {
+                tiv = new infoView();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                infoController sc = new infoController(tiv);
+            
+
+            Scene scene2 = new Scene(tiv, 1000, 500);
+
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.getIcons().add(new Image("/resources/Logo.png"));
+            window.setTitle("Supervisor");
+            window.setScene(scene2);
+            window.show();
         });
 
         gui.getSubmitId().setOnAction((ActionEvent event) -> {
             Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
+           
             if (validateID()) {
-                if ("".equals(gui.getIdNoTF().getText())) {
-                    gui.wrongPass();
+            if ("".equals(gui.getIdNoTF().getText())) {
+                gui.wrongPass();
+            }
+            String id = gui.getIdNoTF().getText();
+            int x = Integer.parseInt(id);
+
+            try {
+                if (true == model.verifyUser(x)) {
+                    //GridPane newSessionGridpane = gui.newSession();
+                    VBox newSessionVbox = gui.newSessionVBox();
+                    Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
+                    signInStage.setScene(newSessionScene);
+                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
+                    signInStage.show();
+
+                } else {
+                    VBox newStudentVbox = gui.newStudentVBox();
+                    Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
+                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
+                    signInStage.setScene(newStudentScene);
+                    signInStage.show();
+
                 }
-                String id = gui.getIdNoTF().getText();
-                int x = Integer.parseInt(id);
 
-                try {
-                    if (true == model.verifyUser(x)) {
-                        //GridPane newSessionGridpane = gui.newSession();
-                        VBox newSessionVbox = gui.newSessionVBox();
-                        Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
-                        signInStage.setScene(newSessionScene);
-                        signInStage.show();
 
-                    } else {
-                        VBox newStudentVbox = gui.newStudentVBox();
-                        Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
-                        signInStage.setScene(newStudentScene);
-                        signInStage.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
 
-                    }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            }
             }
         });
 
@@ -165,6 +242,9 @@ public class studentController {
             VBox studentIdVbox = gui.addSession();
             Scene newIdScene = new Scene(studentIdVbox, 210, 110);
             signInStage.setTitle("Sign-In");
+
+            signInStage.getIcons().add(new Image("/resources/Logo.png"));
+
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
@@ -175,6 +255,7 @@ public class studentController {
                 //if ("".equals(gui.getIdNoTF().getText())) {
                 //   gui.wrongPass();
                 //}
+
                 if (validateNewStudentFields() == true) {
 
                     String idNo = gui.getIdNoTF().getText();
@@ -190,16 +271,17 @@ public class studentController {
                         Scene newSessionScene = new Scene(newSession, 250, 130);
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
-                    } catch (SQLException ex) {
+                    } 
+                    catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
-
         });
 
         // gui.getSe
         gui.getSignOut().setOnAction((ActionEvent event) -> {
+
             /*loginView v = new loginView();
             LoginModel m = new LoginModel();
             loginController logc = new loginController(v, m);
@@ -258,16 +340,21 @@ public class studentController {
             signOutStage.close();
             Stage signInStage = new Stage();
 
+
             loginView v = new loginView();
             LoginModel m = new LoginModel();
             loginController logc = new loginController(v, m);
             Scene scene2 = new Scene(v, 1300, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            window.getIcons().add(new Image("/resources/Logo.png"));
+
             window.setTitle("Sign In");
             window.setScene(scene2);
             window.show();
         });
     }
+
 
     private boolean validateID() {
         Pattern idP = Pattern.compile("[0-9]+");
@@ -354,5 +441,6 @@ public class studentController {
 
         return true;
     }
+
 
 }

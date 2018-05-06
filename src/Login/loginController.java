@@ -28,7 +28,7 @@ public final class loginController {
 
     LoginModel logm = new LoginModel();
     loginView logv = new loginView();
-    studentView sv = new studentView();
+    studentView sv;
 
     public loginController(loginView logv, LoginModel logm) {
         this.logm = logm;
@@ -43,8 +43,7 @@ public final class loginController {
             String psswd = logv.getPassword().getText();
             try {
                 if (logm.loginDB(un, psswd) == true) {
-                    Session session = new Session(logv.getPassword().getText());
-                    
+
                     studentView sv1 = new studentView();
                     StudentModel sm = new StudentModel();
                     SessionModel ssm = new SessionModel();
@@ -54,8 +53,7 @@ public final class loginController {
                     window.setTitle("Student List");
                     window.setScene(scene2);
                     window.show();
-                    
-                    
+
                 } else {
                     logv.wrongId();
                 }
@@ -72,7 +70,7 @@ public final class loginController {
 
                 try {
                     if (logm.loginDB(un, psswd) == true) {
-                        Session session = new Session(logv.getPassword().getText());
+                        
                         
                         studentView sv = new studentView();
                         StudentModel sm = new StudentModel();

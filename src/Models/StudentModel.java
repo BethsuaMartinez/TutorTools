@@ -2,7 +2,11 @@ package Models;
 
 import Database.SQLConnector;
 import Student.Student;
+import Supervisor.Tutor;
+import Supervisor.infoView;
 import java.sql.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -78,6 +82,80 @@ public class StudentModel {
         }
         return student;
     }
+    
+    public ObservableList<infoView.studentRowData> searchStudent(String idNo, String fname, String lname) throws SQLException{
+        try {
+            
+            int id;
+            
+            ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList();
+            String sql="Select * from TutorTools.Students where idStudent =? OR fname =? OR lname=?";
+            
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            boolean isNumeric = idNo.chars().allMatch( Character::isDigit );
+            if(isNumeric){
+                id = Integer.parseInt(idNo);
+                myStmt.setInt(1, id);}
+            else
+                myStmt.setInt(1,0);
+            
+            myStmt.setString(2, fname);
+            myStmt.setString(3, lname);
+            
+            String email, phone;
+            
+            myRs = myStmt.executeQuery();
+            
+            while (myRs.next()) {
+                id = myRs.getInt("idStudent");
+                fname = myRs.getString("fname");
+                lname = myRs.getString("lname");
+                email = myRs.getString("email");
+                phone = myRs.getString("phone");
+                
+                idNo=String.valueOf(id);
+                
+                Student Student= new Student(id, fname, lname, email, phone);
+                infoView.studentRowData studentRowData = new infoView.studentRowData(idNo, fname, lname,email, phone);
+                studenttableData.add(studentRowData);
+            }
+            return studenttableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+    
+    public ObservableList<infoView.studentRowData> populateTable() throws SQLException{
+        try {
+            ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList();
+            String sql="Select * from TutorTools.Students";
+            ResultSet myRs = myConn.query(sql);
+            int id;
+            String fname,  lname,  email,  phone,  password,  subject;
+
+            while (myRs.next()) {
+                id = myRs.getInt("idStudent");
+                fname = myRs.getString("fname");
+                lname = myRs.getString("lname");
+                email = myRs.getString("email");
+                phone = myRs.getString("phone");
+                
+                String idNo=String.valueOf(id);
+                
+                Student currentStudent= new Student(id, fname, lname, email, phone);
+                infoView.studentRowData studentRowData = new infoView.studentRowData(idNo, fname, lname,email, phone);
+                studenttableData.add(studentRowData);
+            }
+            return studenttableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
 
     public void insertStudent(String idNo, String fname, String lname, String email, String phone) throws SQLException {
         try {
@@ -111,7 +189,7 @@ public class StudentModel {
 
             int tutorid = Integer.parseInt(idNo);
 
-            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=? where id =? ";
+            String sql = "UPDATE Students SET fname = ?, lname=?, email=?, phone=? where idStudent =? ";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
 
             myStmt.setString(1, fname);
