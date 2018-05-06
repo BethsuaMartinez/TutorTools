@@ -5,8 +5,10 @@
  */
 package Mail;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.Security;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -26,7 +28,7 @@ import javax.mail.internet.MimeMultipart;
 public class EmailAttachmentSender {
 	public static void sendEmailWithAttachments(String host, String port,
 		final String userName, final String password, String toAddress,
-		String subject, String message, String[] attachFiles)
+		String subject, String message, File[] attachFiles)
 		throws AddressException, MessagingException {
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		
@@ -90,7 +92,7 @@ public class EmailAttachmentSender {
 
 		// adds attachments
 		if (attachFiles != null && attachFiles.length > 0) {
-			for (String filePath : attachFiles) {
+			for (File filePath : attachFiles) {
 				MimeBodyPart attachPart = new MimeBodyPart();
 				try {
 					attachPart.attachFile(filePath);
@@ -107,7 +109,7 @@ public class EmailAttachmentSender {
 	}
 	public static void sendEmailWithAttachmentsCC(String host, String port,
 		final String userName, final String password, String toAddress,
-		String subject, String message, String[] attachFiles,String[] ccEmails)
+		String subject, String message, File[] attachFiles,ArrayList<String> ccEmails)
 		throws AddressException, MessagingException {
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		
@@ -151,10 +153,10 @@ public class EmailAttachmentSender {
 		// for cc
 		int ccLength=0;
 		if (ccEmails != null) {
-			ccLength = ccEmails.length;
+			ccLength = ccEmails.size();
 		}
 		for (int i = 0; i < ccLength; i++) {
-			msg.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmails[i], false));
+			msg.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmails.get(i), false));
 		  }
 		// for cc end //
 		msg.setSubject(subject);
@@ -170,7 +172,7 @@ public class EmailAttachmentSender {
 
 		// adds attachments
 		if (attachFiles != null && attachFiles.length > 0) {
-			for (String filePath : attachFiles) {
+			for (File filePath : attachFiles) {
 				MimeBodyPart attachPart = new MimeBodyPart();
 				try {
 					attachPart.attachFile(filePath);

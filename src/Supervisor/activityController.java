@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  */
 public class activityController {
 
-    TutorInformationView tiv = new TutorInformationView();
+    infoView tiv = new infoView();
     ActivitylogView alv = new ActivitylogView();
 
     public activityController(ActivitylogView alv) {
@@ -30,34 +30,25 @@ public class activityController {
 
     private void attachHandlers() {
 
-        alv.getSignOut().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                loginView v = new loginView();
-                LoginModel m = new LoginModel();
-                loginController logc = new loginController(v, m);
-                Scene scene2 = new Scene(v, 1300, 500);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Sign In");
-                window.setScene(scene2);
-                window.show();
-            }
+        alv.getSignOut().setOnAction((ActionEvent event) -> {
+            loginView v = new loginView();
+            LoginModel m = new LoginModel();
+            loginController logc = new loginController(v, m);
+            Scene scene2 = new Scene(v, 1000, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Sign In");
+            window.setScene(scene2);
+            window.show();
         });
 
-        alv.getBack().setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-
-                TutorInformationView tiv = new TutorInformationView();
-
-                supervisorController sc = new supervisorController(tiv);
-
-                Scene scene3 = new Scene(tiv, 1300, 500);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Supervisor");
-                window.setScene(scene3);
-                window.show();
-
-            }
+        alv.getBack().setOnAction((ActionEvent event) -> {
+            infoView tiv1 = new infoView();
+            supervisorController sc = new supervisorController(tiv1);
+            Scene scene3 = new Scene(tiv1, 1000, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Supervisor");
+            window.setScene(scene3);
+            window.show();
         });
     }
 }

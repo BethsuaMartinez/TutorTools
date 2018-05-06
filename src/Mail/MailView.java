@@ -40,6 +40,7 @@ public class MailView extends VBox {
         //this.setStyle("-fx-background-color: white;");
         this.subject.setPromptText("Add a subject");
         this.message.setPromptText("Add a message here");
+        this.ccTF.setPromptText("Ex. abc@abc.com,abc@def.com,ghi@abc.com");
 
         this.to.setPadding(new Insets(0, 10, 0, 0));
         this.cc.setPadding(new Insets(0, 10, 0, 0));

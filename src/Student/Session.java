@@ -21,8 +21,14 @@ public class Session {
     private SimpleStringProperty subject;
     private SimpleStringProperty startTime;
     private SimpleStringProperty date;
+    
+    private String password;
 
     public Session() {
+    }
+    
+    public Session(String password){
+        this.password = password;
     }
 
     public Session(String idNo, String lastName, String firstName, String tutor, String startTime, String subject, String endTime, String date) {
@@ -145,5 +151,19 @@ public class Session {
 
     public void setDate(String date) {
         this.date.set(date);
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

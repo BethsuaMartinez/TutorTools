@@ -22,6 +22,8 @@ import javafx.stage.Stage;
  */
 public class TutorTools extends Application {
     
+    private Stage primaryStage = new Stage();
+    
     public void start(Stage primaryStage) throws SQLException {
         
         loginView lv = new loginView();
@@ -31,13 +33,14 @@ public class TutorTools extends Application {
        
 
 
-        Scene scene = new Scene(lv, 1300, 500);
+        Scene scene = new Scene(lv, 1000, 500);
 
  
-        primaryStage.getIcons().add(new Image("/resources/Logo.png"));
-        primaryStage.setTitle("TutorTools");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        this.getPrimaryStage().getIcons().add(new Image("/resources/Logo.png"));
+        this.getPrimaryStage().setTitle("TutorTools");
+        
+        this.getPrimaryStage().setScene(scene);
+        this.getPrimaryStage().show();
         
     }
 
@@ -46,6 +49,20 @@ public class TutorTools extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    /**
+     * @return the primaryStage
+     */
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    /**
+     * @param primaryStage the primaryStage to set
+     */
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
     
 }

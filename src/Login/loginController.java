@@ -8,13 +8,13 @@ package Login;
 import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
+import Student.Session;
 import Student.studentController;
 import Student.studentView;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -38,31 +38,29 @@ public final class loginController {
 
     public void AttachHandler() {
 
-        logv.getLoginButton().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String un = logv.getUsername().getText();
-                String psswd = logv.getPassword().getText();
-
-                try {
-                    if (logm.loginDB(un, psswd) == true) {
-
-                        studentView sv = new studentView();
-
-                        StudentModel sm = new StudentModel();
-                        SessionModel ssm = new SessionModel();
-                        studentController sc = new studentController(sv, sm, ssm);
-                        Scene scene2 = new Scene(sv, 1300, 500);
-                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        window.setTitle("Student List");
-                        window.setScene(scene2);
-                        window.show();
-                    } else {
-                        logv.wrongId();
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+        logv.getLoginButton().setOnAction((ActionEvent event) -> {
+            String un = logv.getUsername().getText();
+            String psswd = logv.getPassword().getText();
+            try {
+                if (logm.loginDB(un, psswd) == true) {
+                    Session session = new Session(logv.getPassword().getText());
+                    
+                    studentView sv1 = new studentView();
+                    StudentModel sm = new StudentModel();
+                    SessionModel ssm = new SessionModel();
+                    studentController sc = new studentController(sv1, sm, ssm);
+                    Scene scene2 = new Scene(sv1, 1000, 500);
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setTitle("Student List");
+                    window.setScene(scene2);
+                    window.show();
+                    
+                    
+                } else {
+                    logv.wrongId();
                 }
+            }catch (SQLException ex) {
+                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 
@@ -74,12 +72,13 @@ public final class loginController {
 
                 try {
                     if (logm.loginDB(un, psswd) == true) {
-
+                        Session session = new Session(logv.getPassword().getText());
+                        
                         studentView sv = new studentView();
                         StudentModel sm = new StudentModel();
                         SessionModel ssm = new SessionModel();
                         studentController sc = new studentController(sv, sm, ssm);
-                        Scene scene2 = new Scene(sv, 1300, 500);
+                        Scene scene2 = new Scene(sv, 1000, 500);
                         Stage window = (Stage) ((Node) e.getSource()).getScene().getWindow();
                         window.setScene(scene2);
                         window.show();
