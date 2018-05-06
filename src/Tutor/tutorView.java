@@ -241,6 +241,8 @@ public class tutorView extends BorderPane {
         tutorNameTF.setText(data.getTutor());
         subjectTF.setText(data.getSubject());
         
+        stIDTF.setEditable(false);
+        
         HBox h = new HBox(submitModify);
         h.setAlignment(Pos.CENTER);
         
@@ -255,8 +257,8 @@ public class tutorView extends BorderPane {
         if (index == -1){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
-            alert.setHeaderText("Not Selected Student Found");
-            alert.setContentText("You must select a student to modify");
+            alert.setHeaderText("No Student Selected");
+            alert.setContentText("You must select a student to Modify/Delete");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();

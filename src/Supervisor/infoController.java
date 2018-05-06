@@ -331,7 +331,7 @@ public class infoController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Phone Format");
-            alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            alert.setContentText("Invalid input, check phone format before submitting Ex. (999)999-9999");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
@@ -343,7 +343,7 @@ public class infoController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
-            alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            alert.setContentText("Invalid input, check email format before submitting Ex. sudent@example.edu");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
@@ -355,7 +355,7 @@ public class infoController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
-            alert.setContentText("Invalid input, check information before submit it");
+            alert.setContentText("Invalid input, check information before submitting");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
@@ -391,7 +391,7 @@ public class infoController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Phone Format");
-            alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            alert.setContentText("Invalid input, check phone format before submitting Ex. (999)999-9999");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
@@ -403,7 +403,7 @@ public class infoController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
-            alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            alert.setContentText("Invalid input, check email format before submitting Ex. sudent@example.edu");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
@@ -415,7 +415,7 @@ public class infoController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
-            alert.setContentText("Invalid input, check information before submit it");
+            alert.setContentText("Invalid input, check information before submitting");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();

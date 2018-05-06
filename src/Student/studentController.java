@@ -308,6 +308,7 @@ public class studentController {
             signInStage.setTitle("Sign Out");
             signInStage.setScene(newSessionScene);
             signInStage.show();*/
+            
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password Before Logout");
@@ -360,7 +361,7 @@ public class studentController {
         });
 
         gui.getTutor().setOnAction((ActionEvent event) -> {
-            tutorView tv;
+            /*tutorView tv;
             Scene scene1 = gui.getTutor().getScene();
             try {
                 tv = new tutorView();
@@ -373,12 +374,70 @@ public class studentController {
                 window.show();
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Password");
+            dialog.setHeaderText("Confirm Password");
+            dialog.setContentText("Please enter your password:");
+            
+            Session session = new Session();
+
+            Optional<String> result = dialog.showAndWait();
+            String pass = "";
+            if (result.isPresent()) {
+                pass = result.get();
+                
+                
+                  tutorView tv;
+                Scene scene1 = gui.getTutor().getScene();
+                try {
+                    tv = new tutorView();
+                    tutorController tc = new tutorController(tv);
+
+                    Scene scene3 = new Scene(tv, 1000, 500);
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setTitle("Tutor Information");
+                    window.setScene(scene3);
+                    window.show();
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            
             }
 
         });
 
         gui.getSupervisor().setOnAction((ActionEvent event) -> {
-            infoView tiv = null;
+            /*infoView tiv = null;
+            try {
+                tiv = new infoView();
+                infoController sc = new infoController(tiv);
+
+                Scene scene2 = new Scene(tiv, 1000, 500);
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Supervisor");
+                window.setScene(scene2);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Password");
+            dialog.setHeaderText("Confirm Password");
+            dialog.setContentText("Please enter your password:");
+            
+            Session session = new Session();
+
+            Optional<String> result = dialog.showAndWait();
+            String pass = "";
+            if (result.isPresent()) {
+                pass = result.get();
+                
+                infoView tiv = null;
             try {
                 tiv = new infoView();
                 infoController sc = new infoController(tiv);
@@ -392,6 +451,11 @@ public class studentController {
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
+                  
+               
+            
+            }
+            
         });
     }
 

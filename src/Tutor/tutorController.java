@@ -150,7 +150,7 @@ public class tutorController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
-            alert.setContentText("Invalid input, check information before submit it");
+            alert.setContentText("Invalid input, check information before submitting it");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();

@@ -57,8 +57,13 @@ public class studentView extends BorderPane {
 
     private Button addBtn = new Button("Add Session");
     
+    //-------------to completely sign out from app----
     private Button signOut = new Button("Log Out");
     private Button signOutBtn = new Button("Log Out");
+    
+    //---------------buttons to sign in as tutor or supervisor-----
+    private Button signInTutor = new Button("Log In");
+    private Button signInSV = new Button("Log In"); 
     
     private Button supervisor = new Button("Supervisor");
     private Button tutor = new Button("Tutor");
@@ -102,6 +107,8 @@ public class studentView extends BorderPane {
 
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
+    
+    
 
   
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);

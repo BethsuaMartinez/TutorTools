@@ -438,6 +438,8 @@ public class infoView extends BorderPane {
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
         
+        idTF.setEditable(false);
+        
         layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, modifyTutor);
 
     
@@ -464,6 +466,8 @@ public class infoView extends BorderPane {
         fNameTF.setText(data.getFName());
         lNameTF.setText(data.getLName());
         
+        idTF.setEditable(false);
+        
         layout.getChildren().addAll(idVbox, h, emailVbox, phoneVbox, modifyStudent);
         
     
@@ -476,8 +480,8 @@ public class infoView extends BorderPane {
         if (index == -1){
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");
-            alert.setHeaderText("Not Selected Student Found");
-            alert.setContentText("You must select a student to modify");
+            alert.setHeaderText("No Student Selected");
+            alert.setContentText("You must select a student to Modify/Delete");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
@@ -491,8 +495,8 @@ public class infoView extends BorderPane {
         if (index == -1){
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");
-            alert.setHeaderText("Not Selected Tutor Found");
-            alert.setContentText("You must select a tutor to modify");
+            alert.setHeaderText("No Tutor Selected");
+            alert.setContentText("You must select a tutor to Modify/Delete");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
