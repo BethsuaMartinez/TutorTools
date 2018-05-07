@@ -136,6 +136,7 @@ public class studentController {
             Scene scene3 = new Scene(tv, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setTitle("Tutor Information");
+            window.getIcons().add(new Image("/resources/Logo.png"));
             window.setScene(scene3);
             window.show();
             } catch (SQLException ex) {
@@ -247,7 +248,6 @@ public class studentController {
             signInStage.setTitle("Sign-In");
 
             signInStage.getIcons().add(new Image("/resources/Logo.png"));
-
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
@@ -273,6 +273,7 @@ public class studentController {
                         model.insertStudent(idNo, firstName, lastName, email, phone);
                         VBox newSession = gui.newSessionVBox();
                         Scene newSessionScene = new Scene(newSession, 250, 130);
+                        signInStage.getIcons().add(new Image("/resources/Logo.png"));
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
                     } 
@@ -313,6 +314,8 @@ public class studentController {
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password Before Logout");
             dialog.setContentText("Please enter your password:");
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             
             Session session = new Session();
 
@@ -329,6 +332,7 @@ public class studentController {
                     Scene scene2 = new Scene(v, 1300, 500);
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.setTitle("Sign In");
+                    window.getIcons().add(new Image("/resources/Logo.png"));
                     window.setScene(scene2);
                     window.show();
             
@@ -354,7 +358,6 @@ public class studentController {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             window.getIcons().add(new Image("/resources/Logo.png"));
-
             window.setTitle("Sign In");
             window.setScene(scene2);
             window.show();
@@ -380,6 +383,8 @@ public class studentController {
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password");
             dialog.setContentText("Please enter your password:");
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             
             Session session = new Session();
 
@@ -398,6 +403,7 @@ public class studentController {
                     Scene scene3 = new Scene(tv, 1000, 500);
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.setTitle("Tutor Information");
+                    window.getIcons().add(new Image("/resources/Logo.png"));
                     window.setScene(scene3);
                     window.show();
                 } catch (SQLException ex) {
@@ -429,6 +435,8 @@ public class studentController {
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password");
             dialog.setContentText("Please enter your password:");
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             
             Session session = new Session();
 
@@ -446,6 +454,7 @@ public class studentController {
 
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setTitle("Supervisor");
+                window.getIcons().add(new Image("/resources/Logo.png"));
                 window.setScene(scene2);
                 window.show();
             } catch (SQLException ex) {
@@ -471,6 +480,8 @@ public class studentController {
             alert.setTitle("ERROR!");
             alert.setHeaderText(null);
             alert.setContentText("Empty Field");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             alert.showAndWait();
             return false;
         } else {
@@ -478,6 +489,8 @@ public class studentController {
             alert.setTitle("ERROR!");
             alert.setHeaderText(null);
             alert.setContentText("Invalid ID");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             alert.showAndWait();
 
             return false;
@@ -504,6 +517,8 @@ public class studentController {
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
             alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             alert.showAndWait();
             return false;
         }
@@ -513,6 +528,8 @@ public class studentController {
             alert.setTitle("Warnig");
             alert.setHeaderText("Wrong Phone Format");
             alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             alert.showAndWait();
             return false;
         }
@@ -539,6 +556,8 @@ public class studentController {
             alert.setTitle("ERROR!");
             alert.setHeaderText(null);
             alert.setContentText("Missing Required Fields or Wrong Format");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
             alert.showAndWait();
             return false;
         }

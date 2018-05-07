@@ -111,7 +111,7 @@ public class infoController {
             tiv.ClearFields();
 
             if ("Tutor".equals(tiv.getTypePerson())) {
-                scene = new Scene(tiv.addTutor(), 350, 250);
+                scene = new Scene(tiv.addTutor(), 400, 250);
             } else {
                 scene = new Scene(tiv.addStudent(), 350, 250);
             }
@@ -208,11 +208,10 @@ public class infoController {
                         tiv.searchTutor(idNo, fname, lname, subject);
                 } 
                 else {
-                    if (search.isEmpty()) //"".equals(search)
+                    if (search.isEmpty()) 
                         tiv.updateStudentTable();
-                    else {
+                    else 
                         tiv.searchStudent(idNo, fname, lname);
-                    }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
