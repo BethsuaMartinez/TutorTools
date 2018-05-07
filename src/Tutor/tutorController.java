@@ -10,8 +10,10 @@ import Login.loginController;
 import Models.LoginModel;
 import Models.SessionModel;
 import Models.StudentModel;
+import Student.Session;
 import Student.studentController;
 import Student.studentView;
+import Supervisor.infoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +34,7 @@ public class tutorController {
     LoginModel logm = new LoginModel();
     loginView logv = new loginView();
     tutorView tv;
+    SessionModel ssm;
 
     public tutorController(tutorView tv) {
         this.tv = tv;
@@ -57,26 +60,48 @@ public class tutorController {
 
         });
         
-        tv.getSubmitModify().setOnAction((ActionEvent event) ->{
+        tv.getSearchBtn().setOnAction((ActionEvent event) -> {
+            try {
+                String search=tv.getSearchTf().getText();
+                
+                String idNo = search;
+                String fname = search;
+                String lname = search;
+                String subject = search;
+                
+                    if (search.isEmpty())
+                        tv.updateSessionTable();
+                    else 
+                        tv.searchSession(idNo, fname, lname, subject);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         
+        tv.getSubmitModify().setOnAction((ActionEvent event) ->{
+            SessionModel ssm = new SessionModel();
             if(validateFields()==true){
                 String id = tv.getStIDTF().getText();
                 String fname = tv.getfNameTF().getText();
                 String lname = tv.getlNameTF().getText();
                 String tutor = tv.getTutorNameTF().getText();
                 String subject = tv.getSubjectTF().getText();
-                int idNo = Integer.parseInt(id);
+                String startTime = tv.getStartTF().getText();
+                String endTime = tv.getEndTF().getText();
+                String date = tv.getDateTF().getText();
                 
-                tutoringSession current = new tutoringSession(idNo, fname, lname, tutor, subject); 
+                Session current = new Session(id, lname, fname, tutor, startTime, subject, endTime, date); 
                
-              //  try {
-                  //  tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
+               try {
+                    ssm.updateSession(current);
+                    tv.updateSessionTable();
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();                    
                     window.close();
                     tv.clearFields();
-               // } catch (SQLException ex) {
-               //     Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
-               // }
+                } catch (SQLException ex) {
+                    Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
                
             }
@@ -84,7 +109,12 @@ public class tutorController {
         });
         
         tv.getDelete().setOnAction((ActionEvent event) -> {
-            tv.deleteFromTable();
+            try {
+                tv.deleteFromTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         });
        
         tv.getSignOut().setOnAction((ActionEvent event) -> {

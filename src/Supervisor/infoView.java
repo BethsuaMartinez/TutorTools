@@ -570,10 +570,9 @@ public class infoView extends BorderPane {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-
                     infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
-                            String idNo=selectedItem.getId();
-                tm.deleteTutor(idNo);
+                    String idNo=selectedItem.getId();
+                    tm.deleteTutor(idNo);
                     tutorTable.getItems().remove(selectedItem);
                 }
 

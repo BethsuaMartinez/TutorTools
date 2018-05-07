@@ -131,7 +131,7 @@ public class infoController {
                 String email = tiv.getEmailTF().getText();
                 String phoneNo = tiv.getPhoneTF().getText();
                 String subject = tiv.getSubjectTF().getText();
-                String password = "";
+                String password = tiv.getPasswordTF().getText();
                 int id = Integer.parseInt(idNo);
 
                 Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
@@ -259,7 +259,7 @@ public class infoController {
                 String email = tiv.getEmailTF().getText();
                 String phoneNo = tiv.getPhoneTF().getText();
                 String subject = tiv.getSubjectTF().getText();
-                String password = "";
+                String password = tiv.getPasswordTF().getText();
                 int id = Integer.parseInt(idNo);
 
                 Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
