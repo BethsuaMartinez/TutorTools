@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ public class SessionModel {
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
-    public void insertSession(Session currentData) throws SQLException {
+    public void insertSession(Session currentData, java.sql.Date sqlDate) throws SQLException {
         try {
 
             String idNo = currentData.getIdNo();
@@ -52,7 +53,7 @@ public class SessionModel {
             myStmt.setString(5, subject);
             myStmt.setString(6, startTime);
             myStmt.setString(7, "");
-            myStmt.setString(8, "");
+            myStmt.setDate(8, sqlDate);
             myStmt.setInt(9, 0);
 
             myStmt.executeUpdate();
@@ -66,7 +67,7 @@ public class SessionModel {
         }
     }
 
-    public void endSession(Session currentData) throws SQLException {
+    public void endSession(Session currentData) throws SQLException, ParseException {
         try {
             String tutor = currentData.getTutor();
             String startTime = currentData.getStartTime();
@@ -74,12 +75,14 @@ public class SessionModel {
             String subject = currentData.getSubject();
 
             DateFormat format1 = new SimpleDateFormat("HH:mm");
-            DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
             Date et = new Date();
-            Date dt = new Date();
             String endTime = format1.format(et);
+            Date dt = new Date();
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
             String date = format2.format(dt);
-
+            Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            
             int id = Integer.parseInt(idNo);
             
             String sql = "UPDATE TutorTools.TutoringSessions SET status = ?, endTime=?, date=? where idStudent =? AND tutor=? AND subject=? AND startTime=? ";
@@ -87,7 +90,7 @@ public class SessionModel {
 
             myStmt.setInt(1, 1);
             myStmt.setString(2, endTime);
-            myStmt.setString(3, date);
+            myStmt.setDate(3, sqlDate);
             myStmt.setInt(4, id);
             myStmt.setString(5, tutor);
             myStmt.setString(6, subject);

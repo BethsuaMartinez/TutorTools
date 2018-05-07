@@ -10,6 +10,7 @@ import Models.SessionModel;
 import Models.StudentModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -415,8 +416,6 @@ public class studentView extends BorderPane {
                 String startTime = currentPerson.getTimeIn();
                 String subject = currentPerson.getSubject();
                 
-                System.out.println(startTime);
-                
                 Session currentSession = new Session(idNo, lastName, firstName, tutor, startTime, subject, "", "");
  
                 try {  
@@ -424,6 +423,8 @@ public class studentView extends BorderPane {
                     sessiontableData.remove(currentPerson);
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(studentView.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }

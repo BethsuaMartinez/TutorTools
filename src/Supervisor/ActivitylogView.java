@@ -63,8 +63,7 @@ public class ActivitylogView extends BorderPane {
 
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
-        final BarChart<String, Number> bc
-                = new BarChart<String, Number>(xAxis, yAxis);
+        final BarChart<String, Number> bc= new BarChart<String, Number>(xAxis, yAxis);
         bc.setTitle("Students Per Subject");
         xAxis.setLabel("Subject");
         yAxis.setLabel("Student");
@@ -87,34 +86,7 @@ public class ActivitylogView extends BorderPane {
 
         bc.getData().addAll(series1, series2, series3, series4);
 
-        final CategoryAxis xAxis2 = new CategoryAxis();
-        final NumberAxis yAxis2 = new NumberAxis();
-        final BarChart<String, Number> bc2
-                = new BarChart<String, Number>(xAxis2, yAxis2);
-        bc2.setTitle("Hours Per Tutors");
-        xAxis2.setLabel("Subject");
-        yAxis2.setLabel("Hours");
-
-        XYChart.Series series5 = new XYChart.Series();
-        series5.setName("Luis");
-        series5.getData().add(new XYChart.Data(math, 34));
-
-        XYChart.Series series6 = new XYChart.Series();
-        series6.setName("Kenneth");
-        series6.getData().add(new XYChart.Data(science, 20));
-
-        XYChart.Series series7 = new XYChart.Series();
-        series7.setName("Elyvic");
-        series7.getData().add(new XYChart.Data(english, 15));
-
-        XYChart.Series series8 = new XYChart.Series();
-        series8.setName("Bethsua");
-        series8.getData().add(new XYChart.Data(computerScience, 26));
-
-        bc2.getData().addAll(series5, series6, series7, series8);
-
-        this.setLeft(bc);
-        this.setRight(bc2);
+        this.setCenter(bc);     
         this.setTop(hb);
 
     }

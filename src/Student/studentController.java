@@ -18,6 +18,7 @@ import Tutor.tutorController;
 import Tutor.tutorView;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -59,11 +60,9 @@ public class studentController {
 
     public void AttachHandler() {
 
-
         gui.getAddBtn().setOnAction((ActionEvent event) -> {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Stage signInStage = new Stage();
-
 
             signInStage.initModality(Modality.APPLICATION_MODAL);
             signInStage.initOwner(window);
@@ -73,7 +72,6 @@ public class studentController {
 
             Scene newIdScene = new Scene(layout, 210, 110);
 
-
             signInStage.setTitle("Sign-In");
 
             signInStage.setScene(newIdScene);
@@ -82,43 +80,49 @@ public class studentController {
 
             gui.ClearFields();
 
-            
             signInStage.setTitle("Sign-In");
             signInStage.getIcons().add(new Image("/resources/Logo.png"));
             signInStage.setScene(newIdScene);
             signInStage.show();
 
         });
-        
+
         gui.getSubmitSs().setOnAction((ActionEvent event) -> {
             Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             String idNo = gui.getIdNoTF().getText();
             String tutor = gui.getTutors();
             String subject = gui.getSubjects();
-            
+
             DateFormat dateFormat = new SimpleDateFormat("HH:mm");
             Date date = new Date();
             String startTime = dateFormat.format(date);
-
 
             int id = Integer.parseInt(idNo);
 
             Student student;
             try {
+                Date dt = new Date();
+                DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+                String sdate = format2.format(dt);
+                Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(sdate);
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                
                 student = model.getStudent(id);
                 String fname = student.getFname();
                 String lname = student.getLname();
-                
+
                 Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
-                
+
                 gui.updateTable(currentSession);
-                ssm.insertSession(currentSession);
-                
+                ssm.insertSession(currentSession, sqlDate);
+
                 signInStage.close();
                 gui.ClearFields();
 
             } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -132,17 +136,16 @@ public class studentController {
             tutorView tv;
             try {
                 tv = new tutorView();
-                            tutorController tc = new tutorController(tv);
-            Scene scene3 = new Scene(tv, 1000, 500);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Tutor Information");
-            window.getIcons().add(new Image("/resources/Logo.png"));
-            window.setScene(scene3);
-            window.show();
+                tutorController tc = new tutorController(tv);
+                Scene scene3 = new Scene(tv, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Tutor Information");
+                window.getIcons().add(new Image("/resources/Logo.png"));
+                window.setScene(scene3);
+                window.show();
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
 
         });
 
@@ -150,21 +153,18 @@ public class studentController {
             infoView tiv;
             try {
                 tiv = new infoView();
-                
 
-            Scene scene2 = new Scene(tiv, 1000, 500);
+                Scene scene2 = new Scene(tiv, 1000, 500);
 
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Supervisor");
-            window.setScene(scene2);
-            window.show();
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Supervisor");
+                window.setScene(scene2);
+                window.show();
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         });
-
-       
 
         gui.getTutor().setOnAction((ActionEvent event) -> {
             tutorView tv;
@@ -177,26 +177,23 @@ public class studentController {
                 window.setTitle("Tutor Information");
                 window.setScene(scene3);
                 window.show();
-            } 
-            catch (SQLException ex) {
-               Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-           }
+            } catch (SQLException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
 
         gui.getSupervisor().setOnAction((ActionEvent event) -> {
             infoView tiv = null;
-           
+
             try {
                 tiv = new infoView();
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                infoController sc = new infoController(tiv);
-            
+            infoController sc = new infoController(tiv);
 
             Scene scene2 = new Scene(tiv, 1000, 500);
-
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.getIcons().add(new Image("/resources/Logo.png"));
@@ -207,37 +204,36 @@ public class studentController {
 
         gui.getSubmitId().setOnAction((ActionEvent event) -> {
             Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-           
+
             if (validateID()) {
-            if ("".equals(gui.getIdNoTF().getText())) {
-                gui.wrongPass();
-            }
-            String id = gui.getIdNoTF().getText();
-            int x = Integer.parseInt(id);
+                if ("".equals(gui.getIdNoTF().getText())) {
+                    gui.wrongPass();
+                }
+                String id = gui.getIdNoTF().getText();
+                int x = Integer.parseInt(id);
 
-            try {
-                if (true == model.verifyUser(x)) {
-                    //GridPane newSessionGridpane = gui.newSession();
-                    VBox newSessionVbox = gui.newSessionVBox();
-                    Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
-                    signInStage.setScene(newSessionScene);
-                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
-                    signInStage.show();
+                try {
+                    if (true == model.verifyUser(x)) {
+                        //GridPane newSessionGridpane = gui.newSession();
+                        VBox newSessionVbox = gui.newSessionVBox();
+                        Scene newSessionScene = new Scene(newSessionVbox, 250, 130);
+                        signInStage.setScene(newSessionScene);
+                        signInStage.getIcons().add(new Image("/resources/Logo.png"));
+                        signInStage.show();
 
-                } else {
-                    VBox newStudentVbox = gui.newStudentVBox();
-                    Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
-                    signInStage.getIcons().add(new Image("/resources/Logo.png"));
-                    signInStage.setScene(newStudentScene);
-                    signInStage.show();
+                    } else {
+                        VBox newStudentVbox = gui.newStudentVBox();
+                        Scene newStudentScene = new Scene(newStudentVbox, 300, 270);
+                        signInStage.getIcons().add(new Image("/resources/Logo.png"));
+                        signInStage.setScene(newStudentScene);
+                        signInStage.show();
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
-
-
-            } catch (SQLException ex) {
-                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
-
-            }
             }
         });
 
@@ -255,11 +251,9 @@ public class studentController {
         gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
 
-
                 //if ("".equals(gui.getIdNoTF().getText())) {
                 //   gui.wrongPass();
                 //}
-
                 if (validateNewStudentFields() == true) {
 
                     String idNo = gui.getIdNoTF().getText();
@@ -276,8 +270,7 @@ public class studentController {
                         signInStage.getIcons().add(new Image("/resources/Logo.png"));
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
-                    } 
-                    catch (SQLException ex) {
+                    } catch (SQLException ex) {
                         Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
@@ -309,39 +302,31 @@ public class studentController {
             signInStage.setTitle("Sign Out");
             signInStage.setScene(newSessionScene);
             signInStage.show();*/
-            
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password Before Logout");
             dialog.setContentText("Please enter your password:");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
-            
+
             Session session = new Session();
 
             Optional<String> result = dialog.showAndWait();
             String pass = "";
             if (result.isPresent()) {
                 pass = result.get();
-                
-                
-                    
-                    loginView v = new loginView();
-                    LoginModel m = new LoginModel();
-                    loginController logc = new loginController(v, m);
-                    Scene scene2 = new Scene(v, 1300, 500);
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    window.setTitle("Sign In");
-                    window.getIcons().add(new Image("/resources/Logo.png"));
-                    window.setScene(scene2);
-                    window.show();
-            
-            }
-            
-            
-            
-            
 
+                loginView v = new loginView();
+                LoginModel m = new LoginModel();
+                loginController logc = new loginController(v, m);
+                Scene scene2 = new Scene(v, 1300, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Sign In");
+                window.getIcons().add(new Image("/resources/Logo.png"));
+                window.setScene(scene2);
+                window.show();
+
+            }
 
         });
 
@@ -349,7 +334,6 @@ public class studentController {
             Stage signOutStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             signOutStage.close();
             Stage signInStage = new Stage();
-
 
             loginView v = new loginView();
             LoginModel m = new LoginModel();
@@ -378,23 +362,22 @@ public class studentController {
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-            
+
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password");
             dialog.setContentText("Please enter your password:");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
-            
+
             Session session = new Session();
 
             Optional<String> result = dialog.showAndWait();
             String pass = "";
             if (result.isPresent()) {
                 pass = result.get();
-                
-                
-                  tutorView tv;
+
+                tutorView tv;
                 Scene scene1 = gui.getTutor().getScene();
                 try {
                     tv = new tutorView();
@@ -409,8 +392,7 @@ public class studentController {
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-               
-            
+
             }
 
         });
@@ -430,44 +412,41 @@ public class studentController {
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-            
+
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Password");
             dialog.setHeaderText("Confirm Password");
             dialog.setContentText("Please enter your password:");
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
-            
+
             Session session = new Session();
 
             Optional<String> result = dialog.showAndWait();
             String pass = "";
             if (result.isPresent()) {
                 pass = result.get();
-                
+
                 infoView tiv = null;
-            try {
-                tiv = new infoView();
-                infoController sc = new infoController(tiv);
+                try {
+                    tiv = new infoView();
+                    infoController sc = new infoController(tiv);
 
-                Scene scene2 = new Scene(tiv, 1000, 500);
+                    Scene scene2 = new Scene(tiv, 1000, 500);
 
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setTitle("Supervisor");
-                window.getIcons().add(new Image("/resources/Logo.png"));
-                window.setScene(scene2);
-                window.show();
-            } catch (SQLException ex) {
-                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setTitle("Supervisor");
+                    window.getIcons().add(new Image("/resources/Logo.png"));
+                    window.setScene(scene2);
+                    window.show();
+                } catch (SQLException ex) {
+                    Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
-                  
-               
-            
-            }
-            
+
         });
     }
-
 
     private boolean validateID() {
         Pattern idP = Pattern.compile("[0-9]+");
@@ -564,6 +543,5 @@ public class studentController {
 
         return true;
     }
-
 
 }
