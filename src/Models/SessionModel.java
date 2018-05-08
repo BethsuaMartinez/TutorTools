@@ -66,6 +66,8 @@ public class SessionModel {
             }
         }
     }
+    
+    
 
     public void endSession(Session currentData) throws SQLException, ParseException {
         try {
