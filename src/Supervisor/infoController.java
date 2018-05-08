@@ -101,6 +101,7 @@ public class infoController {
             ActivitylogView alv1;
             try {
                 alv1 = new ActivitylogView();
+                alv1.setPass(tiv.getPass());
                 activityController ac = new activityController(alv1);
                 Scene scene3 = new Scene(alv1, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -63,7 +63,7 @@ public class ActivitylogView extends BorderPane {
         logo.setFitHeight(30);
         hb2.getChildren().add(logo);
         hb2.setPadding(new Insets(0, 0, 0, 30));
-        hb3.getChildren().addAll(months, subMonth, signOut, back);
+        hb3.getChildren().addAll(months, subMonth, back, signOut);
         hb3.setAlignment(Pos.CENTER_RIGHT);
         hb3.setPadding(new Insets(0, 20, 0, 0));
         hb3.setSpacing(10);
