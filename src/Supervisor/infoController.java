@@ -116,7 +116,7 @@ public class infoController {
             tiv.ClearFields();
 
             if ("Tutor".equals(tiv.getTypePerson())) {
-                scene = new Scene(tiv.addTutor(), 350, 250);
+                scene = new Scene(tiv.addTutor(), 400, 250);
             } else {
                 scene = new Scene(tiv.addStudent(), 350, 250);
             }
@@ -136,7 +136,7 @@ public class infoController {
                 String email = tiv.getEmailTF().getText();
                 String phoneNo = tiv.getPhoneTF().getText();
                 String subject = tiv.getSubjectTF().getText();
-                String password = "";
+                String password = tiv.getPasswordTF().getText();
                 int id = Integer.parseInt(idNo);
 
                 Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject, password);
@@ -265,7 +265,7 @@ public class infoController {
                 String email = tiv.getEmailTF().getText();
                 String phoneNo = tiv.getPhoneTF().getText();
                 String subject = tiv.getSubjectTF().getText();
-                String password = "";
+                String password = tiv.getPasswordTF().getText();
                 int id = Integer.parseInt(idNo);
 
                 Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject, password);

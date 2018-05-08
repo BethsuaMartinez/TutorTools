@@ -11,6 +11,7 @@ import Models.StudentModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -56,31 +57,25 @@ public class studentView extends BorderPane {
     StudentModel sm = new StudentModel();
     SessionModel ssm = new SessionModel();
 
-            
     private ChoiceBox<String> tutors = new ChoiceBox<>();
     private ChoiceBox<String> subjects = new ChoiceBox<>();
 
     private Button addBtn = new Button("Add Session");
-    
+
     //-------------to completely sign out from app----
     private Button signOut = new Button("Log Out");
 
-    
     //---------------buttons------------------------
-  
     private Button supervisor = new Button("Supervisor");
     private Button tutor = new Button("Tutor");
-    private Button backNew = new Button("Back"); 
+    private Button backNew = new Button("Back");
     private Button submitSt = new Button("Submit");
     private Button submitSs = new Button("Submit");
     private Button submitId = new Button("Submit");
 
-
     ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"),
             new studentView.RowData("John", "Williamson", "Math", "16:00", "43342", "Bethsua"));
 
- 
-    
     private Label passwordLabel = new Label("Password");
     private PasswordField passwordPF = new PasswordField();
 
@@ -88,10 +83,8 @@ public class studentView extends BorderPane {
 
     private final TableView sessiontable = new TableView();
 
-
     private Label idNoLabel = new Label("ID Number*");
     private TextField idNoTF = new TextField();
-    
 
     private Label firstNameLabel = new Label("First Name*");
     private TextField firstNameTF = new TextField();
@@ -110,71 +103,63 @@ public class studentView extends BorderPane {
 
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
-    
-    
 
-  
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
     private VBox phoneNoVbox = new VBox(phoneNoLabel, phoneNoTF);
     private VBox subjectVbox = new VBox(subjectLabel, subjects);
     private VBox tutorVbox = new VBox(tutorLabel, tutors);
-    
+
     private HBox nameHBox = new HBox(firstNameVbox, lastNameVbox);
 
     private VBox idVbox = new VBox(idNoLabel, idNoTF);
     private VBox vbox10 = new VBox(tutor, supervisor, addBtn);
-    
-    
-    
-    
 
     public studentView() throws SQLException {
-        
+
         tutors.getItems().add("Luis");
         tutors.getItems().addAll("Elyvic", "Bethsua");
         tutors.setValue("Luis");
 
         subjects.getItems().addAll("Computer Science", "English", "History");
         subjects.setValue("Computer Science");
-        
-        
+
         HBox hb = new HBox();
         HBox hb2 = new HBox();
         HBox hb3 = new HBox();
         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         hb.setBackground(new Background(background));
-        hb.setPadding(new Insets(10,10,10,10));
+        hb.setPadding(new Insets(10, 10, 10, 10));
         ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/resources/TutorTools.PNG")));
         logo.setPreserveRatio(true);
         logo.setFitWidth(120);
         logo.setFitHeight(30);
         hb2.getChildren().add(logo);
-        hb2.setPadding(new Insets(0,0,0,30));
+        hb2.setPadding(new Insets(0, 0, 0, 30));
         hb3.getChildren().add(signOut);
         hb3.setAlignment(Pos.CENTER_RIGHT);
         hb3.setPadding(new Insets(0, 20, 0, 0));
         HBox.setHgrow(hb3, Priority.ALWAYS);
         hb.getChildren().addAll(logo, hb3);
-        hb.setPadding(new Insets(5,0,5,20));
+        hb.setPadding(new Insets(5, 0, 5, 20));
 
-        this.tutor.setMaxSize(200, 30);       
+        this.tutor.setMaxSize(200, 30);
         this.supervisor.setMaxSize(200, 30);
         this.addBtn.setMaxSize(200, 40);
-        this.signOut.setMaxSize(100, 20);  
-        
-        this.tutor.setPadding(new Insets(10,50,10,50));
-        this.supervisor.setPadding(new Insets(10,50,10,50));
-        this.addBtn.setPadding(new Insets(10,50,10,50));
-        this.signOut.setPadding(new Insets(5,5,5,5));
-        
+        this.signOut.setMaxSize(100, 20);
+
+        this.tutor.setPadding(new Insets(10, 50, 10, 50));
+        this.supervisor.setPadding(new Insets(10, 50, 10, 50));
+        this.addBtn.setPadding(new Insets(10, 50, 10, 50));
+        this.signOut.setPadding(new Insets(5, 5, 5, 5));
+
         this.tutor.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
         this.supervisor.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
         this.addBtn.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9 ;");
         this.signOut.setStyle("-fx-font: 11 arial; -fx-border-color:#b6e7c9 ;");
-        
+
         this.tutor.setMaxSize(200, 30);
         this.supervisor.setMaxSize(200, 30);
         this.addBtn.setMaxSize(200, 40);
@@ -232,7 +217,6 @@ public class studentView extends BorderPane {
         timeInCol.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
         timeInCol.setPrefWidth(110);
 
-
         TableColumn actionCol = new TableColumn("Action");
         actionCol.setPrefWidth(110);
 
@@ -249,8 +233,6 @@ public class studentView extends BorderPane {
         sessiontable.getColumns().addAll(idCol, firstNameCol, lastNameCol, tutorcol, subjectcol, timeInCol, actionCol);
         this.sessiontable.setPrefWidth(770);
 
-        //Hbox
-        //   buttonHbox.setSpacing(3);
         idVbox.setSpacing(3);
         firstNameVbox.setSpacing(3);
         lastNameVbox.setSpacing(3);
@@ -258,72 +240,65 @@ public class studentView extends BorderPane {
         phoneNoVbox.setSpacing(3);
 
         BorderPane.setMargin(sessiontable, new Insets(10, 10, 10, 10));
-        
+
         this.setRight(sessiontable);
         this.setLeft(vbox10);
         this.setTop(hb);
 
     }
-    
-    
-    public VBox addSession(){
+
+    public VBox addSession() {
         VBox layout = new VBox();
-        layout.setPadding(new Insets(5,5,5,5));
+        layout.setPadding(new Insets(5, 5, 5, 5));
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(5);
-        
+
         idNoTF.setPromptText("Enter ID number (integer)");
-        
+
         idVbox.setSpacing(5);
-        
+
         layout.getChildren().addAll(idVbox, submitId);
-        
+
         return layout;
     }
 
-    public VBox newSessionVBox(){
+    public VBox newSessionVBox() {
         VBox layout = new VBox();
 
-
-        
         layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(5,5,5,5));
+        layout.setPadding(new Insets(5, 5, 5, 5));
         layout.setSpacing(5);
-        
+
         layout.getChildren().addAll(subjectVbox, tutorVbox, submitSs);
-        
+
         return layout;
     }
 
-    
-    
-    public VBox newStudentVBox(){
-        
+    public VBox newStudentVBox() {
+
         VBox layout = new VBox();
-        
+
         layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(5,5,5,5));
+        layout.setPadding(new Insets(5, 5, 5, 5));
         layout.setSpacing(5);
-        
+
         idNoTF.setPromptText("Enter ID number (integer)");
         firstNameTF.setPromptText("Enter FIrst Name");
         lastNameTF.setPromptText("Enter Last Name");
         emailTF.setPromptText("Ex. student@emample.edu");
         phoneNoTF.setPromptText("(956)999-9999");
-        
-        
+
         nameHBox.setSpacing(5);
-        
+
         layout.getChildren().addAll(idVbox, nameHBox, emailVbox, phoneNoVbox, submitSt);
 
         return layout;
-    
+
     }
-    
-    public void Dialog(){
-        
+
+    public void Dialog() {
+
     }
-    
 
     public void ClearFields() {
         getIdNoTF().clear();
@@ -348,7 +323,7 @@ public class studentView extends BorderPane {
         sessiontableData.add(rowData);
         sessiontable.setItems(sessiontableData);
     }
-    
+
     public void wrongPass() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -406,16 +381,16 @@ public class studentView extends BorderPane {
                 String tutor = currentPerson.getTutor();
                 String startTime = currentPerson.getTimeIn();
                 String subject = currentPerson.getSubject();
-                
-                System.out.println(startTime);
-                
+
                 Session currentSession = new Session(idNo, lastName, firstName, tutor, startTime, subject, "", "");
- 
-                try {  
+
+                try {
                     ssm.endSession(currentSession);
                     sessiontableData.remove(currentPerson);
                 } catch (SQLException ex) {
                     Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(studentView.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
         }
@@ -754,7 +729,6 @@ public class studentView extends BorderPane {
         this.tutorTF = tutorTF;
     }
 
-
     /**
      * @return the supervisor
      */
@@ -786,7 +760,6 @@ public class studentView extends BorderPane {
     /**
      * @return the newStudentGridpane
      */
-    
     /**
      * @return the submitId
      */
@@ -804,8 +777,6 @@ public class studentView extends BorderPane {
     /**
      * @return the newStudentIdNoTF
      */
-    
-
     /**
      * @return the backNew
      */
@@ -850,7 +821,6 @@ public class studentView extends BorderPane {
         this.subjects = subjects;
     }
 
-
     /**
      * @return the passwordLabel
      */
@@ -878,6 +848,5 @@ public class studentView extends BorderPane {
     public void setPasswordPF(PasswordField passwordPF) {
         this.passwordPF = passwordPF;
     }
-    
-}
 
+}

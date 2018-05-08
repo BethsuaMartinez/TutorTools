@@ -112,8 +112,8 @@ public class loginView extends BorderPane {
     public void wrongId() {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
-        alert.setHeaderText("Incorrect Password or Username");
-        alert.setContentText("Try a valid username and password!");
+        alert.setHeaderText("Incorrect Email or Password ");
+        alert.setContentText("Try a valid email and password!");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(this.getClass().getResource("/resources/Logo.png").toString()));
         alert.showAndWait();

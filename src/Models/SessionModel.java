@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ public class SessionModel {
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
-    public void insertSession(Session currentData) throws SQLException {
+    public void insertSession(Session currentData, java.sql.Date sqlDate) throws SQLException {
         try {
 
             String idNo = currentData.getIdNo();
@@ -52,7 +53,7 @@ public class SessionModel {
             myStmt.setString(5, subject);
             myStmt.setString(6, startTime);
             myStmt.setString(7, "");
-            myStmt.setString(8, "");
+            myStmt.setDate(8, sqlDate);
             myStmt.setInt(9, 0);
 
             myStmt.executeUpdate();
@@ -65,8 +66,10 @@ public class SessionModel {
             }
         }
     }
+    
+    
 
-    public void endSession(Session currentData) throws SQLException {
+    public void endSession(Session currentData) throws SQLException, ParseException {
         try {
             String tutor = currentData.getTutor();
             String startTime = currentData.getStartTime();
@@ -74,12 +77,14 @@ public class SessionModel {
             String subject = currentData.getSubject();
 
             DateFormat format1 = new SimpleDateFormat("HH:mm");
-            DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
             Date et = new Date();
-            Date dt = new Date();
             String endTime = format1.format(et);
+            Date dt = new Date();
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
             String date = format2.format(dt);
-
+            Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            
             int id = Integer.parseInt(idNo);
             
             String sql = "UPDATE TutorTools.TutoringSessions SET status = ?, endTime=?, date=? where idStudent =? AND tutor=? AND subject=? AND startTime=? ";
@@ -87,7 +92,7 @@ public class SessionModel {
 
             myStmt.setInt(1, 1);
             myStmt.setString(2, endTime);
-            myStmt.setString(3, date);
+            myStmt.setDate(3, sqlDate);
             myStmt.setInt(4, id);
             myStmt.setString(5, tutor);
             myStmt.setString(6, subject);
@@ -118,7 +123,7 @@ public class SessionModel {
 
             int id = Integer.parseInt(idNo);
 
-            String sql = "UPDATE TutorTools.TutoringSessions SET fname = ?, lname=?, tutor=?, subject=?, endTime=?, startTime=?, date=? where id =? ";
+            String sql = "UPDATE TutorTools.TutoringSessions SET fname = ?, lname=?, tutor=?, subject=? where startTime =? and endTime =? and date=? ";
             PreparedStatement myStmt = myConn.preparedStatement(sql);
 
             myStmt.setString(1, fname);
@@ -128,7 +133,7 @@ public class SessionModel {
             myStmt.setString(5, startTime);
             myStmt.setString(6, endTime);
             myStmt.setString(7, date);
-            myStmt.setInt(8, id);
+            //myStmt.setInt(8, id);
 
             myStmt.executeUpdate();
 
@@ -197,6 +202,90 @@ public class SessionModel {
 
                 Session currentSession = new Session(idNo, firstName, lastName, tutor, startTime, subject, endTime, date);
                 tutorView.RowData RowData = new tutorView.RowData(idNo, firstName, lastName, subject,tutor, startTime, endTime, date);
+
+                sessiontableData.add(RowData);
+            }
+            return sessiontableData;
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+    
+    public void deleteSession(Session currentSession) throws SQLException {
+        try {
+            String idNo = currentSession.getIdNo();
+            String firstName = currentSession.getFirstName();
+            String lastName = currentSession.getLastName();
+            String tutor = currentSession.getTutor();
+            String startTime = currentSession.getStartTime();
+            String subject = currentSession.getSubject();
+            String date = currentSession.getDate();
+            String endTime = currentSession.getEndTime();
+                
+            int id = Integer.parseInt(idNo);
+
+            String sql = "DELETE FROM TutorTools.tutoringsessions where idStudent =? and tutor =? and subject =? and startTime =? and endTime=? and date =?";
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            
+            myStmt.setInt(1, id);
+            myStmt.setString(2, tutor);
+            myStmt.setString(3, subject);
+            myStmt.setString(4, startTime);
+            myStmt.setString(5, endTime);
+            myStmt.setString(6, date);
+            
+            myStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println(e);
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+        }
+    }
+    
+    public ObservableList<tutorView.RowData> searchSession(String idNo, String fname, String lname, String subject) throws SQLException{
+        try {
+            
+            int id;
+            
+            ObservableList<tutorView.RowData> sessiontableData = FXCollections.observableArrayList();
+            String sql="Select * from TutorTools.tutoringsessions where idStudent =? OR fname =? OR lname=? OR subject=? AND status=1";
+            
+            PreparedStatement myStmt = myConn.preparedStatement(sql);
+
+            boolean isNumeric = idNo.chars().allMatch( Character::isDigit );
+            if(isNumeric){
+                id = Integer.parseInt(idNo);
+                myStmt.setInt(1, id);}
+            else
+                myStmt.setInt(1,0);
+            
+            myStmt.setString(2, fname);
+            myStmt.setString(3, lname);
+            myStmt.setString(4, subject);
+            
+            String date, startTime, endTime, tutor;
+            
+            myRs = myStmt.executeQuery();
+            
+            while (myRs.next()) {
+                id = myRs.getInt("idStudent");
+                fname = myRs.getString("fname");
+                lname = myRs.getString("lname");
+                subject = myRs.getString("subject");
+                tutor = myRs.getString("tutor");
+                startTime = myRs.getString("startTime");
+                endTime = myRs.getString("endTime");
+                date = myRs.getString("date");
+                
+                idNo=String.valueOf(id);
+                
+                tutorView.RowData RowData = new tutorView.RowData(idNo, fname, lname, subject,tutor, startTime, endTime, date);
 
                 sessiontableData.add(RowData);
             }

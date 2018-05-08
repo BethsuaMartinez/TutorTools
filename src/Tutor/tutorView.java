@@ -6,6 +6,7 @@
 package Tutor;
 
 import Models.SessionModel;
+import Student.Session;
 import java.sql.SQLException;
 import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
@@ -60,12 +61,18 @@ public class tutorView extends BorderPane {
     private Label lName = new Label("Last Name*");
     private Label tutorName = new Label("Tutor Name*");
     private Label subject = new Label("Subject*");
+    private Label start = new Label("Time In");
+    private Label end = new Label("Time Out");
+    private Label date = new Label("Date");
     
     private TextField stIDTF = new TextField();
     private TextField fNameTF = new TextField();
     private TextField lNameTF = new TextField();
     private TextField tutorNameTF = new TextField();
     private TextField subjectTF = new TextField();
+    private TextField endTF = new TextField();
+    private TextField startTF = new TextField();
+    private TextField dateTF = new TextField();
     
     //-----VBox 
     VBox idBox = new VBox(stID, stIDTF);
@@ -73,6 +80,9 @@ public class tutorView extends BorderPane {
     VBox lnameBox = new VBox(lName, lNameTF);
     VBox tutorBox = new VBox(tutorName, tutorNameTF);
     VBox subjectBox = new VBox(subject, subjectTF);
+    VBox startBox = new VBox(start, getStartTF());
+    VBox endBox = new VBox(end, getEndTF());
+    VBox dateBox = new VBox(date, getDateTF());
     
     //----HBox
     HBox nameBox = new HBox(fnameBox,lnameBox);
@@ -81,6 +91,8 @@ public class tutorView extends BorderPane {
     private String pass;
     
     
+
+    HBox timeBox= new HBox(startBox, endBox);
     
     public tutorView() throws SQLException {
 
@@ -141,6 +153,13 @@ public class tutorView extends BorderPane {
         tutorNameTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
         subjectTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        
+        startTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        endTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
+                + "    -fx-background-insets: 1;");
+        dateTF.setStyle("-fx-border-width: 0; -fx-background-color: -fx-control-inner-background;\n"
                 + "    -fx-background-insets: 1;");
         
         stIDTF.setPromptText("Student ID");
@@ -229,6 +248,63 @@ public class tutorView extends BorderPane {
         this.setTop(top);
     }
     
+    public void updateSessionTable() throws SQLException{
+        sessiontableData = sm.populateSessionTable();
+        sessionTable.setItems(sessiontableData);
+    
+        HBox search = new HBox();
+        search.setAlignment(Pos.CENTER);
+        search.getChildren().addAll(searchTf, searchBtn);
+        search.setSpacing(10);
+        search.setStyle(" -fx-padding: 10");
+        
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(sessionTable);
+        
+        HBox bottom = new HBox();
+        bottom.getChildren().addAll(modify,delete);
+        bottom.setAlignment(Pos.CENTER);
+        bottom.setSpacing(10);
+       
+        VBox center = new VBox();
+        center.getChildren().addAll(search,tableBox,bottom);
+        center.setSpacing(10);
+       
+        BorderPane.setMargin(center, new Insets(0,50,10,50));
+
+        this.setCenter(center);    
+    }
+    
+    public void searchSession(String idNo, String fname, String lname, String subject ) throws SQLException{
+        
+        sessiontableData = sm.searchSession(idNo, fname, lname, subject);
+        sessionTable.setItems(sessiontableData);
+    
+        HBox search = new HBox();
+        search.setAlignment(Pos.CENTER);
+        search.getChildren().addAll(searchTf, searchBtn);
+        search.setSpacing(10);
+        search.setStyle(" -fx-padding: 10");
+        
+        HBox tableBox = new HBox();
+        tableBox.setAlignment(Pos.CENTER);
+        tableBox.getChildren().add(sessionTable);
+        
+        HBox bottom = new HBox();
+        bottom.getChildren().addAll(modify,delete);
+        bottom.setAlignment(Pos.CENTER);
+        bottom.setSpacing(10);
+       
+        VBox center = new VBox();
+        center.getChildren().addAll(search,tableBox,bottom);
+        center.setSpacing(10);
+       
+        BorderPane.setMargin(center, new Insets(0,50,10,50));
+
+        this.setCenter(center);    
+    }
+    
     public VBox modifyView(){
         VBox modify = new VBox();
         
@@ -244,13 +320,19 @@ public class tutorView extends BorderPane {
         lNameTF.setText(data.getLastName());
         tutorNameTF.setText(data.getTutor());
         subjectTF.setText(data.getSubject());
+        getStartTF().setText(data.getTimeIn());
+        getEndTF().setText(data.getTimeOut());
+        getDateTF().setText(data.getDate());
         
         stIDTF.setEditable(false);
+        getStartTF().setEditable(false);
+        getEndTF().setEditable(false);
+        getDateTF().setEditable(false);
         
         HBox h = new HBox(submitModify);
         h.setAlignment(Pos.CENTER);
         
-        modify.getChildren().addAll(idBox, nameBox, tutorBox, subjectBox, h);
+        modify.getChildren().addAll(idBox, nameBox, tutorBox, subjectBox, timeBox, dateBox, h);
         modify.setSpacing(7);
         
         return modify;
@@ -279,7 +361,7 @@ public class tutorView extends BorderPane {
         subjectTF.clear();
     }
     
-    public void deleteFromTable() {
+    public void deleteFromTable() throws SQLException {
 
         if (confirmStudentModify()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -292,6 +374,19 @@ public class tutorView extends BorderPane {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 tutorView.RowData selectedItem = (tutorView.RowData) sessionTable.getSelectionModel().getSelectedItem();
+                String idNo = selectedItem.getStudentID();
+                String firstName = selectedItem.getFirstName();
+                String lastName = selectedItem.getLastName();
+                String tutor = selectedItem.getTutor();
+                String startTime = selectedItem.getTimeIn();
+                String subject = selectedItem.getSubject();
+                String date = selectedItem.getDate();
+                String endTime = selectedItem.getTimeOut();
+                
+                SessionModel ssm = new SessionModel();
+                Session currentSession = new Session(idNo, lastName, firstName, tutor, startTime, subject, endTime, date);
+                ssm.deleteSession(currentSession);
+                
                 sessionTable.getItems().remove(selectedItem);
             }
         }
@@ -471,6 +566,48 @@ public class tutorView extends BorderPane {
      */
     public void setSubmitModify(Button submitModify) {
         this.submitModify = submitModify;
+    }
+
+    /**
+     * @return the endTF
+     */
+    public TextField getEndTF() {
+        return endTF;
+    }
+
+    /**
+     * @param endTF the endTF to set
+     */
+    public void setEndTF(TextField endTF) {
+        this.endTF = endTF;
+    }
+
+    /**
+     * @return the startTF
+     */
+    public TextField getStartTF() {
+        return startTF;
+    }
+
+    /**
+     * @param startTF the startTF to set
+     */
+    public void setStartTF(TextField startTF) {
+        this.startTF = startTF;
+    }
+
+    /**
+     * @return the dateTF
+     */
+    public TextField getDateTF() {
+        return dateTF;
+    }
+
+    /**
+     * @param dateTF the dateTF to set
+     */
+    public void setDateTF(TextField dateTF) {
+        this.dateTF = dateTF;
     }
 
     public static class RowData {

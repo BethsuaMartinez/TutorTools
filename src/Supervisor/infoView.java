@@ -148,7 +148,6 @@ public class infoView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5,0,5,20));
         
-        tutor.setAlignment(Pos.CENTER_LEFT);
         tutor.setPadding(new Insets(5,0,5,10));
        
         this.setTop(hb);
@@ -229,12 +228,8 @@ public class infoView extends BorderPane {
         tutorTable.setItems(tutortableData);
         tutorTable.setTranslateX(5);
         tutorTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
-        tutorTable.setMaxWidth(1000);
-        
-        tutorTable.setMaxSize(650, 250);
+
         tutorTable.setTranslateX(5);
-        
-        tutor.setPrefSize(100, 10);
         
         typePerson.getItems().addAll("Student", "Tutor");
         typePerson.setValue("Student");
@@ -268,7 +263,7 @@ public class infoView extends BorderPane {
         tutoridCol.setPrefWidth(110);
         
         tutorTable.getColumns().addAll(tutoridCol, tutorfNameCol, tutorlNameCol, tutoremailCol, tutorsubjectCol, tutorphoneCol);
-        tutorTable.setMinWidth(687);
+        tutorTable.setPrefSize(670,400);
         
                 //------------------------Table Student----------------------------------------------
 
@@ -276,13 +271,9 @@ public class infoView extends BorderPane {
         studenttableData = sm.populateTable();
         studentTable.setItems(studenttableData);
         
-        studentTable.setMaxSize(650, 250);
         studentTable.setTranslateX(5);
         studentTable.setStyle("-fx-font: 13 arial; -fx-border-color:#b6e7c9;");
-        studentTable.setMaxWidth(800);
         
-        student.setTranslateX(10);
-        student.setAlignment(Pos.BASELINE_CENTER);
         student.setPadding(new Insets(5,0,5,0));
         
         TableColumn studentidCol = new TableColumn("ID");
@@ -306,7 +297,7 @@ public class infoView extends BorderPane {
         studentphoneCol.setPrefWidth(110);              
         
         studentTable.getColumns().addAll(studentidCol, studentfNameCol, studentlNameCol, studentemailCol, studentphoneCol);
-        studentTable.setMinWidth(652);
+        studentTable.setPrefSize(670,400);
         
 
         hbox.setPadding(new Insets(5));
@@ -327,8 +318,11 @@ public class infoView extends BorderPane {
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
+        HBox searchMenu = new HBox(tutor,hbox);
+        searchMenu.setAlignment(Pos.CENTER);
+        
         vb2.getChildren().clear();
-        vb2.getChildren().addAll(tutor,hbox, tableBox, hb4);
+        vb2.getChildren().addAll(searchMenu, tableBox, hb4);
         vb2.setSpacing(7);
         
         this.setCenter(vb2);
@@ -337,16 +331,19 @@ public class infoView extends BorderPane {
     public void updateStudentTable() throws SQLException{
         studenttableData = sm.populateTable();
         studentTable.setItems(studenttableData);
-        
+                
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
-        tableBox.getChildren().add(tutorTable);
+        tableBox.getChildren().add(studentTable);
         HBox hb4 = new HBox(add, delete, modify);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
+        HBox searchMenu = new HBox(student,hbox);
+        searchMenu.setAlignment(Pos.CENTER);
+        
         vb.getChildren().clear();
-        vb.getChildren().addAll(tutor,hbox,tableBox,hb4);
+        vb.getChildren().addAll(searchMenu,tableBox,hb4);
         vb.setSpacing(7);
         this.setCenter(vb);
     }
@@ -362,8 +359,11 @@ public class infoView extends BorderPane {
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
+        HBox searchMenu = new HBox(tutor,hbox);
+        searchMenu.setAlignment(Pos.CENTER);
+        
         vb2.getChildren().clear();
-        vb2.getChildren().addAll(tutor,hbox, tableBox, hb4);
+        vb2.getChildren().addAll(searchMenu, tableBox, hb4);
         vb2.setSpacing(7);
         
         this.setCenter(vb2);
@@ -382,8 +382,11 @@ public class infoView extends BorderPane {
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
+        HBox searchMenu = new HBox(student,hbox);
+        searchMenu.setAlignment(Pos.CENTER);
+        
         vb.getChildren().clear();
-        vb.getChildren().addAll(student,hbox,tableBox,hb4);
+        vb.getChildren().addAll(searchMenu,tableBox,hb4);
         vb.setSpacing(7);
         this.setCenter(vb);
     }
@@ -397,8 +400,11 @@ public class infoView extends BorderPane {
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
+        HBox searchMenu = new HBox(tutor,hbox);
+        searchMenu.setAlignment(Pos.CENTER);
+        
         vb.getChildren().clear();
-        vb.getChildren().addAll(tutor,hbox,tableBox,hb4);
+        vb.getChildren().addAll(searchMenu,tableBox,hb4);
         vb.setSpacing(7);
         this.setCenter(vb);    
     }
@@ -412,8 +418,11 @@ public class infoView extends BorderPane {
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
+        HBox searchMenu = new HBox(student,hbox);
+        searchMenu.setAlignment(Pos.CENTER);
+        
         vb2.getChildren().clear();
-        vb2.getChildren().addAll(student,hbox, tableBox, hb4);
+        vb2.getChildren().addAll(searchMenu, tableBox, hb4);
         vb2.setSpacing(7);
         this.setCenter(vb2);
     }
@@ -519,6 +528,8 @@ public class infoView extends BorderPane {
         
         HBox h = new HBox(v, v1);
         
+        idTF.setEditable(true);
+        
         layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, subjectVbox, newTutorSubmitBtn);
 
         return layout;
@@ -535,6 +546,8 @@ public class infoView extends BorderPane {
         VBox v1 = new VBox(lNameLabel, lNameTF);
         
         HBox h = new HBox(v, v1);
+        
+        idTF.setEditable(true);
         
         layout.getChildren().add(idVbox);
         layout.getChildren().add(h);
@@ -559,10 +572,9 @@ public class infoView extends BorderPane {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-
                     infoView.tutorRowData selectedItem = (infoView.tutorRowData) tutorTable.getSelectionModel().getSelectedItem();
-                            String idNo=selectedItem.getId();
-                tm.deleteTutor(idNo);
+                    String idNo=selectedItem.getId();
+                    tm.deleteTutor(idNo);
                     tutorTable.getItems().remove(selectedItem);
                 }
 

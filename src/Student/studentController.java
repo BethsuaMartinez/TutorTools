@@ -18,6 +18,7 @@ import Tutor.tutorController;
 import Tutor.tutorView;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -127,6 +128,12 @@ public class studentController {
 
             Student student;
             try {
+                Date dt = new Date();
+                DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+                String sdate = format2.format(dt);
+                Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(sdate);
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                
                 student = model.getStudent(id);
                 String fname = student.getFname();
                 String lname = student.getLname();
@@ -134,19 +141,25 @@ public class studentController {
                 Session currentSession = new Session(idNo, lname, fname, tutor, startTime, subject, "", "");
 
                 gui.updateTable(currentSession);
-                ssm.insertSession(currentSession);
+
+                ssm.insertSession(currentSession, sqlDate);
+
 
                 signInStage.close();
                 gui.ClearFields();
 
             } catch (SQLException ex) {
                 Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(studentController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             signInStage.close();
             gui.ClearFields();
 
+
         });
+
 
         gui.getSubmitId().setOnAction((ActionEvent event) -> {
             Stage signInStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -190,13 +203,14 @@ public class studentController {
             signInStage.setTitle("Sign-In");
 
             signInStage.getIcons().add(new Image("/resources/Logo.png"));
-
             signInStage.setScene(newIdScene);
             signInStage.show();
         });
 
         gui.getSubmitSt().setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+
+
 
                 if (validateNewStudentFields() == true) {
 
@@ -211,6 +225,7 @@ public class studentController {
                         model.insertStudent(idNo, firstName, lastName, email, phone);
                         VBox newSession = gui.newSessionVBox();
                         Scene newSessionScene = new Scene(newSession, 250, 130);
+                        signInStage.getIcons().add(new Image("/resources/Logo.png"));
                         signInStage.setScene(newSessionScene);
                         signInStage.show();
                     } catch (SQLException ex) {
@@ -234,6 +249,7 @@ public class studentController {
 
                 ButtonType loginButtonType = new ButtonType("Log Out", ButtonData.OK_DONE);
                 dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
 
                 GridPane grid = new GridPane();
                 grid.setHgap(10);
@@ -303,13 +319,16 @@ public class studentController {
 
         gui.getTutor().setOnAction((ActionEvent event) -> {
 
+ 
             String pass = "";
+
             Dialog<String> dialog = new Dialog<>();
             dialog.setTitle("Log In");
             dialog.setHeaderText("Confirm Password");
 
             Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
+
 
             ButtonType loginButtonType = new ButtonType("Log In", ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
@@ -335,15 +354,15 @@ public class studentController {
                 }
 
             });
-
+            
             Optional<String> result = dialog.showAndWait();
 
-            if (result.isPresent()) {
+            if(result.isPresent()){
                 pass = result.get();
-
                 if (pass.equals(mainTutor.getPassword())) {
                     tutorView tv;
                     try {
+                        setClose(true);
                         tv = new tutorView();
                         tutorController tc = new tutorController(tv);
                         tv.setPass(pass);
@@ -368,6 +387,8 @@ public class studentController {
 
                     alert.showAndWait();
                 }
+
+
             }
                  else {
                     setClose(false);
@@ -377,6 +398,7 @@ public class studentController {
         });
         
         gui.getSupervisor().setOnAction((ActionEvent event) -> {
+
 
             String pass = "";
             Dialog<String> dialog = new Dialog<>();
@@ -411,6 +433,7 @@ public class studentController {
 
             });
 
+
             Optional<String> result = dialog.showAndWait();
 
             if (result.isPresent()) {
@@ -419,6 +442,7 @@ public class studentController {
                 if (pass.equals(mainSV.getPassword())) {
                     infoView tiv = null;
                     try {
+                        setClose(true);
                         tiv = new infoView();
                         infoController sc = new infoController(tiv);
                         Scene scene2 = new Scene(tiv, 1000, 500);
@@ -447,6 +471,7 @@ public class studentController {
             } else {
                
                 setClose(false);
+
             }
 
         });
@@ -465,6 +490,7 @@ public class studentController {
             alert.setContentText("Empty Field");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
+
             alert.showAndWait();
             return false;
         } else {
@@ -474,6 +500,7 @@ public class studentController {
             alert.setContentText("Invalid ID");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
+
             alert.showAndWait();
 
             return false;
@@ -502,6 +529,7 @@ public class studentController {
             alert.setContentText("Invalid input, check email format before submit it Ex. sudent@example.edu");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
+
             alert.showAndWait();
             return false;
         }
@@ -512,7 +540,9 @@ public class studentController {
             alert.setHeaderText("Wrong Phone Format");
             alert.setContentText("Invalid input, check phone format before submit it Ex. (999)999-9999");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
             stage.getIcons().add(new Image("/resources/Logo.png"));
+
             alert.showAndWait();
             return false;
         }
@@ -540,13 +570,16 @@ public class studentController {
             alert.setHeaderText(null);
             alert.setContentText("Missing Required Fields or Wrong Format");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+
             stage.getIcons().add(new Image("/resources/Logo.png"));
+
             alert.showAndWait();
             return false;
         }
 
         return true;
     }
+
 
     /**
      * @return the close
