@@ -12,6 +12,7 @@ import Models.SessionModel;
 import Models.StudentModel;
 import Student.studentController;
 import Student.studentView;
+import Supervisor.Tutor;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,11 +33,10 @@ public class tutorController {
     LoginModel logm = new LoginModel();
     loginView logv = new loginView();
     tutorView tv;
+    Tutor mainTutor = new Tutor();
 
     public tutorController(tutorView tv) {
         this.tv = tv;
-        //this.logv = logv;
-        //this.logm = logm;
         attachHandlers();
     }
 
@@ -69,15 +69,11 @@ public class tutorController {
                 
                 tutoringSession current = new tutoringSession(idNo, fname, lname, tutor, subject); 
                
-              //  try {
-                  //  tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
+            
                     Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();                    
                     window.close();
                     tv.clearFields();
-               // } catch (SQLException ex) {
-               //     Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
-               // }
-                
+              
                
             }
         
@@ -105,7 +101,8 @@ public class tutorController {
                 sv = new studentView();
                 StudentModel sm = new StudentModel();
                 SessionModel ssm = new SessionModel();
-                studentController sc = new studentController(sv, sm, ssm);
+                studentController sc = new studentController(sv, sm, ssm, mainTutor);
+                mainTutor.setPassword(tv.getPass());
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

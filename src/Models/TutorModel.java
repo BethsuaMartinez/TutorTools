@@ -72,7 +72,7 @@ public class TutorModel {
                 
                 String idNo=String.valueOf(id);
                 
-                Tutor currentTutor= new Tutor(id, fname, lname, email, phone, subject);
+                Tutor currentTutor= new Tutor(id, fname, lname, email, phone, subject, "");
                 infoView.tutorRowData tutorRowData = new infoView.tutorRowData(idNo, fname, lname,email, subject, phone);
                 tutortableData.add(tutorRowData);
             }
@@ -119,7 +119,7 @@ public class TutorModel {
                 
                 idNo=String.valueOf(id);
                 
-                Tutor currentTutor= new Tutor(id, fname, lname, email, phone, subject);
+                Tutor currentTutor= new Tutor(id, fname, lname, email, phone, subject, "");
                 infoView.tutorRowData tutorRowData = new infoView.tutorRowData(idNo, fname, lname,email, subject, phone);
                 tutortableData.add(tutorRowData);
             }

@@ -51,6 +51,9 @@ public class infoController {
     Tutor currentTutor = new Tutor();
     TutorModel tm = new TutorModel();
 
+    Supervisor mainSV = new Supervisor();
+
+    //Tutor mainTutor = new Tutor();
     public infoController(infoView tiv) {
         this.tiv = tiv;
         attachHandlers();
@@ -79,7 +82,8 @@ public class infoController {
                 sv = new studentView();
                 StudentModel sm = new StudentModel();
                 SessionModel ssm = new SessionModel();
-                studentController sc = new studentController(sv, sm, ssm);
+                studentController sc = new studentController(sv, sm, ssm, mainSV);
+                mainSV.setPassword(tiv.getPass());
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -95,6 +99,7 @@ public class infoController {
         tiv.getActivity().setOnAction((ActionEvent event) -> {
             ActivitylogView alv1 = new ActivitylogView();
             activityController ac = new activityController(alv1);
+            alv1.setPass(tiv.getPass());
             Scene scene3 = new Scene(alv1, 1000, 500);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.getIcons().add(new Image("/resources/Logo.png"));
@@ -115,7 +120,7 @@ public class infoController {
             } else {
                 scene = new Scene(tiv.addStudent(), 350, 250);
             }
-            
+
             window.setTitle("Add");
             window.getIcons().add(new Image("/resources/Logo.png"));
             window.setScene(scene);
@@ -123,7 +128,7 @@ public class infoController {
         });
 
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
-            
+
             if (validateTutorFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -134,7 +139,7 @@ public class infoController {
                 String password = "";
                 int id = Integer.parseInt(idNo);
 
-                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
+                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject, password);
                 try {
                     tm.insertTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
                 } catch (SQLException ex) {
@@ -149,7 +154,7 @@ public class infoController {
         });
 
         tiv.getStudentSubmitBtn().setOnAction((ActionEvent event) -> {
-            
+
             if (validateStudentFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -195,22 +200,22 @@ public class infoController {
 
         tiv.getSearch().setOnAction((ActionEvent event) -> {
             try {
-                String search=tiv.getSearchTF().getText();
+                String search = tiv.getSearchTF().getText();
                 String idNo = search;
                 String fname = search;
                 String lname = search;
                 String subject = search;
-                
+
                 if ("Tutor".equals(tiv.getTypePerson())) {
-                    if (search.isEmpty())
+                    if (search.isEmpty()) {
                         tiv.updateTutorTable();
-                    else 
+                    } else {
                         tiv.searchTutor(idNo, fname, lname, subject);
-                } 
-                else {
-                    if (search.isEmpty()) //"".equals(search)
+                    }
+                } else {
+                    if (search.isEmpty()) {
                         tiv.updateStudentTable();
-                    else {
+                    } else {
                         tiv.searchStudent(idNo, fname, lname);
                     }
                 }
@@ -263,7 +268,7 @@ public class infoController {
                 String password = "";
                 int id = Integer.parseInt(idNo);
 
-                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
+                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject, password);
                 try {
                     tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
                     tiv.updateTutorTable();
@@ -311,22 +316,22 @@ public class infoController {
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
 
-        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) 
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
             confID = false;
-        
+        }
 
-        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
             confFN = false;
-   
+        }
 
-        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
             confLN = false;
-        
+        }
 
-        if (tiv.getSubjectTF().getText().isEmpty()) 
+        if (tiv.getSubjectTF().getText().isEmpty()) {
             confS = false;
+        }
 
-        
         if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -335,11 +340,11 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
-        
-        if(!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())){
+
+        if (!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
@@ -347,10 +352,10 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
-            
+
         if (confID == false || confFN == false || confLN == false || confS == false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -366,7 +371,7 @@ public class infoController {
         return true;
     }
 
-    boolean validateStudentFields(){
+    boolean validateStudentFields() {
         boolean confID = true;
         boolean confFN = true;
         boolean confLN = true;
@@ -375,19 +380,19 @@ public class infoController {
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
 
-        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) 
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
             confID = false;
-    
+        }
 
-        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
             confFN = false;
-        
+        }
 
-        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
             confLN = false;
+        }
 
-        
-       if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+        if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Phone Format");
@@ -395,11 +400,11 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
-        
-        if(!(emailValidator.isValid(tiv.getEmailTF().getText()))&& !(tiv.getEmailTF().getText().isEmpty())){
+
+        if (!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
@@ -407,7 +412,7 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
 
@@ -424,5 +429,5 @@ public class infoController {
 
         return true;
     }
-       
+
 }

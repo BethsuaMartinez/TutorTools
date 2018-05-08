@@ -27,7 +27,7 @@ public class LoginModel {
      * @return
      * @throws SQLException
      */
-    public Boolean loginDB(String un, String psswd) throws SQLException {
+    public int loginDB(String un, String psswd) throws SQLException {
         try {
             PreparedStatement myStmt;
             PreparedStatement myStmt2;
@@ -47,11 +47,16 @@ public class LoginModel {
             String chkpsswd = null;
             if (myRs.next()) {
                 chkpsswd = myRs.getString("password");
-                return chkpsswd.equals(psswd);
+                if( chkpsswd.equals(psswd)){
+                    return 1;
+                }
+                
 
             } else if (myRs2.next()) {
                 chkpsswd = myRs2.getString("password");
-                return chkpsswd.equals(psswd);
+                if( chkpsswd.equals(psswd)){
+                    return 2;
+                }
             }
         } catch (SQLException exc) {
         } finally {
@@ -59,6 +64,6 @@ public class LoginModel {
                 myRs.close();
             }
         }
-        return false;
+        return 0;
     }
 }

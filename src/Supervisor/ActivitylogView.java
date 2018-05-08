@@ -37,6 +37,9 @@ public class ActivitylogView extends BorderPane {
     final static String science = "";
     final static String english = "";
     final static String computerScience = "";
+    
+    
+    private String pass;
 
     public ActivitylogView() {
 
@@ -145,6 +148,20 @@ public class ActivitylogView extends BorderPane {
      */
     public void setSignOut(Button signOut) {
         this.signOut = signOut;
+    }
+
+    /**
+     * @return the pass
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
 }

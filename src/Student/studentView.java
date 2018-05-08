@@ -10,6 +10,7 @@ import Models.SessionModel;
 import Models.StudentModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,7 +29,10 @@ import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
@@ -38,6 +42,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -59,12 +64,10 @@ public class studentView extends BorderPane {
     
     //-------------to completely sign out from app----
     private Button signOut = new Button("Log Out");
-    private Button signOutBtn = new Button("Log Out");
+
     
-    //---------------buttons to sign in as tutor or supervisor-----
-    private Button signInTutor = new Button("Log In");
-    private Button signInSV = new Button("Log In"); 
-    
+    //---------------buttons------------------------
+  
     private Button supervisor = new Button("Supervisor");
     private Button tutor = new Button("Tutor");
     private Button backNew = new Button("Back"); 
@@ -76,7 +79,7 @@ public class studentView extends BorderPane {
     ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"),
             new studentView.RowData("John", "Williamson", "Math", "16:00", "43342", "Bethsua"));
 
-    private final TableView table = new TableView();
+ 
     
     private Label passwordLabel = new Label("Password");
     private PasswordField passwordPF = new PasswordField();
@@ -123,7 +126,7 @@ public class studentView extends BorderPane {
     private VBox idVbox = new VBox(idNoLabel, idNoTF);
     private VBox vbox10 = new VBox(tutor, supervisor, addBtn);
     
-    private VBox passwordVBox = new VBox(passwordLabel, passwordPF);
+    
     
     
 
@@ -262,21 +265,6 @@ public class studentView extends BorderPane {
 
     }
     
-    public VBox signOut(){
-        VBox layout = new VBox();
-        layout.setPadding(new Insets(5,5,5,5));
-        layout.setAlignment(Pos.CENTER);
-        layout.setSpacing(5);
-        
-        passwordPF.setPromptText("Password");
-        
-        passwordVBox.setSpacing(5);
-        
-        layout.getChildren().addAll(passwordVBox, signOutBtn);
-        
-        return layout;
-        
-    }
     
     public VBox addSession(){
         VBox layout = new VBox();
@@ -330,6 +318,10 @@ public class studentView extends BorderPane {
 
         return layout;
     
+    }
+    
+    public void Dialog(){
+        
     }
     
 
@@ -762,9 +754,6 @@ public class studentView extends BorderPane {
         this.tutorTF = tutorTF;
     }
 
-    /**
-     * @return the gridpane
-     */
 
     /**
      * @return the supervisor
@@ -861,20 +850,6 @@ public class studentView extends BorderPane {
         this.subjects = subjects;
     }
 
-
-    /**
-     * @return the signOutBtn
-     */
-    public Button getSignOutBtn() {
-        return signOutBtn;
-    }
-
-    /**
-     * @param signOutBtn the signOutBtn to set
-     */
-    public void setSignOutBtn(Button signOutBtn) {
-        this.signOutBtn = signOutBtn;
-    }
 
     /**
      * @return the passwordLabel
