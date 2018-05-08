@@ -86,6 +86,12 @@ public class tutorView extends BorderPane {
     
     //----HBox
     HBox nameBox = new HBox(fnameBox,lnameBox);
+
+
+    private String pass;
+    
+    
+
     HBox timeBox= new HBox(startBox, endBox);
     
     public tutorView() throws SQLException {
@@ -738,5 +744,19 @@ public class tutorView extends BorderPane {
             this.tutor = tutor;
         }
 
+    }
+
+    /**
+     * @return the pass
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

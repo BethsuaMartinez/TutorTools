@@ -7,28 +7,25 @@ package Supervisor;
 
 /**
  *
- * @author KennyBoiii
+ * @author elyvic
  */
-public class Tutor {
-
+public class Supervisor {
     private int ID;
     private String LastName;
     private String FirstName;
     private String email;
-    private String phone;
-    private String subject;
+    private String phone;   
     private String password;
 
-    public Tutor() {
+    public Supervisor() {
     }
 
-    public Tutor(int ID,String FirstName,  String LastName, String email, String phone, String subject, String password) {
+    public Supervisor(int ID,String FirstName,  String LastName, String email, String phone, String password) {
         this.ID = ID;
         this.FirstName = FirstName;
         this.LastName = LastName;
         this.email = email;
         this.phone = phone;
-        this.subject= subject;
         this.password = password;
     }
 
@@ -103,20 +100,6 @@ public class Tutor {
     }
 
     /**
-     * @return the subject
-     */
-    public String getSubject() {
-        return subject;
-    }
-
-    /**
-     * @param subject the subject to set
-     */
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    /**
      * @return the password
      */
     public String getPassword() {
@@ -130,9 +113,3 @@ public class Tutor {
         this.password = password;
     }
 }
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */

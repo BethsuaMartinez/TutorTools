@@ -38,7 +38,7 @@ public class MailView extends VBox {
         HBox hb3 = new HBox();
         HBox hb4 = new HBox();
 
-        //this.setStyle("-fx-background-color: white;");
+
         this.subject.setPromptText("Add a subject");
         this.message.setPromptText("Add a message here");
         this.ccTF.setPromptText("Ex. abc@abc.com,abc@def.com,ghi@abc.com");

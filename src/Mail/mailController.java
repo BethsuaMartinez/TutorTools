@@ -57,7 +57,7 @@ public class mailController {
                         EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles);
                     mv.emailSent();}
-                    //System.out.println("Email sent.");}
+                    
                     else{
                         EmailAttachmentSender.sendEmailWithAttachmentsCC(host, port, mailFrom, password, mailTo,
                             subject, message, attachFiles, ccEmails);}
@@ -75,8 +75,8 @@ public class mailController {
                 Stage stage = new Stage();
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Select file");
-                //fileChooser.setInitialDirectory(new File("C:\\Users\\beths\\Desktop"));
-                fileChooser.setInitialDirectory(new File("//home//selvera"));
+                fileChooser.setInitialDirectory(new File("C:\\Users"));
+
                List <File> files = fileChooser.showOpenMultipleDialog(stage);
          
                 attachFiles = new File[files.size()];

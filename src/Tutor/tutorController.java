@@ -13,6 +13,7 @@ import Models.StudentModel;
 import Student.Session;
 import Student.studentController;
 import Student.studentView;
+import Supervisor.Tutor;
 import Supervisor.infoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -34,12 +35,11 @@ public class tutorController {
     LoginModel logm = new LoginModel();
     loginView logv = new loginView();
     tutorView tv;
+    Tutor mainTutor = new Tutor();
     SessionModel ssm;
 
     public tutorController(tutorView tv) {
         this.tv = tv;
-        //this.logv = logv;
-        //this.logm = logm;
         attachHandlers();
     }
 
@@ -50,8 +50,8 @@ public class tutorController {
             modifyStage.initModality(Modality.APPLICATION_MODAL);
             modifyStage.getIcons().add(new Image("/resources/Logo.png"));
             Scene modifyScene;
-            
-            if(tv.confirmStudentModify()==true){
+
+            if (tv.confirmStudentModify() == true) {
                 modifyScene = new Scene(tv.modifyView(), 350, 300);
                 modifyStage.setTitle("Modify");
                 modifyStage.setScene(modifyScene);
@@ -59,29 +59,30 @@ public class tutorController {
             }
 
         });
-        
+
         tv.getSearchBtn().setOnAction((ActionEvent event) -> {
             try {
-                String search=tv.getSearchTf().getText();
-                
+                String search = tv.getSearchTf().getText();
+
                 String idNo = search;
                 String fname = search;
                 String lname = search;
                 String subject = search;
-                
-                    if (search.isEmpty())
-                        tv.updateSessionTable();
-                    else 
-                        tv.searchSession(idNo, fname, lname, subject);
-                
+
+                if (search.isEmpty()) {
+                    tv.updateSessionTable();
+                } else {
+                    tv.searchSession(idNo, fname, lname, subject);
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
-        tv.getSubmitModify().setOnAction((ActionEvent event) ->{
+
+        tv.getSubmitModify().setOnAction((ActionEvent event) -> {
             SessionModel ssm = new SessionModel();
-            if(validateFields()==true){
+            if (validateFields() == true) {
                 String id = tv.getStIDTF().getText();
                 String fname = tv.getfNameTF().getText();
                 String lname = tv.getlNameTF().getText();
@@ -90,33 +91,32 @@ public class tutorController {
                 String startTime = tv.getStartTF().getText();
                 String endTime = tv.getEndTF().getText();
                 String date = tv.getDateTF().getText();
-                
-                Session current = new Session(id, lname, fname, tutor, startTime, subject, endTime, date); 
-               
-               try {
+
+                Session current = new Session(id, lname, fname, tutor, startTime, subject, endTime, date);
+
+                try {
                     ssm.updateSession(current);
                     tv.updateSessionTable();
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();                    
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     window.close();
                     tv.clearFields();
                 } catch (SQLException ex) {
                     Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-               
+
             }
-        
+
         });
-        
+
         tv.getDelete().setOnAction((ActionEvent event) -> {
             try {
                 tv.deleteFromTable();
             } catch (SQLException ex) {
                 Logger.getLogger(tutorController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+
         });
-       
+
         tv.getSignOut().setOnAction((ActionEvent event) -> {
             loginView v = new loginView();
             LoginModel m = new LoginModel();
@@ -135,7 +135,8 @@ public class tutorController {
                 sv = new studentView();
                 StudentModel sm = new StudentModel();
                 SessionModel ssm = new SessionModel();
-                studentController sc = new studentController(sv, sm, ssm);
+                studentController sc = new studentController(sv, sm, ssm, mainTutor);
+                mainTutor.setPassword(tv.getPass());
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -149,34 +150,35 @@ public class tutorController {
         });
 
     }
-    
-    boolean validateFields(){
+
+    boolean validateFields() {
         boolean confID = true;
         boolean confFName = true;
         boolean confLName = true;
         boolean confTutor = true;
         boolean confSubj = true;
-        
-   
-        if (tv.getStIDTF().getText().isEmpty() || !(tv.getStIDTF().getText().matches("\\d+"))) 
+
+        if (tv.getStIDTF().getText().isEmpty() || !(tv.getStIDTF().getText().matches("\\d+"))) {
             confID = false;
-        
+        }
 
-        if (tv.getfNameTF().getText().isEmpty() || tv.getfNameTF().getText().contains("[0-9]+")) 
+        if (tv.getfNameTF().getText().isEmpty() || tv.getfNameTF().getText().contains("[0-9]+")) {
             confFName = false;
-   
+        }
 
-        if (tv.getlNameTF().getText().isEmpty() || tv.getlNameTF().getText().contains("[0-9]+")) 
+        if (tv.getlNameTF().getText().isEmpty() || tv.getlNameTF().getText().contains("[0-9]+")) {
             confLName = false;
-        
-        if (tv.getTutorNameTF().getText().isEmpty() || tv.getTutorNameTF().getText().contains("[0-9]+")) 
-            confLName = false;
-        
+        }
 
-        if (tv.getSubjectTF().getText().isEmpty() || tv.getSubjectTF().getText().contains("[0-9]+")) 
+        if (tv.getTutorNameTF().getText().isEmpty() || tv.getTutorNameTF().getText().contains("[0-9]+")) {
+            confLName = false;
+        }
+
+        if (tv.getSubjectTF().getText().isEmpty() || tv.getSubjectTF().getText().contains("[0-9]+")) {
             confSubj = false;
-        
-        if(confID == false || confFName == false || confLName == false || confTutor == false || confSubj == false){
+        }
+
+        if (confID == false || confFName == false || confLName == false || confTutor == false || confSubj == false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");

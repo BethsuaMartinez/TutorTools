@@ -52,6 +52,9 @@ public class infoController {
     Tutor currentTutor = new Tutor();
     TutorModel tm = new TutorModel();
 
+    Supervisor mainSV = new Supervisor();
+
+    //Tutor mainTutor = new Tutor();
     public infoController(infoView tiv) {
         this.tiv = tiv;
         attachHandlers();
@@ -80,7 +83,8 @@ public class infoController {
                 sv = new studentView();
                 StudentModel sm = new StudentModel();
                 SessionModel ssm = new SessionModel();
-                studentController sc = new studentController(sv, sm, ssm);
+                studentController sc = new studentController(sv, sm, ssm, mainSV);
+                mainSV.setPassword(tiv.getPass());
 
                 Scene scene3 = new Scene(sv, 1000, 500);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -143,7 +147,7 @@ public class infoController {
                 String password = tiv.getPasswordTF().getText();
                 int id = Integer.parseInt(idNo);
 
-                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
+                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject, password);
                 try {
                     tm.insertTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
                 } catch (SQLException ex) {
@@ -216,10 +220,12 @@ public class infoController {
                     } else {
                         tiv.searchTutor(idNo, fname, lname, subject);
                     }
-                } else if (search.isEmpty()) {
-                    tiv.updateStudentTable();
                 } else {
-                    tiv.searchStudent(idNo, fname, lname);
+                    if (search.isEmpty()) {
+                        tiv.updateStudentTable();
+                    } else {
+                        tiv.searchStudent(idNo, fname, lname);
+                    }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -268,7 +274,7 @@ public class infoController {
                 String password = tiv.getPasswordTF().getText();
                 int id = Integer.parseInt(idNo);
 
-                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject);
+                Tutor currentTutor = new Tutor(id, firstName, lastName, email, phoneNo, subject, password);
                 try {
                     tm.updateTutor(idNo, firstName, lastName, email, phoneNo, password, subject);
                     tiv.updateTutorTable();

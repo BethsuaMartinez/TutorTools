@@ -117,6 +117,8 @@ public class infoView extends BorderPane {
     //----------------------Data for Tables---------------------------------
     ObservableList<infoView.tutorRowData> tutortableData = FXCollections.observableArrayList();
     ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList();
+    
+    private String pass;
 
     public  infoView() throws SQLException {
        
@@ -1347,6 +1349,20 @@ public static class studentRowData {
      */
     public void setModifyTutor(Button modifyTutor) {
         this.modifyTutor = modifyTutor;
+    }
+
+    /**
+     * @return the pass
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(String pass) {
+        this.pass = pass;
     }
     
 }

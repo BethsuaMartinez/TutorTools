@@ -52,12 +52,13 @@ public class activityController {
             infoView tiv1;
             try {
                 tiv1 = new infoView();
-                 infoController sc = new infoController( tiv1);
-            Scene scene3 = new Scene(tiv1, 1000, 500);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Supervisor");
-            window.setScene(scene3);
-            window.show();
+                infoController sc = new infoController(tiv1);
+                tiv1.setPass(alv.getPass());
+                Scene scene3 = new Scene(tiv1, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setTitle("Supervisor");
+                window.setScene(scene3);
+                window.show();
             } catch (SQLException ex) {
                 Logger.getLogger(activityController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -41,12 +41,11 @@ public class loginView extends BorderPane {
     private CustomTextField username = new CustomTextField();
     private CustomPasswordField password = new CustomPasswordField();
     private Button loginButton = new Button("LOGIN");
-    private AnchorPane back = new AnchorPane();
-    private Button signOut = new Button("Log Out");
+
 
     public loginView() {
 
-      //  this.setStyle("-fx-background-color: #FFFFFF;");
+    
         HBox h1 = new HBox();
         HBox h2 = new HBox();
         HBox h3 = new HBox();
@@ -68,7 +67,7 @@ public class loginView extends BorderPane {
         lock.setFitHeight(14);
         lock.setFitWidth(13);
         
-       // ImageView background = new ImageView(new Image(getClass().getResourceAsStream("/resources/background.jpg")));
+       
         BackgroundImage background = new BackgroundImage(new Image("/resources/background.jpg", 3000, 3000, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
