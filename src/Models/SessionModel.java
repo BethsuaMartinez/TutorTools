@@ -19,6 +19,7 @@ import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 /**
  *
  * @author selvera
@@ -29,7 +30,7 @@ public class SessionModel {
     PreparedStatement myStmt = null;
     ResultSet myRs = null;
 
-    public void insertSession(Session currentData, java.sql.Date sqlDate) throws SQLException {
+    public void insertSession(Session currentData, java.sql.Date sqlDate) throws SQLException, ParseException {
         try {
 
             String idNo = currentData.getIdNo();
@@ -38,7 +39,7 @@ public class SessionModel {
             String tutor = currentData.getTutor();
             String startTime = currentData.getStartTime();
             String subject = currentData.getSubject();
-
+            
             int id = Integer.parseInt(idNo);
 
             String sql = "INSERT INTO TutorTools.TutoringSessions "
@@ -66,8 +67,25 @@ public class SessionModel {
             }
         }
     }
-    
-    
+
+   public int subectCount(String subject, String startDate, String endDate ) throws SQLException, ParseException{
+       
+       String sql = "Select * from TutorTools.tutoringsessions where date between ? AND ? AND subject= ? AND status =1";
+       PreparedStatement myStmt = myConn.preparedStatement(sql);
+       
+       myStmt.setString(1, startDate);
+       myStmt.setString(2, endDate);
+       myStmt.setString(3, subject);
+       
+       myRs = myStmt.executeQuery();
+       
+       int count =0;
+       while (myRs.next()) 
+            count++;
+       
+       return count;
+}
+
 
     public void endSession(Session currentData) throws SQLException, ParseException {
         try {

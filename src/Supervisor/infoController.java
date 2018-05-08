@@ -21,6 +21,7 @@ import Tutor.tutorView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -43,7 +44,7 @@ public class infoController {
     infoView tiv;
     tutorView tv;
 
-    ActivitylogView alv = new ActivitylogView();
+    ActivitylogView alv;
     SupervisorModel sm = new SupervisorModel();
     StudentModel stm = new StudentModel();
 
@@ -93,14 +94,22 @@ public class infoController {
 
         });
         tiv.getActivity().setOnAction((ActionEvent event) -> {
-            ActivitylogView alv1 = new ActivitylogView();
-            activityController ac = new activityController(alv1);
-            Scene scene3 = new Scene(alv1, 1000, 500);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.getIcons().add(new Image("/resources/Logo.png"));
-            window.setTitle("Activity Log");
-            window.setScene(scene3);
-            window.show();
+            ActivitylogView alv1;
+            try {
+                alv1 = new ActivitylogView();
+                activityController ac = new activityController(alv1);
+                Scene scene3 = new Scene(alv1, 1000, 500);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.getIcons().add(new Image("/resources/Logo.png"));
+                window.setTitle("Activity Log");
+                window.setScene(scene3);
+                window.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
 
         tiv.getAdd().setOnAction((ActionEvent event) -> {
@@ -115,7 +124,7 @@ public class infoController {
             } else {
                 scene = new Scene(tiv.addStudent(), 350, 250);
             }
-            
+
             window.setTitle("Add");
             window.getIcons().add(new Image("/resources/Logo.png"));
             window.setScene(scene);
@@ -123,7 +132,7 @@ public class infoController {
         });
 
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
-            
+
             if (validateTutorFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -149,7 +158,7 @@ public class infoController {
         });
 
         tiv.getStudentSubmitBtn().setOnAction((ActionEvent event) -> {
-            
+
             if (validateStudentFields()) {
                 String idNo = tiv.getIdTF().getText();
                 String firstName = tiv.getfNameTF().getText();
@@ -195,23 +204,22 @@ public class infoController {
 
         tiv.getSearch().setOnAction((ActionEvent event) -> {
             try {
-                String search=tiv.getSearchTF().getText();
+                String search = tiv.getSearchTF().getText();
                 String idNo = search;
                 String fname = search;
                 String lname = search;
                 String subject = search;
-                
+
                 if ("Tutor".equals(tiv.getTypePerson())) {
-                    if (search.isEmpty())
+                    if (search.isEmpty()) {
                         tiv.updateTutorTable();
-                    else 
+                    } else {
                         tiv.searchTutor(idNo, fname, lname, subject);
-                } 
-                else {
-                    if (search.isEmpty()) 
-                        tiv.updateStudentTable();
-                    else 
-                        tiv.searchStudent(idNo, fname, lname);
+                    }
+                } else if (search.isEmpty()) {
+                    tiv.updateStudentTable();
+                } else {
+                    tiv.searchStudent(idNo, fname, lname);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -232,13 +240,11 @@ public class infoController {
                     modifyStage.setScene(modifyScene);
                     modifyStage.show();
                 }
-            } else {
-                if (tiv.confirmStudentModify() == true) {
-                    modifyScene = new Scene(tiv.modifyStudent(), 350, 300);
-                    modifyStage.setTitle("Modify");
-                    modifyStage.setScene(modifyScene);
-                    modifyStage.show();
-                }
+            } else if (tiv.confirmStudentModify() == true) {
+                modifyScene = new Scene(tiv.modifyStudent(), 350, 300);
+                modifyStage.setTitle("Modify");
+                modifyStage.setScene(modifyScene);
+                modifyStage.show();
             }
         });
 
@@ -310,22 +316,22 @@ public class infoController {
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
 
-        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) 
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
             confID = false;
-        
+        }
 
-        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
             confFN = false;
-   
+        }
 
-        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
             confLN = false;
-        
+        }
 
-        if (tiv.getSubjectTF().getText().isEmpty()) 
+        if (tiv.getSubjectTF().getText().isEmpty()) {
             confS = false;
+        }
 
-        
         if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -334,11 +340,11 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
-        
-        if(!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())){
+
+        if (!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
@@ -346,10 +352,10 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
-            
+
         if (confID == false || confFN == false || confLN == false || confS == false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -365,7 +371,7 @@ public class infoController {
         return true;
     }
 
-    boolean validateStudentFields(){
+    boolean validateStudentFields() {
         boolean confID = true;
         boolean confFN = true;
         boolean confLN = true;
@@ -374,19 +380,19 @@ public class infoController {
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
 
-        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) 
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
             confID = false;
-    
+        }
 
-        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
             confFN = false;
-        
+        }
 
-        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) 
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
             confLN = false;
+        }
 
-        
-       if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+        if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Phone Format");
@@ -394,11 +400,11 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
-        
-        if(!(emailValidator.isValid(tiv.getEmailTF().getText()))&& !(tiv.getEmailTF().getText().isEmpty())){
+
+        if (!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Wrong Email Format");
@@ -406,7 +412,7 @@ public class infoController {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
-            
+
             return false;
         }
 
@@ -423,5 +429,5 @@ public class infoController {
 
         return true;
     }
-       
+
 }

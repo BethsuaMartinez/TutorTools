@@ -2,7 +2,6 @@ package Models;
 
 import Database.SQLConnector;
 import Student.Student;
-import Supervisor.Tutor;
 import Supervisor.infoView;
 import java.sql.*;
 import javafx.collections.FXCollections;

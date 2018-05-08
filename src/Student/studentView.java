@@ -8,9 +8,11 @@ package Student;
 
 import Models.SessionModel;
 import Models.StudentModel;
+import Models.TutorModel;
 import com.sun.prism.impl.Disposer;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -51,8 +53,8 @@ public class studentView extends BorderPane {
 
     StudentModel sm = new StudentModel();
     SessionModel ssm = new SessionModel();
-
-            
+    TutorModel tm = new TutorModel();
+    
     private ChoiceBox<String> tutors = new ChoiceBox<>();
     private ChoiceBox<String> subjects = new ChoiceBox<>();
 
@@ -74,8 +76,7 @@ public class studentView extends BorderPane {
     private Button submitId = new Button("Submit");
 
 
-    ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList(new studentView.RowData("Jacob", "Smith", "english", "12:00", "23432", "Luis"),
-            new studentView.RowData("John", "Williamson", "Math", "16:00", "43342", "Bethsua"));
+    ObservableList<studentView.RowData> tableData = FXCollections.observableArrayList();
 
     private final TableView table = new TableView();
     
@@ -109,9 +110,6 @@ public class studentView extends BorderPane {
     private Label tutorLabel = new Label("Tutor");
     private TextField tutorTF = new TextField();
     
-    
-
-  
     private VBox firstNameVbox = new VBox(firstNameLabel, firstNameTF);
     private VBox lastNameVbox = new VBox(lastNameLabel, lastNameTF);
     private VBox emailVbox = new VBox(emailLabel, emailTF);
@@ -130,13 +128,17 @@ public class studentView extends BorderPane {
 
     public studentView() throws SQLException {
         
-        tutors.getItems().add("Luis");
-        tutors.getItems().addAll("Elyvic", "Bethsua");
-        tutors.setValue("Luis");
+        ArrayList<String> tutorList = tm.tutors();
+        for(int i=0; i<tutorList.size();i++){
+            tutors.getItems().add(tutorList.get(i));
+        }
+        tutors.setValue(tutorList.get(0));
 
-        subjects.getItems().addAll("Computer Science", "English", "History");
-        subjects.setValue("Computer Science");
-        
+        ArrayList<String> subjectList = tm.subjects();
+        for(int i=0; i<subjectList.size();i++){
+            subjects.getItems().add(subjectList.get(i));
+        }
+        subjects.setValue(subjectList.get(0));
         
         HBox hb = new HBox();
         HBox hb2 = new HBox();

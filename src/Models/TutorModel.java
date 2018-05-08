@@ -10,7 +10,6 @@ import Supervisor.Tutor;
 import Supervisor.infoView;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -84,7 +83,7 @@ public class TutorModel {
         }
     }
 
-        public ObservableList<infoView.tutorRowData> searchTutor(String idNo, String fname, String lname, String subject) throws SQLException{
+    public ObservableList<infoView.tutorRowData> searchTutor(String idNo, String fname, String lname, String subject) throws SQLException{
         try {
             
             int id;
@@ -131,13 +130,37 @@ public class TutorModel {
         }
     }
 
+    public ArrayList<String> subjects () throws SQLException{
+        ArrayList<String> subjects= new ArrayList<>(); 
+        String sql="SELECT DISTINCT SUBJECT FROM tutortools.tutors";
+        ResultSet myRs = conn.query(sql);
+        
+        while(myRs.next()){
+            subjects.add(myRs.getString("subject"));
+        }
+        return subjects;
+    }
+    
+    public ArrayList<String> tutors () throws SQLException{
+        ArrayList<String> tutors= new ArrayList<>(); 
+        String sql="Select * from TutorTools.Tutors";
+        ResultSet myRs = conn.query(sql);
+        
+        while(myRs.next()){
+            tutors.add(myRs.getString("fname"));
+        }
+
+        
+        
+        return tutors;
+    }
     
     public void updateTutor(String idNo, String fname, String lname, String email, String phone, String password, String subject) throws SQLException {
         try {
 
             int tutorid = Integer.parseInt(idNo);
 
-            String sql = "UPDATE Tutors SET fname = ?, lname=?, email=?, phone=?, password=? where idTutor =? ";
+            String sql = "UPDATE Tutors SET fname = ?, lname=?, email=?, phone=?, password=?, subject=? where idTutor =? ";
             PreparedStatement myStmt = conn.preparedStatement(sql);
 
             myStmt.setString(1, fname);
@@ -145,7 +168,8 @@ public class TutorModel {
             myStmt.setString(3, email);
             myStmt.setString(4, phone);
             myStmt.setString(5, password);
-            myStmt.setInt(6, tutorid);
+            myStmt.setString(6, subject);
+            myStmt.setInt(7, tutorid);
 
             myStmt.executeUpdate();
 

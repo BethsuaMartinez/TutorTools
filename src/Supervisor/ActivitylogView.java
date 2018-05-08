@@ -5,14 +5,22 @@
  */
 package Supervisor;
 
+import Models.SessionModel;
+import Models.TutorModel;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -29,17 +37,20 @@ import javafx.scene.layout.Priority;
  * @author selvera
  */
 public class ActivitylogView extends BorderPane {
-
+    SessionModel ssm = new SessionModel();
     private Button back = new Button("Back");
     private Button signOut = new Button("Sign Out");
+    TutorModel tm = new TutorModel();
+    private ChoiceBox<String> months = new ChoiceBox<>();
+    private Button subMonth = new Button("Submit");
+    final NumberAxis yAxis = new NumberAxis();
+    final CategoryAxis xAxis = new CategoryAxis();
+    
+    public ActivitylogView() throws SQLException, ParseException {
 
-    final static String math = "";
-    final static String science = "";
-    final static String english = "";
-    final static String computerScience = "";
-
-    public ActivitylogView() {
-
+        months.getItems().addAll("Year","January", "February", "March", "April", "May", "June", "July", "August","September", "October","November", "December");
+        months.setValue("Year");
+        
         HBox hb = new HBox();
         HBox hb2 = new HBox();
         HBox hb3 = new HBox();
@@ -53,7 +64,7 @@ public class ActivitylogView extends BorderPane {
         logo.setFitHeight(30);
         hb2.getChildren().add(logo);
         hb2.setPadding(new Insets(0, 0, 0, 30));
-        hb3.getChildren().addAll(signOut, back);
+        hb3.getChildren().addAll(months, subMonth,signOut, back);
         hb3.setAlignment(Pos.CENTER_RIGHT);
         hb3.setPadding(new Insets(0, 20, 0, 0));
         hb3.setSpacing(10);
@@ -61,34 +72,84 @@ public class ActivitylogView extends BorderPane {
         hb.getChildren().addAll(logo, hb3);
         hb.setPadding(new Insets(5, 0, 5, 20));
 
-        final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        final BarChart<String, Number> bc= new BarChart<String, Number>(xAxis, yAxis);
+    final BarChart<String, Number> bc= new BarChart<String, Number>(xAxis, yAxis);
         bc.setTitle("Students Per Subject");
         xAxis.setLabel("Subject");
         yAxis.setLabel("Student");
 
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Math");
-        series1.getData().add(new XYChart.Data(math, 10));
+        int x = 0;
+        String subject="";
+        ArrayList<XYChart.Series> chartlist = new ArrayList<>();
+        
+        ArrayList<String> subjectList = tm.subjects();
+        
+        for(int i=0; i<subjectList.size();i++){
+           
+            subject=subjectList.get(i);
+            x=ssm.subectCount(subjectList.get(i),"2018-01-01", "2018-12-31" );
+            
+            XYChart.Series series = new XYChart.Series();
+            series.setName(subject);
+            series.getData().add(new XYChart.Data("", x));
+            
+            chartlist.add(series);
+        }
 
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Science");
-        series2.getData().add(new XYChart.Data(science, 30));
-
-        XYChart.Series series3 = new XYChart.Series();
-        series3.setName("English");
-        series3.getData().add(new XYChart.Data(english, 25));
-
-        XYChart.Series series4 = new XYChart.Series();
-        series4.setName("Computer Science");
-        series4.getData().add(new XYChart.Data(computerScience, 5));
-
-        bc.getData().addAll(series1, series2, series3, series4);
-
-        this.setCenter(bc);     
+        for(int i=0; i<chartlist.size();i++){
+            bc.getData().add(chartlist.get(i));
+        }
+        this.setCenter(bc);
         this.setTop(hb);
 
+    }
+    
+    public void updateChart(String month) throws SQLException, ParseException{
+        final BarChart<String, Number> bcs= new BarChart<String, Number>(xAxis, yAxis);
+        bcs.setTitle("Students Per Subject");
+        int x = 0;
+        String subject="";
+        ArrayList<XYChart.Series> chartList = new ArrayList<>();
+        ArrayList<String> subList = tm.subjects();
+        for(int i=0; i<subList.size();i++){   
+            subject=subList.get(i);
+        if("January".equals(month))
+            x =ssm.subectCount(subject,"2018-01-01", "2018-01-31");
+        else if("February".equals(month))
+            x =ssm.subectCount(subject,"2018-02-01", "2018-02-29");
+        else if("March".equals(month))
+            x =ssm.subectCount(subject,"2018-03-01", "2018-03-31");
+        else if("April".equals(month))
+            x =ssm.subectCount(subject,"2018-04-01", "2018-04-30");
+        else if("May".equals(month))
+            x =ssm.subectCount(subject,"2018-05-01", "2018-05-31");
+        else if("June".equals(month))
+            x =ssm.subectCount(subject,"2018-06-01", "2018-06-30");
+        else if("July".equals(month))
+            x =ssm.subectCount(subject,"2018-07-01", "2018-07-31");
+        else if("August".equals(month))
+            x =ssm.subectCount(subject,"2018-08-01", "2018-08-31");
+        else if("September".equals(month))
+            x =ssm.subectCount(subject,"2018-09-01", "2018-09-30");
+        else if("October".equals(month))
+            x =ssm.subectCount(subject,"2018-10-01", "2018-10-31");
+        else if("November".equals(month))
+            x =ssm.subectCount(subject,"2018-11-01", "2018-11-30");
+        else if("December".equals(month))
+            x =ssm.subectCount(subject,"2018-12-01", "2018-12-31");
+        else
+            x=ssm.subectCount(subject, "2018-01-01", "2018-12-31");
+            
+            XYChart.Series series = new XYChart.Series();
+            series.setName(subject);
+            series.getData().add(new XYChart.Data("", x));
+            
+            chartList.add(series);
+        }
+
+        for(int i=0; i<chartList.size();i++){
+            bcs.getData().add(chartList.get(i));
+        }
+        this.setCenter(bcs);    
     }
 
     /**
@@ -117,6 +178,35 @@ public class ActivitylogView extends BorderPane {
      */
     public void setSignOut(Button signOut) {
         this.signOut = signOut;
+    }
+
+    /**
+     * @return the months
+     */
+    public String getMonths() {
+         String month = months.getValue();
+        return month;
+    }
+
+    /**
+     * @param months the months to set
+     */
+    public void setMonths(ChoiceBox<String> months) {
+        this.months = months;
+    }
+
+    /**
+     * @return the subMonth
+     */
+    public Button getSubMonth() {
+        return subMonth;
+    }
+
+    /**
+     * @param subMonth the subMonth to set
+     */
+    public void setSubMonth(Button subMonth) {
+        this.subMonth = subMonth;
     }
 
 }

@@ -9,6 +9,7 @@ import Login.loginController;
 import Login.loginView;
 import Models.LoginModel;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -26,7 +27,7 @@ public class activityController {
 
     infoView tiv;
 
-    ActivitylogView alv = new ActivitylogView();
+    ActivitylogView alv;
 
     public activityController(ActivitylogView alv) {
         this.alv = alv;
@@ -60,7 +61,16 @@ public class activityController {
             } catch (SQLException ex) {
                 Logger.getLogger(activityController.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
+});
+            alv.getSubMonth().setOnAction((ActionEvent event) -> {
+            try {
+                String month = alv.getMonths();
+                alv.updateChart(month);
+            } catch (SQLException ex) {
+                Logger.getLogger(activityController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(activityController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
     }
