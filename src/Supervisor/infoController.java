@@ -135,7 +135,46 @@ public class infoController {
             window.setScene(scene);
             window.show();
         });
+        
+        tiv.getAddSupervisor().setOnAction((ActionEvent event) -> {
+            Stage window = new Stage();
+            window.initModality(Modality.APPLICATION_MODAL);
 
+            Scene scene;
+            tiv.ClearFields();
+            
+            scene = new Scene(tiv.addSupervisor(), 400, 250);
+
+            window.setTitle("Add Supervisor");
+            window.getIcons().add(new Image("/resources/Logo.png"));
+            window.setScene(scene);
+            window.show();
+        });
+
+        tiv.getSubmitSupervisor().setOnAction((ActionEvent event) -> {
+
+            if (validateSupervisorFields()) {
+                String idNo = tiv.getIdTF().getText();
+                String firstName = tiv.getfNameTF().getText();
+                String lastName = tiv.getlNameTF().getText();
+                String email = tiv.getEmailTF().getText();
+                String phoneNo = tiv.getPhoneTF().getText();
+                String password = tiv.getPasswordTF().getText();
+                int id = Integer.parseInt(idNo);
+
+                Supervisor currentSupervisor = new Supervisor(id, firstName, lastName, email, phoneNo, password);
+                try {
+                    sm.insertSupervisor(idNo, firstName, lastName, email, phoneNo, password);
+                } catch (SQLException ex) {
+                    Logger.getLogger(infoController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.close();
+                tiv.ClearFields();
+            }
+        });
+        
         tiv.getNewTutorSubmitBtn().setOnAction((ActionEvent event) -> {
 
             if (validateTutorFields()) {
@@ -162,6 +201,7 @@ public class infoController {
             }
         });
 
+        
         tiv.getStudentSubmitBtn().setOnAction((ActionEvent event) -> {
 
             if (validateStudentFields()) {
@@ -319,6 +359,7 @@ public class infoController {
         boolean confFN = true;
         boolean confLN = true;
         boolean confS = true;
+        boolean confE = true;
         EmailValidator emailValidator = EmailValidator.getInstance();
         Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
         Matcher m = p.matcher(tiv.getPhoneTF().getText());
@@ -337,6 +378,9 @@ public class infoController {
 
         if (tiv.getSubjectTF().getText().isEmpty()) {
             confS = false;
+        }
+        if (tiv.getEmailTF().getText().isEmpty()) {
+            confE = false;
         }
 
         if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
@@ -363,7 +407,7 @@ public class infoController {
             return false;
         }
 
-        if (confID == false || confFN == false || confLN == false || confS == false) {
+        if (confID == false || confFN == false || confLN == false || confS == false||confE==false) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("Required Fields/ Wrong Format");
@@ -432,6 +476,69 @@ public class infoController {
             stage.getIcons().add(new Image("/resources/Logo.png"));
             alert.showAndWait();
             return false;
+        }
+
+        return true;
+    }
+
+    boolean validateSupervisorFields() {
+        boolean confID = true;
+        boolean confFN = true;
+        boolean confLN = true;
+        boolean confE= true;
+        EmailValidator emailValidator = EmailValidator.getInstance();
+        Pattern p = Pattern.compile("\\(\\d{3}\\)\\d{3}-\\d{4}");
+        Matcher m = p.matcher(tiv.getPhoneTF().getText());
+
+        if (tiv.getIdTF().getText().isEmpty() || !(tiv.getIdTF().getText().matches("\\d+"))) {
+            confID = false;
+        }
+
+        if (tiv.getfNameTF().getText().isEmpty() || tiv.getfNameTF().getText().contains("[0-9]+")) {
+            confFN = false;
+        }
+
+        if (tiv.getlNameTF().getText().isEmpty() || tiv.getlNameTF().getText().contains("[0-9]+")) {
+            confLN = false;
+        }
+        if (tiv.getEmailTF().getText().isEmpty()) {
+            confE = false;
+        }
+        
+        if (!(m.find() && m.group().equals(tiv.getPhoneTF().getText())) && !(tiv.getPhoneTF().getText().isEmpty())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Phone Format");
+            alert.setContentText("Invalid input, check phone format before submitting Ex. (999)999-9999");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+
+            return false;
+        }
+
+        if (!(emailValidator.isValid(tiv.getEmailTF().getText())) && !(tiv.getEmailTF().getText().isEmpty())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Wrong Email Format");
+            alert.setContentText("Invalid input, check email format before submitting Ex. sudent@example.edu");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+
+            return false;
+        }
+
+        if (confID == false || confFN == false || confLN == false||confE==false) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Required Fields/ Wrong Format");
+            alert.setContentText("Invalid input, check information before submitting");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/resources/Logo.png"));
+            alert.showAndWait();
+            return false;
+
         }
 
         return true;

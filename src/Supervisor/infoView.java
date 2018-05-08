@@ -62,6 +62,8 @@ public class infoView extends BorderPane {
     private Button studentSubmitBtn = new Button("Submit");
     private Button modifyStudent = new Button("Modify");
     private Button modifyTutor = new Button("Modify");
+    private Button addSupervisor = new Button("Add Supervisor");
+    private Button submitSupervisor = new Button("Submit");
     
     //-------------Table--------------------------------
     private TableView tutorTable = new TableView();
@@ -119,6 +121,20 @@ public class infoView extends BorderPane {
     ObservableList<infoView.studentRowData> studenttableData = FXCollections.observableArrayList();
     
     private String pass;
+
+    /**
+     * @return the submitSupervisor
+     */
+    public Button getSubmitSupervisor() {
+        return submitSupervisor;
+    }
+
+    /**
+     * @param submitSupervisor the submitSupervisor to set
+     */
+    public void setSubmitSupervisor(Button submitSupervisor) {
+        this.submitSupervisor = submitSupervisor;
+    }
 
     public  infoView() throws SQLException {
        
@@ -184,6 +200,8 @@ public class infoView extends BorderPane {
         signOut.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
         newTutorSubmitBtn.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
         studentSubmitBtn.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        addSupervisor.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
+        submitSupervisor.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
         
         typePerson.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
         typePerson2.setStyle("-fx-font: 12 arial; -fx-border-color:#b6e7c9;");
@@ -314,7 +332,7 @@ public class infoView extends BorderPane {
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(tutorTable);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(add, delete, modify, addSupervisor);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
@@ -335,7 +353,7 @@ public class infoView extends BorderPane {
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(studentTable);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(add, delete, modify, addSupervisor);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
@@ -355,7 +373,7 @@ public class infoView extends BorderPane {
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(tutorTable);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(add, delete, modify, addSupervisor);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
@@ -378,7 +396,7 @@ public class infoView extends BorderPane {
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(studentTable);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(add, delete, modify, addSupervisor);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
@@ -396,7 +414,7 @@ public class infoView extends BorderPane {
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(tutorTable);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(add, delete, modify, addSupervisor);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
@@ -414,7 +432,7 @@ public class infoView extends BorderPane {
         HBox tableBox = new HBox();
         tableBox.setAlignment(Pos.CENTER);
         tableBox.getChildren().add(studentTable);
-        HBox hb4 = new HBox(add, delete, modify);
+        HBox hb4 = new HBox(add, delete, modify, addSupervisor);
         hb4.setPadding(new Insets(10));
         hb4.setSpacing(20);
         hb4.setAlignment(Pos.BOTTOM_CENTER);
@@ -535,6 +553,23 @@ public class infoView extends BorderPane {
         return layout;
     }
 
+    public VBox addSupervisor() {
+        VBox layout = new VBox();
+
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(6, 6, 6, 6));
+        
+        VBox v = new VBox(fNameLabel,fNameTF );
+        VBox v1 = new VBox(lNameLabel, lNameTF);
+        
+        HBox h = new HBox(v, v1);
+        
+        idTF.setEditable(true);
+        
+        layout.getChildren().addAll(idVbox, h, emailVbox, passwordVbox, phoneVbox, submitSupervisor);
+
+        return layout;
+    }
     
     public VBox addStudent(){
         VBox layout = new VBox();
@@ -1363,6 +1398,20 @@ public static class studentRowData {
      */
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    /**
+     * @return the addSupervisor
+     */
+    public Button getAddSupervisor() {
+        return addSupervisor;
+    }
+
+    /**
+     * @param addSupervisor the addSupervisor to set
+     */
+    public void setAddSupervisor(Button addSupervisor) {
+        this.addSupervisor = addSupervisor;
     }
     
 }
